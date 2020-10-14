@@ -12,6 +12,7 @@ Gem::Specification.new do |spec|
   spec.summary       = 'Library to report URBANopt results'
   spec.description   = 'Library include scenario default reporting measure and scenario defaults reports schema and classes'
   spec.homepage      = 'https://github.com/urbanopt'
+  spec.licenses      = 'Nonstandard'
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
