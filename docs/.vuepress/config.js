@@ -1,11 +1,17 @@
 const path = require('path');
 
 module.exports = {
-  base: '/urbanopt-scenario-gem/',
+  base: '/urbanopt-reporting-gem/',
   themeConfig: {
     navbar: false,
     sidebar: [
-      "/"
+      "/",
+      {
+        title: "Schemas",
+        children: [
+          "/schemas/scenario-schema.md"
+        ]
+      }
     ]
   },
   chainWebpack: config => {
