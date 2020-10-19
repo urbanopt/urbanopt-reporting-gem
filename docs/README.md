@@ -1,4 +1,4 @@
-# URBANOpt Reporting Gem
+# URBANopt Reporting Gem
 
 ### <StaticLink href="rdoc/">Rdocs</StaticLink>
 
