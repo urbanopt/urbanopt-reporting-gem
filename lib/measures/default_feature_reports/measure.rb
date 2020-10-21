@@ -234,6 +234,9 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
   # unit conversion method
   def convert_units(value, from_units, to_units)
     # apply unit conversion
+    if value.nil?
+      return nil
+    end
     value_converted = OpenStudio.convert(value, from_units, to_units)
     if value_converted.is_initialized
       value = value_converted.get
