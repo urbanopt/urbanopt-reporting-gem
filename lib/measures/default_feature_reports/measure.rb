@@ -581,6 +581,15 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     total_source_energy = sql_query(runner, sql_file, 'AnnualBuildingUtilityPerformanceSummary', "TableName='Site and Source Energy' AND RowName='Total Source Energy' AND ColumnName='Total Energy'")
     feature_report.reporting_periods[0].total_source_energy_kwh = convert_units(total_source_energy, 'GJ', 'kWh')
 
+    if begin_month == 1 && begin_day_of_month == 1 && end_month == 12 && end_day_of_month == 31
+      # site_EUI_kwh/m2
+      site_EUI_kwh_per_m2 = total_site_energy / floor_area
+      puts "site_EUI_kwh/m2 == #{site_EUI_kwh_per_m2}"
+      # site_EUI_kwh/m2
+      source_EUI_kwh_per_m2 = total_source_energy / floor_area
+      puts "site_EUI_kwh/m2 == #{source_EUI_kwh_per_m2}"
+    end
+
     # net_site_energy
     net_site_energy = sql_query(runner, sql_file, 'AnnualBuildingUtilityPerformanceSummary', "TableName='Site and Source Energy' AND RowName='Net Site Energy' AND ColumnName='Total Energy'")
     feature_report.reporting_periods[0].net_site_energy_kwh = convert_units(net_site_energy, 'GJ', 'kWh')
