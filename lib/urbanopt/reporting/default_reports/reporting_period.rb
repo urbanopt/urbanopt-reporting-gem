@@ -225,8 +225,6 @@ module URBANopt
           # modify the existing_period by summing up the results
           existing_period.total_site_energy_kwh = add_values(existing_period.total_site_energy_kwh, new_period.total_site_energy_kwh)
           existing_period.total_source_energy_kwh = add_values(existing_period.total_source_energy_kwh, new_period.total_source_energy_kwh)
-          existing_period.site_EUI_kwh_per_m2 = add_values(existing_period.site_EUI_kwh_per_m2, new_period.site_EUI_kwh_per_m2)
-          existing_period.source_EUI_kwh_per_m2 = add_values(existing_period.source_EUI_kwh_per_m2, new_period.source_EUI_kwh_per_m2)
           existing_period.net_source_energy_kwh = add_values(existing_period.net_source_energy_kwh, new_period.net_source_energy_kwh)
           existing_period.net_utility_cost_dollar = add_values(existing_period.net_utility_cost_dollar, new_period.net_utility_cost_dollar)
           existing_period.total_utility_cost_dollar = add_values(existing_period.total_utility_cost_dollar, new_period.total_utility_cost_dollar)
