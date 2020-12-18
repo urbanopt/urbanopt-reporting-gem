@@ -584,9 +584,11 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     if begin_month == 1 && begin_day_of_month == 1 && end_month == 12 && end_day_of_month == 31
       # site_EUI_kwh/m2
       site_EUI_kwh_per_m2 = total_site_energy / floor_area
+      feature_report.reporting_periods[0].site_EUI_kwh_per_m2 = site_EUI_kwh_per_m2
       puts "site_EUI_kwh/m2 == #{site_EUI_kwh_per_m2}"
       # site_EUI_kwh/m2
       source_EUI_kwh_per_m2 = total_source_energy / floor_area
+      feature_report.reporting_periods[0].source_EUI_kwh_per_m2 = source_EUI_kwh_per_m2
       puts "site_EUI_kwh/m2 == #{source_EUI_kwh_per_m2}"
     end
 
