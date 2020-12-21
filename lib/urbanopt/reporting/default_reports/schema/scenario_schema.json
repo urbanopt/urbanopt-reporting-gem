@@ -274,7 +274,13 @@
 				"site_EUI_kwh_per_m2": {
 					"type": "number"
 				},
+				"site_EUI_kBtu_per_ft2": {
+					"type": "number"
+				},
 				"source_EUI_kwh_per_m2": {
+					"type": "number"
+				},
+				"source_EUI_kBtu_per_ft2": {
 					"type": "number"
 				},
 				"net_site_energy_kwh": {
