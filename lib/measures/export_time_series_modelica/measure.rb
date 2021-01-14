@@ -131,7 +131,7 @@ class ExportTimeSeriesLoadsCSV < OpenStudio::Measure::ReportingMeasure
         result << OpenStudio::IdfObject.load("Output:Variable,#{key_value_chw_outlet},#{variable_name2},timestep;").get
         result << OpenStudio::IdfObject.load("Output:Variable,#{key_value_chw_inlet},#{variable_name2},timestep;").get
         result << OpenStudio::IdfObject.load("Output:Variable,#{key_value_chw_outlet},#{variable_name1},timestep;").get
-        end
+      end
       if plantLoop.name.get.to_s.downcase.include? hhw_loop_name.to_s and !plantLoop.name.get.to_s.downcase.include? "service" and !plantLoop.name.get.to_s.downcase.include? "domestic"
         #Extract plant loop information
         selected_plant_loops[1]=plantLoop
@@ -147,7 +147,7 @@ class ExportTimeSeriesLoadsCSV < OpenStudio::Measure::ReportingMeasure
     result << OpenStudio::IdfObject.load('Output:Variable,,Site Outdoor Air Drybulb Temperature,hourly;').get
     result << OpenStudio::IdfObject.load('Output:Variable,,Site Outdoor Air Relative Humidity,hourly;').get
     result << OpenStudio::IdfObject.load('Output:Meter,Cooling:Electricity,hourly;').get
-	  result << OpenStudio::IdfObject.load('Output:Meter,Cooling:Electricity,timestep;').get ##Using this for data at timestep interval
+	  result << OpenStudio::IdfObject.load('Output:Meter,Electricity:Facility,timestep;').get ##Using this for data at timestep interval
     result << OpenStudio::IdfObject.load('Output:Meter,Heating:Electricity,hourly;').get
     result << OpenStudio::IdfObject.load('Output:Meter,Heating:Gas,hourly;').get
     result << OpenStudio::IdfObject.load('Output:Meter,InteriorLights:Electricity,hourly;').get
