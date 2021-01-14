@@ -94,16 +94,16 @@ class ExportModelicaLoads < OpenStudio::Measure::ReportingMeasure
     result << OpenStudio::IdfObject.load('Output:Meter,ExteriorLighting:Electricity,hourly;').get # Joules
     result << OpenStudio::IdfObject.load('Output:Meter,Electricity:Facility,hourly;').get # Joules
     result << OpenStudio::IdfObject.load('Output:Meter,Gas:Facility,hourly;').get # Joules
-    result << OpenStudio::IdfObject.load('Output:Meter,Heating:EnergyTransfer,hourly;').get  # Joules
-    result << OpenStudio::IdfObject.load('Output:Meter,WaterSystems:EnergyTransfer,hourly;').get  # Joules
+    result << OpenStudio::IdfObject.load('Output:Meter,Heating:EnergyTransfer,hourly;').get # Joules
+    result << OpenStudio::IdfObject.load('Output:Meter,WaterSystems:EnergyTransfer,hourly;').get # Joules
     # these variables are used for the modelica export.
-    result << OpenStudio::IdfObject.load('Output:Variable,*,Zone Predicted Sensible Load to Setpoint Heat Transfer Rate,hourly;').get  # watts according to e+
+    result << OpenStudio::IdfObject.load('Output:Variable,*,Zone Predicted Sensible Load to Setpoint Heat Transfer Rate,hourly;').get # watts according to e+
     result << OpenStudio::IdfObject.load('Output:Variable,*,Water Heater Total Demand Heat Transfer Rate,hourly;').get # Watts
 
     return result
   end
 
-  def extract_timeseries_into_matrix(sqlfile, data, variable_name, key_value = nil, default_if_empty=0)
+  def extract_timeseries_into_matrix(sqlfile, data, variable_name, key_value = nil, default_if_empty = 0)
     log "Executing query for #{variable_name}"
     column_name = variable_name
     if key_value
@@ -120,7 +120,7 @@ class ExportModelicaLoads < OpenStudio::Measure::ReportingMeasure
     if ts.empty?
       log "No time series for #{variable_name}:#{key_value}... defaulting to #{default_if_empty}"
       # needs to be data.size-1 since the column name is already stored above (+=)
-      column += [default_if_empty] * (data.size-1)
+      column += [default_if_empty] * (data.size - 1)
     else
       ts = ts.get if ts.respond_to?(:get)
       ts = ts.first if ts.respond_to?(:first)
@@ -154,10 +154,10 @@ class ExportModelicaLoads < OpenStudio::Measure::ReportingMeasure
     log "Finished extracting #{variable_name}"
   end
 
-  def create_new_variable_sum(data, new_var_name, include_str, options=nil)
+  def create_new_variable_sum(data, new_var_name, include_str, options = nil)
     var_info = {
-        name: new_var_name,
-        var_indexes: []
+      name: new_var_name,
+      var_indexes: []
     }
     data.each_with_index do |row, index|
       if index.zero?
@@ -245,12 +245,12 @@ class ExportModelicaLoads < OpenStudio::Measure::ReportingMeasure
         dt_current = DateTime.parse(dt.to_s)
         rows << [
           DateTime.parse(dt.to_s).strftime('%m/%d/%Y %H:%M'),
-            dt.date.monthOfYear.value,
-            dt.date.dayOfMonth,
-            dt.date.dayOfWeek.value,
-            dt.time.hours,
-            dt.time.minutes,
-            dt_current.to_time.to_i - dt_base.to_time.to_i
+          dt.date.monthOfYear.value,
+          dt.date.dayOfMonth,
+          dt.date.dayOfWeek.value,
+          dt.time.hours,
+          dt.time.minutes,
+          dt_current.to_time.to_i - dt_base.to_time.to_i
         ]
       end
     end
@@ -346,7 +346,7 @@ class ExportModelicaLoads < OpenStudio::Measure::ReportingMeasure
     # Find the total runtime for energyplus and save it into a registerValue
     total_time = -999
     location_of_file = ['../eplusout.end', './run/eplusout.end']
-    first_index = location_of_file.map {|f| File.exist?(f)}.index(true)
+    first_index = location_of_file.map { |f| File.exist?(f) }.index(true)
     if first_index
       match = File.read(location_of_file[first_index]).to_s.match(/Elapsed.Time=(.*)hr(.*)min(.*)sec/)
       total_time = match[1].to_i * 3600 + match[2].to_i * 60 + match[3].to_f
