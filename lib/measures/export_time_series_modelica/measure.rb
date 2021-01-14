@@ -169,7 +169,6 @@ class ExportTimeSeriesLoadsCSV < OpenStudio::Measure::ReportingMeasure
     log "Executing query for #{variable_name}"
     #column_name = variable_name
     if key_value
-      #ts = sqlfile.timeSeries('RUN PERIOD 1', 'Hourly', variable_name, key_value)
       ts = sqlfile.timeSeries('RUN PERIOD 1', 'Zone Timestep', variable_name, key_value)
       #column_name += "_#{key_value}"
 	    column_name=str
@@ -286,7 +285,7 @@ class ExportTimeSeriesLoadsCSV < OpenStudio::Measure::ReportingMeasure
         if !value_from_osw.empty?
           runner.registerInfo("Replacing argument named #{arg} from current measure with a value of #{value_from_osw[:value]} from #{value_from_osw[:measure_name]}.")
           new_val = value_from_osw[:value]
-          # todo - make code to handle non strings more robust. check_upstream_measure_for_arg could pass bakc the argument type
+          # TODO: make code to handle non strings more robust. check_upstream_measure_for_arg could pass back the argument type
           if arg == 'hhw_loop_name'
             args[arg] = new_val.to_s
           elsif arg == 'chw_loop_name'
@@ -333,10 +332,11 @@ class ExportTimeSeriesLoadsCSV < OpenStudio::Measure::ReportingMeasure
     ]
 
     # just grab one of the variables to get the date/time stamps
-    ts = sqlFile.timeSeries('RUN PERIOD 1', 'Zone Timestep', 'Electricity:Facility')
-    #ts = sqlFile.timeSeries('RUN PERIOD 1', 'Hourly', 'Cooling:Electricity')
+    attribute_name = 'Electricity:Facility'
+    ts = sqlFile.timeSeries('RUN PERIOD 1', 'Zone Timestep', attribute_name)
     if ts.empty?
-      runner.registerError('This feature does not have the attribute "Electricity:Facility"')
+      runner.registerError("This feature does not have the attribute '#{attribute_name}' to enable this measure to work." \
+      "To resolve, simulate a building with electricity or remove this measure from your workflow.")
     else
       ts = ts.first
       dt_base = nil
