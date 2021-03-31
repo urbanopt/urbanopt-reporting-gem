@@ -1,21 +1,31 @@
 # *********************************************************************************
-# URBANopt (tm), Copyright (c) 2019-2020, Alliance for Sustainable Energy, LLC, and other
+# URBANopt™, Copyright (c) 2019-2021, Alliance for Sustainable Energy, LLC, and other
 # contributors. All rights reserved.
-#
+
 # Redistribution and use in source and binary forms, with or without modification,
 # are permitted provided that the following conditions are met:
-#
+
 # Redistributions of source code must retain the above copyright notice, this list
 # of conditions and the following disclaimer.
-#
+
 # Redistributions in binary form must reproduce the above copyright notice, this
 # list of conditions and the following disclaimer in the documentation and/or other
 # materials provided with the distribution.
-#
+
 # Neither the name of the copyright holder nor the names of its contributors may be
 # used to endorse or promote products derived from this software without specific
 # prior written permission.
-#
+
+# Redistribution of this software, without modification, must refer to the software
+# by the same designation. Redistribution of a modified version of this software
+# (i) may not refer to the modified version by the same designation, or by any
+# confusingly similar designation, and (ii) must refer to the underlying software
+# originally provided by Alliance as “URBANopt”. Except to comply with the foregoing,
+# the term “URBANopt”, or any confusingly similar designation may not be used to
+# refer to any modified version of this software or any modified version of the
+# underlying software originally provided by Alliance without the prior written
+# consent of Alliance.
+
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 # ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -135,7 +145,7 @@ module URBANopt
           result[:footprint_area_sqft] = @footprint_area_sqft if @footprint_area_sqft
           result[:maximum_roof_height_ft] = @maximum_roof_height_ft if @maximum_roof_height_ft
           result[:maximum_number_of_stories] = @maximum_number_of_stories if @maximum_number_of_stories
-          result[:maximum_number_of_stories_above_ground] = @maximum_number_of_stories_above_ground if @maximum_number_of_parking_stories_above_ground
+          result[:maximum_number_of_stories_above_ground] = @maximum_number_of_stories_above_ground if @maximum_number_of_stories_above_ground
           result[:parking_area_sqft] = @parking_area_sqft if @parking_area_sqft
           result[:number_of_parking_spaces] = @number_of_parking_spaces if @number_of_parking_spaces
           result[:number_of_parking_spaces_charging] = @number_of_parking_spaces_charging if @number_of_parking_spaces_charging
