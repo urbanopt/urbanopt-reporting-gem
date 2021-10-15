@@ -1,10 +1,14 @@
 # URBANopt Reporting Gem
 
+## Version 0.4.2
+Date Range: 07/01/21 - 10/15/21
+- Fixed [#77]( https://github.com/urbanopt/urbanopt-reporting-gem/issues/77 ), Fix test_with_openstudio model failures
+
 ## Version 0.4.1
 Date Range: 04/27/23 - 07/01/21
 
 - Fixed [#80](https://github.com/urbanopt/urbanopt-reporting-gem/issues/80), Update rubocop configs to v4
-- 
+
 ## Version 0.4.0
 
 Date Range: 03/27/21 - 04/26/21
