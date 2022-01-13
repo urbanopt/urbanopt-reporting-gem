@@ -19,7 +19,11 @@
 
 <link href="../../../css/fonts.css" rel="stylesheet">
 <link href="../../../css/rdoc.css" rel="stylesheet">
+
+
 <link href="../../../custom_rdoc_styles.css" rel="stylesheet">
+
+
 
 
 
@@ -100,8 +104,7 @@
 
   <section class="description">
     
-<p><a href="ReportingPeriod.html">ReportingPeriod</a> includes all the results
-of a specific reporting period.</p>
+<p><a href="ReportingPeriod.html"><code>ReportingPeriod</code></a> includes all the results of a specific reporting period.</p>
 
   </section>
 
@@ -135,22 +138,19 @@ of a specific reporting period.</p>
 
         <div class="method-description">
           
-          <p>Adds up <code>existing_value</code> and <code>new_values</code> if not
-nill.</p>
+          <p>Adds up <code>existing_value</code> and <code>new_values</code> if not nill.</p>
 <dl class="rdoc-list label-list"><dt>parameter:
 <dd>
-<p><code>existing_value</code> - <em>Float</em> - A value corresponding to a
-<a href="ReportingPeriod.html">ReportingPeriod</a> attribute.</p>
+<p><code>existing_value</code> - <em>Float</em> - A value corresponding to a <a href="ReportingPeriod.html"><code>ReportingPeriod</code></a> attribute.</p>
 
-<p><code>new_value</code> - <em>Float</em> - A value corresponding to a <a
-href="ReportingPeriod.html">ReportingPeriod</a> attribute.</p>
+<p><code>new_value</code> - <em>Float</em> - A value corresponding to a <a href="ReportingPeriod.html"><code>ReportingPeriod</code></a> attribute.</p>
 </dd></dl>
           
           
 
           
           <div class="method-source-code" id="add_values-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/reporting_period.rb, line 201</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/reporting_period.rb, line 224</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">add_values</span>(<span class="ruby-identifier">existing_value</span>, <span class="ruby-identifier">new_value</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">existing_value</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">new_value</span>
     <span class="ruby-identifier">existing_value</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">new_value</span>
@@ -182,22 +182,19 @@ href="ReportingPeriod.html">ReportingPeriod</a> attribute.</p>
 
         <div class="method-description">
           
-          <p>Merges an <code>existing_period</code> with a <code>new_period</code> if
-not nil.</p>
+          <p>Merges an <code>existing_period</code> with a <code>new_period</code> if not nil.</p>
 <dl class="rdoc-list label-list"><dt>Parameters:
 <dd>
-<p><code>existing_period</code> - <em>ReportingPeriod</em> - An object of <a
-href="ReportingPeriod.html">ReportingPeriod</a> class.</p>
+<p><code>existing_period</code> - <em>ReportingPeriod</em> - An object of <a href="ReportingPeriod.html"><code>ReportingPeriod</code></a> class.</p>
 
-<p><code>new_period</code> - <em>ReportingPeriod</em> - An object of <a
-href="ReportingPeriod.html">ReportingPeriod</a> class.</p>
+<p><code>new_period</code> - <em>ReportingPeriod</em> - An object of <a href="ReportingPeriod.html"><code>ReportingPeriod</code></a> class.</p>
 </dd></dl>
           
           
 
           
           <div class="method-source-code" id="merge_reporting_period-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/reporting_period.rb, line 218</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/reporting_period.rb, line 241</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">merge_reporting_period</span>(<span class="ruby-identifier">existing_period</span>, <span class="ruby-identifier">new_period</span>)
   <span class="ruby-comment"># modify the existing_period by summing up the results</span>
   <span class="ruby-identifier">existing_period</span>.<span class="ruby-identifier">total_site_energy_kwh</span> = <span class="ruby-identifier">add_values</span>(<span class="ruby-identifier">existing_period</span>.<span class="ruby-identifier">total_site_energy_kwh</span>, <span class="ruby-identifier">new_period</span>.<span class="ruby-identifier">total_site_energy_kwh</span>)
@@ -219,10 +216,8 @@ href="ReportingPeriod.html">ReportingPeriod</a> class.</p>
   <span class="ruby-identifier">new_end_uses</span> = <span class="ruby-identifier">new_period</span>.<span class="ruby-identifier">end_uses</span>
   <span class="ruby-identifier">existing_period</span>.<span class="ruby-identifier">end_uses</span>&amp;.<span class="ruby-identifier">merge_end_uses!</span>(<span class="ruby-identifier">new_end_uses</span>)
 
-  <span class="ruby-keyword">if</span> <span class="ruby-identifier">existing_period</span>.<span class="ruby-identifier">energy_production_kwh</span>
-    <span class="ruby-keyword">if</span> <span class="ruby-identifier">existing_period</span>.<span class="ruby-identifier">energy_production_kwh</span>[<span class="ruby-value">:electricity_produced_kwh</span>]
-      <span class="ruby-identifier">existing_period</span>.<span class="ruby-identifier">energy_production_kwh</span>[<span class="ruby-value">:electricity_produced_kwh</span>][<span class="ruby-value">:photovoltaic_kwh</span>] = <span class="ruby-identifier">add_values</span>(<span class="ruby-identifier">existing_period</span>.<span class="ruby-identifier">energy_production_kwh</span>[<span class="ruby-value">:electricity_produced</span>][<span class="ruby-value">:photovoltaic</span>], <span class="ruby-identifier">new_period</span>.<span class="ruby-identifier">energy_production_kwh</span>[<span class="ruby-value">:electricity_produced_kwh</span>][<span class="ruby-value">:photovoltaic_kwh</span>])
-    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">existing_period</span>.<span class="ruby-identifier">energy_production_kwh</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">existing_period</span>.<span class="ruby-identifier">energy_production_kwh</span>[<span class="ruby-value">:electricity_produced_kwh</span>]
+    <span class="ruby-identifier">existing_period</span>.<span class="ruby-identifier">energy_production_kwh</span>[<span class="ruby-value">:electricity_produced_kwh</span>][<span class="ruby-value">:photovoltaic_kwh</span>] = <span class="ruby-identifier">add_values</span>(<span class="ruby-identifier">existing_period</span>.<span class="ruby-identifier">energy_production_kwh</span>[<span class="ruby-value">:electricity_produced</span>][<span class="ruby-value">:photovoltaic</span>], <span class="ruby-identifier">new_period</span>.<span class="ruby-identifier">energy_production_kwh</span>[<span class="ruby-value">:electricity_produced_kwh</span>][<span class="ruby-value">:photovoltaic_kwh</span>])
   <span class="ruby-keyword">end</span>
 
   <span class="ruby-identifier">existing_period</span>.<span class="ruby-identifier">utility_costs_dollar</span>&amp;.<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">item</span>, <span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
@@ -267,31 +262,27 @@ href="ReportingPeriod.html">ReportingPeriod</a> class.</p>
           
           <p>Merges multiple reporting periods together.</p>
 <ul><li>
-<p>If <code>existing_periods</code> and <code>new_periods</code> ids are
-equal,</p>
+<p>If <code>existing_periods</code> and <code>new_periods</code> ids are equal,</p>
 </li></ul>
 
 <p>modify the existing_periods by merging the new periods results</p>
 <ul><li>
 <p>If existing periods are empty, initialize with new_periods.</p>
 </li><li>
-<p>Raise an error if the existing periods are not identical with new periods
-(cannot have different reporting period ids).</p>
+<p>Raise an error if the existing periods are not identical with new periods (cannot have different reporting period ids).</p>
 </li></ul>
 <dl class="rdoc-list label-list"><dt>parameters:
 <dd>
-<p><code>existing_periods</code> - <em>Array</em> - An array of <a
-href="ReportingPeriod.html">ReportingPeriod</a> objects.</p>
+<p><code>existing_periods</code> - <em>Array</em> - An array of <a href="ReportingPeriod.html"><code>ReportingPeriod</code></a> objects.</p>
 
-<p><code>new_periods</code> - <em>Array</em> - An array of <a
-href="ReportingPeriod.html">ReportingPeriod</a> objects.</p>
+<p><code>new_periods</code> - <em>Array</em> - An array of <a href="ReportingPeriod.html"><code>ReportingPeriod</code></a> objects.</p>
 </dd></dl>
           
           
 
           
           <div class="method-source-code" id="merge_reporting_periods-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/reporting_period.rb, line 276</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/reporting_period.rb, line 297</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">merge_reporting_periods</span>(<span class="ruby-identifier">existing_periods</span>, <span class="ruby-identifier">new_periods</span>)
   <span class="ruby-identifier">id_list_existing</span> = []
   <span class="ruby-identifier">id_list_new</span> = []
@@ -344,37 +335,17 @@ href="ReportingPeriod.html">ReportingPeriod</a> objects.</p>
 
         <div class="method-description">
           
-          <p><a href="ReportingPeriod.html">ReportingPeriod</a> class initializes the
-reporting period attributes: <code>:id</code> , <code>:name</code> ,
-<code>:multiplier</code> , <code>:start_date</code> ,
-<code>:end_date</code> , <code>:month</code> , <code>:day_of_month</code> ,
-<code>:year</code> , <code>:total_site_energy_kwh</code> ,
-<code>:total_source_energy_kwh</code> , <code>:net_site_energy_kwh</code> ,
-<code>:net_source_energy_kwh</code> , +:total_utility_cost_dollar ,
-<code>:net_utility_cost_dollar</code> , <code>:utility_costs_dollar</code>
-, <code>:electricity_kwh</code> , <code>:natural_gas_kwh</code> ,
-<code>:propane_kwh</code> , <code>:fuel_oil_kwh</code> ,
-<code>:other_fuels_kwh</code> , <code>:district_cooling_kwh</code> ,
-<code>:district_heating_kwh</code> , <code>:water_qbft</code> ,
-<code>:electricity_produced_kwh</code> , <code>:end_uses</code> ,
-<code>:energy_production_kwh</code> , <code>:photovoltaic_kwh</code> ,
-<code>:fuel_type</code> , <code>:total_cost_dollar</code> ,
-<code>:usage_cost_dollar</code> , <code>:demand_cost_dollar</code> ,
-<code>:comfort_result</code> ,
-<code>:time_setpoint_not_met_during_occupied_cooling</code> ,
-<code>:time_setpoint_not_met_during_occupied_heating</code> ,
-<code>:time_setpoint_not_met_during_occupied_hours</code></p>
+          <p><a href="ReportingPeriod.html"><code>ReportingPeriod</code></a> class initializes the reporting period attributes: <code>:id</code> , <code>:name</code> , <code>:multiplier</code> , <code>:start_date</code> , <code>:end_date</code> , <code>:month</code> , <code>:day_of_month</code> , <code>:year</code> , <code>:total_site_energy_kwh</code> , <code>:total_source_energy_kwh</code> , <code>:site_EUI_kwh_per_m2</code>, <code>:site_EUI_kbtu_per_ft2</code>, <code>:source_EUI_kwh_per_m2</code>, <code>:source_EUI_kbtu_per_ft2</code>, <code>:net_site_energy_kwh</code> , <code>:net_source_energy_kwh</code> , +:total_utility_cost_dollar , <code>:net_utility_cost_dollar</code> , <code>:utility_costs_dollar</code> , <code>:electricity_kwh</code> , <code>:natural_gas_kwh</code> , <code>:propane_kwh</code> , <code>:fuel_oil_kwh</code> , <code>:other_fuels_kwh</code> , <code>:district_cooling_kwh</code> , <code>:district_heating_kwh</code> , <code>:water_qbft</code> , <code>:electricity_produced_kwh</code> , <code>:end_uses</code> , <code>:energy_production_kwh</code> , <code>:photovoltaic_kwh</code> , <code>:fuel_type</code> , <code>:total_cost_dollar</code> , <code>:usage_cost_dollar</code> , <code>:demand_cost_dollar</code> , <code>:comfort_result</code> , <code>:time_setpoint_not_met_during_occupied_cooling</code> , <code>:time_setpoint_not_met_during_occupied_heating</code> , <code>:time_setpoint_not_met_during_occupied_hours</code></p>
 <dl class="rdoc-list label-list"><dt>parameters:
 <dd>
-<p><code>hash</code> - <em>Hash</em> - A hash which may contain a deserialized
-reporting_period.</p>
+<p><code>hash</code> - <em>Hash</em> - A hash which may contain a deserialized reporting_period.</p>
 </dd></dl>
           
           
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/reporting_period.rb, line 61</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/reporting_period.rb, line 72</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">hash</span> = {})
   <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">delete_if</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">nil?</span> }
   <span class="ruby-identifier">hash</span> = <span class="ruby-identifier">defaults</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">hash</span>)
@@ -387,6 +358,10 @@ reporting_period.</p>
 
   <span class="ruby-ivar">@total_site_energy_kwh</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:total_site_energy_kwh</span>]
   <span class="ruby-ivar">@total_source_energy_kwh</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:total_source_energy_kwh</span>]
+  <span class="ruby-ivar">@site_EUI_kwh_per_m2</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:site_EUI_kwh_per_m2</span>]
+  <span class="ruby-ivar">@site_EUI_kbtu_per_ft2</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:site_EUI_kbtu_per_ft2</span>]
+  <span class="ruby-ivar">@source_EUI_kwh_per_m2</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:source_EUI_kwh_per_m2</span>]
+  <span class="ruby-ivar">@source_EUI_kbtu_per_ft2</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:source_EUI_kbtu_per_ft2</span>]
   <span class="ruby-ivar">@net_site_energy_kwh</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:net_site_energy_kwh</span>]
   <span class="ruby-ivar">@net_source_energy_kwh</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:net_source_energy_kwh</span>]
   <span class="ruby-ivar">@net_utility_cost_dollar</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:net_utility_cost_dollar</span>]
@@ -449,7 +424,7 @@ reporting_period.</p>
 
           
           <div class="method-source-code" id="defaults-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/reporting_period.rb, line 102</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/reporting_period.rb, line 117</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">defaults</span>
   <span class="ruby-identifier">hash</span> = {}
 
@@ -461,6 +436,10 @@ reporting_period.</p>
 
   <span class="ruby-identifier">hash</span>[<span class="ruby-value">:total_site_energy_kwh</span>] = <span class="ruby-keyword">nil</span>
   <span class="ruby-identifier">hash</span>[<span class="ruby-value">:total_source_energy_kwh</span>] = <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">hash</span>[<span class="ruby-value">:site_EUI_kwh_per_m2</span>] = <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">hash</span>[<span class="ruby-value">:site_EUI_kbtu_per_ft2</span>] = <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">hash</span>[<span class="ruby-value">:source_EUI_kwh_per_m2</span>] = <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">hash</span>[<span class="ruby-value">:source_EUI_kbtu_per_ft2</span>] = <span class="ruby-keyword">nil</span>
   <span class="ruby-identifier">hash</span>[<span class="ruby-value">:net_site_energy_kwh</span>] = <span class="ruby-keyword">nil</span>
   <span class="ruby-identifier">hash</span>[<span class="ruby-value">:net_source_energy_kwh</span>] = <span class="ruby-keyword">nil</span>
   <span class="ruby-identifier">hash</span>[<span class="ruby-value">:net_utility_cost_dollar</span>] = <span class="ruby-keyword">nil</span>
@@ -516,7 +495,7 @@ reporting_period.</p>
 
           
           <div class="method-source-code" id="to_hash-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/reporting_period.rb, line 141</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/reporting_period.rb, line 160</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_hash</span>
   <span class="ruby-identifier">result</span> = {}
 
@@ -527,6 +506,10 @@ reporting_period.</p>
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:end_date</span>] = <span class="ruby-ivar">@end_date</span>.<span class="ruby-identifier">to_hash</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@end_date</span>
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:total_site_energy_kwh</span>] = <span class="ruby-ivar">@total_site_energy_kwh</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@total_site_energy_kwh</span>
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:total_source_energy_kwh</span>] = <span class="ruby-ivar">@total_source_energy_kwh</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@total_source_energy_kwh</span>
+  <span class="ruby-identifier">result</span>[<span class="ruby-value">:site_EUI_kwh_per_m2</span>] = <span class="ruby-ivar">@site_EUI_kwh_per_m2</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@site_EUI_kwh_per_m2</span>
+  <span class="ruby-identifier">result</span>[<span class="ruby-value">:site_EUI_kbtu_per_ft2</span>] = <span class="ruby-ivar">@site_EUI_kbtu_per_ft2</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@site_EUI_kbtu_per_ft2</span>
+  <span class="ruby-identifier">result</span>[<span class="ruby-value">:source_EUI_kwh_per_m2</span>] = <span class="ruby-ivar">@source_EUI_kwh_per_m2</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@source_EUI_kwh_per_m2</span>
+  <span class="ruby-identifier">result</span>[<span class="ruby-value">:source_EUI_kbtu_per_ft2</span>] = <span class="ruby-ivar">@source_EUI_kbtu_per_ft2</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@source_EUI_kbtu_per_ft2</span>
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:net_site_energy_kwh</span>] = <span class="ruby-ivar">@net_site_energy_kwh</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@net_site_energy_kwh</span>
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:net_source_energy_kwh</span>] = <span class="ruby-ivar">@net_source_energy_kwh</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@net_source_energy_kwh</span>
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:net_utility_cost_dollar</span>] = <span class="ruby-ivar">@net_utility_cost_dollar</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@net_utility_cost_dollar</span>
@@ -581,12 +564,13 @@ reporting_period.</p>
     </section>
   
   </section>
+
 </main>
 
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="https://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.0.1.1.
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

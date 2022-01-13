@@ -19,7 +19,11 @@
 
 <link href="../../../css/fonts.css" rel="stylesheet">
 <link href="../../../css/rdoc.css" rel="stylesheet">
+
+
 <link href="../../../custom_rdoc_styles.css" rel="stylesheet">
+
+
 
 
 
@@ -98,8 +102,7 @@
 
   <section class="description">
     
-<p><a href="ConstructionCost.html">ConstructionCost</a> include construction
-cost information.</p>
+<p><a href="ConstructionCost.html"><code>ConstructionCost</code></a> include construction cost information.</p>
 
   </section>
 
@@ -135,26 +138,22 @@ cost information.</p>
           
           <p>Merges an <code>existing_cost</code> with a <code>new_cost</code>:</p>
 <ul><li>
-<p>modify the existing_cost by summing the <code>:total_cost</code> and
-<code>:item_quantity</code> of new_cost and existing_cost.</p>
+<p>modify the existing_cost by summing the <code>:total_cost</code> and <code>:item_quantity</code> of new_cost and existing_cost.</p>
 </li><li>
-<p>raise an error if <code>:category</code> , <code>:cost_units</code> and
-<code>:unit_cost</code> are not identical</p>
+<p>raise an error if <code>:category</code> , <code>:cost_units</code> and <code>:unit_cost</code> are not identical</p>
 </li></ul>
 <dl class="rdoc-list label-list"><dt>Parameters:
 <dd>
-<p><code>existing_cost</code> - <em>ConstructionCost</em> - An object of <a
-href="ConstructionCost.html">ConstructionCost</a> class.</p>
+<p><code>existing_cost</code> - <em>ConstructionCost</em> - An object of <a href="ConstructionCost.html"><code>ConstructionCost</code></a> class.</p>
 
-<p><code>new_cost</code> - <em>ConstructionCost</em> - An object of <a
-href="ConstructionCost.html">ConstructionCost</a> class.</p>
+<p><code>new_cost</code> - <em>ConstructionCost</em> - An object of <a href="ConstructionCost.html"><code>ConstructionCost</code></a> class.</p>
 </dd></dl>
           
           
 
           
           <div class="method-source-code" id="merge_construction_cost-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/construction_cost.rb, line 114</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/construction_cost.rb, line 125</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">merge_construction_cost</span>(<span class="ruby-identifier">existing_cost</span>, <span class="ruby-identifier">new_cost</span>)
   <span class="ruby-comment"># modify the existing_cost by adding the :total_cost and :item_quantity</span>
   <span class="ruby-identifier">existing_cost</span>.<span class="ruby-identifier">total_cost</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">new_cost</span>.<span class="ruby-identifier">total_cost</span>
@@ -199,27 +198,22 @@ href="ConstructionCost.html">ConstructionCost</a> class.</p>
           
           <p>Merges muliple construction costs together.</p>
 <ul><li>
-<p>loops over the new_costs and find the index of the cost with identical
-<code>:item_name</code>.</p>
+<p>loops over the new_costs and find the index of the cost with identical <code>:item_name</code>.</p>
 </li><li>
-<p>if <code>item_name</code> is identical then modify the existing_cost array
-by summing the :total_cost and :item_quantity. Else add the new_cost to
-existing_costs array.</p>
+<p>if <code>item_name</code> is identical then modify the existing_cost array by summing the :total_cost and :item_quantity. Else add the new_cost to existing_costs array.</p>
 </li></ul>
 <dl class="rdoc-list label-list"><dt>Parameters:
 <dd>
-<p><code>existing_costs</code> - <em>Array</em> - An array of <a
-href="ConstructionCost.html">ConstructionCost</a> objects.</p>
+<p><code>existing_costs</code> - <em>Array</em> - An array of <a href="ConstructionCost.html"><code>ConstructionCost</code></a> objects.</p>
 
-<p><code>new_costs</code> - <em>Array</em> - An array of <a
-href="ConstructionCost.html">ConstructionCost</a> objects.</p>
+<p><code>new_costs</code> - <em>Array</em> - An array of <a href="ConstructionCost.html"><code>ConstructionCost</code></a> objects.</p>
 </dd></dl>
           
           
 
           
           <div class="method-source-code" id="merge_construction_costs-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/construction_cost.rb, line 143</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/construction_cost.rb, line 154</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">merge_construction_costs</span>(<span class="ruby-identifier">existing_costs</span>, <span class="ruby-identifier">new_costs</span>)
   <span class="ruby-identifier">item_name_list</span> = []
   <span class="ruby-identifier">item_name_list</span> = <span class="ruby-identifier">existing_costs</span>.<span class="ruby-identifier">collect</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:item_name</span>)
@@ -266,22 +260,17 @@ href="ConstructionCost.html">ConstructionCost</a> objects.</p>
 
         <div class="method-description">
           
-          <p><a href="ConstructionCost.html">ConstructionCost</a> class intialize all
-construction_cost attributes: <code>:category</code> ,
-<code>:item_name</code> , <code>:unit_cost</code> ,
-<code>:cost_units</code> , <code>:item_quantity</code> ,
-<code>:total_cost</code></p>
+          <p><a href="ConstructionCost.html"><code>ConstructionCost</code></a> class intialize all construction_cost attributes: <code>:category</code> , <code>:item_name</code> , <code>:unit_cost</code> , <code>:cost_units</code> , <code>:item_quantity</code> , <code>:total_cost</code></p>
 <dl class="rdoc-list label-list"><dt>parameters:
 <dd>
-<p><code>hash</code> - <em>Hash</em> - A hash which may contain a deserialized
-construction_cost.</p>
+<p><code>hash</code> - <em>Hash</em> - A hash which may contain a deserialized construction_cost.</p>
 </dd></dl>
           
           
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/construction_cost.rb, line 50</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/construction_cost.rb, line 61</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">hash</span> = {})
   <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">delete_if</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">nil?</span> }
   <span class="ruby-identifier">hash</span> = <span class="ruby-identifier">defaults</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">hash</span>)
@@ -334,7 +323,7 @@ construction_cost.</p>
 
           
           <div class="method-source-code" id="defaults-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/construction_cost.rb, line 69</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/construction_cost.rb, line 80</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">defaults</span>
   <span class="ruby-identifier">hash</span> = {}
   <span class="ruby-identifier">hash</span>[<span class="ruby-value">:category</span>] = <span class="ruby-keyword">nil</span>
@@ -380,7 +369,7 @@ construction_cost.</p>
 
           
           <div class="method-source-code" id="to_hash-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/construction_cost.rb, line 87</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/construction_cost.rb, line 98</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_hash</span>
   <span class="ruby-identifier">result</span> = {}
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:category</span>] = <span class="ruby-ivar">@category</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@category</span>
@@ -410,12 +399,13 @@ construction_cost.</p>
     </section>
   
   </section>
+
 </main>
 
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="https://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.0.1.1.
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

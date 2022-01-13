@@ -19,7 +19,11 @@
 
 <link href="../../../css/fonts.css" rel="stylesheet">
 <link href="../../../css/rdoc.css" rel="stylesheet">
+
+
 <link href="../../../custom_rdoc_styles.css" rel="stylesheet">
+
+
 
 
 
@@ -108,8 +112,7 @@
 
   <section class="description">
     
-<p><a href="TimeseriesCSV.html">TimeseriesCSV</a> include timesries reults
-reported in a CSV file.</p>
+<p><a href="TimeseriesCSV.html"><code>TimeseriesCSV</code></a> include timesries reults reported in a CSV file.</p>
 
   </section>
 
@@ -143,18 +146,15 @@ reported in a CSV file.</p>
 
         <div class="method-description">
           
-          <p><a href="TimeseriesCSV.html">TimeseriesCSV</a> class initializes timeseries
-csv attributes: <code>:path</code> , <code>:first_report_datetime</code> ,
-<code>:column_names</code></p>
+          <p><a href="TimeseriesCSV.html"><code>TimeseriesCSV</code></a> class initializes timeseries csv attributes: <code>:path</code> , <code>:first_report_datetime</code> , <code>:column_names</code></p>
 
-<p><code>hash</code> - <em>Hash</em> - A hash which may contain a deserialized
-timeseries_csv.</p>
+<p><code>hash</code> - <em>Hash</em> - A hash which may contain a deserialized timeseries_csv.</p>
           
           
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/timeseries_csv.rb, line 52</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/timeseries_csv.rb, line 62</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">hash</span> = {})
   <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">delete_if</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">nil?</span> }
   <span class="ruby-identifier">hash</span> = <span class="ruby-identifier">defaults</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">hash</span>)
@@ -214,8 +214,7 @@ timeseries_csv.</p>
           
           <p>Merges timeseries csv to each other.</p>
 <ul><li>
-<p>initialize first_report_datetime with the incoming first_report_datetime if
-its nil.</p>
+<p>initialize first_report_datetime with the incoming first_report_datetime if its nil.</p>
 </li><li>
 <p>checks if first_report_datetime are identical.</p>
 </li><li>
@@ -225,15 +224,14 @@ its nil.</p>
 </li></ul>
 <dl class="rdoc-list label-list"><dt>parameters:
 <dd>
-<p><code>other</code> - <em>TimeseriesCSV</em> - An object of <a
-href="TimeseriesCSV.html">TimeseriesCSV</a> class.</p>
+<p><code>other</code> - <em>TimeseriesCSV</em> - An object of <a href="TimeseriesCSV.html"><code>TimeseriesCSV</code></a> class.</p>
 </dd></dl>
           
           
 
           
           <div class="method-source-code" id="add_timeseries_csv-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/timeseries_csv.rb, line 244</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/timeseries_csv.rb, line 254</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">add_timeseries_csv</span>(<span class="ruby-identifier">other</span>)
   <span class="ruby-comment"># initialize first_report_datetime with the incoming first_report_datetime if its nil.</span>
   <span class="ruby-keyword">if</span> <span class="ruby-ivar">@first_report_datetime</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@first_report_datetime</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39;&#39;</span>
@@ -274,6 +272,7 @@ href="TimeseriesCSV.html">TimeseriesCSV</a> class.</p>
         <span class="ruby-keyword">if</span> <span class="ruby-identifier">current_values</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">new_values</span>.<span class="ruby-identifier">size</span>
           <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Values of different sizes in add_timeseries_csv&#39;</span>
         <span class="ruby-keyword">end</span>
+
         <span class="ruby-identifier">new_values</span>.<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">value</span>, <span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
           <span class="ruby-comment"># aggregate all columns except Datime column</span>
           <span class="ruby-keyword">if</span> <span class="ruby-identifier">column_name</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&#39;Datetime&#39;</span>
@@ -316,7 +315,7 @@ href="TimeseriesCSV.html">TimeseriesCSV</a> class.</p>
 
           
           <div class="method-source-code" id="defaults-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/timeseries_csv.rb, line 100</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/timeseries_csv.rb, line 110</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">defaults</span>
   <span class="ruby-identifier">hash</span> = {}
   <span class="ruby-identifier">hash</span>[<span class="ruby-value">:path</span>] = <span class="ruby-keyword">nil</span>
@@ -349,18 +348,17 @@ href="TimeseriesCSV.html">TimeseriesCSV</a> class.</p>
           <p>Gets data for each column name in the CSV file.</p>
 <dl class="rdoc-list label-list"><dt>parameters:
 <dd>
-<p><code>column_name</code> - <em>String</em> - The header of each column in
-the CSV file.</p>
+<p><code>column_name</code> - <em>String</em> - The header of each column in the CSV file.</p>
 </dd></dl>
           
           
 
           
           <div class="method-source-code" id="get_data-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/timeseries_csv.rb, line 198</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/timeseries_csv.rb, line 208</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">get_data</span>(<span class="ruby-identifier">column_name</span>)
   <span class="ruby-identifier">load_data</span>
-  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@data</span>[<span class="ruby-identifier">column_name</span>]
+  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@data</span>[<span class="ruby-identifier">column_name</span>].<span class="ruby-identifier">clone</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -391,7 +389,7 @@ the CSV file.</p>
 
           
           <div class="method-source-code" id="load_data-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/timeseries_csv.rb, line 171</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/timeseries_csv.rb, line 181</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">load_data</span>
   <span class="ruby-ivar">@mutex</span>.<span class="ruby-identifier">synchronize</span> <span class="ruby-keyword">do</span>
     <span class="ruby-keyword">if</span> <span class="ruby-ivar">@data</span>.<span class="ruby-identifier">nil?</span>
@@ -441,7 +439,7 @@ the CSV file.</p>
 
           
           <div class="method-source-code" id="load_scenario_csv_schema_headers-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/timeseries_csv.rb, line 82</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/timeseries_csv.rb, line 92</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">load_scenario_csv_schema_headers</span>
   <span class="ruby-comment"># rubocop: disable Security/Open</span>
   <span class="ruby-identifier">scenario_csv_schema</span> = <span class="ruby-identifier">open</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-string">&#39;../default_reports/schema/scenario_csv_columns.txt&#39;</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-keyword">__FILE__</span>)))
@@ -485,7 +483,7 @@ the CSV file.</p>
 
           
           <div class="method-source-code" id="reload_data-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/timeseries_csv.rb, line 145</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/timeseries_csv.rb, line 155</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">reload_data</span>(<span class="ruby-identifier">new_data</span>)
   <span class="ruby-ivar">@mutex</span>.<span class="ruby-identifier">synchronize</span> <span class="ruby-keyword">do</span>
     <span class="ruby-ivar">@data</span> = {}
@@ -534,15 +532,14 @@ the CSV file.</p>
           <p>Gets run directory.</p>
 <dl class="rdoc-list label-list"><dt>parameters:
 <dd>
-<p><code>name</code> - <em>String</em> - The name of the scenario
-(<code>directory_name</code>).</p>
+<p><code>name</code> - <em>String</em> - The name of the scenario (<code>directory_name</code>).</p>
 </dd></dl>
           
           
 
           
           <div class="method-source-code" id="run_dir_name-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/timeseries_csv.rb, line 113</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/timeseries_csv.rb, line 123</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run_dir_name</span>(<span class="ruby-identifier">name</span>)
   <span class="ruby-ivar">@run_dir</span> = <span class="ruby-identifier">name</span>
 <span class="ruby-keyword">end</span></pre>
@@ -572,15 +569,14 @@ the CSV file.</p>
           <p>Saves data to the the scenario report CSV file.</p>
 <dl class="rdoc-list label-list"><dt>parameters:
 <dd>
-<p><code>path</code> - <em>String</em> - The path of the scenario report CSV
-(default_scenario_report.csv).</p>
+<p><code>path</code> - <em>String</em> - The path of the scenario report CSV (default_scenario_report.csv).</p>
 </dd></dl>
           
           
 
           
           <div class="method-source-code" id="save_data-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/timeseries_csv.rb, line 209</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/timeseries_csv.rb, line 219</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">save_data</span>(<span class="ruby-identifier">path</span> = <span class="ruby-keyword">nil</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">path</span>.<span class="ruby-identifier">nil?</span>
     <span class="ruby-identifier">path</span> = <span class="ruby-ivar">@path</span>
@@ -638,7 +634,7 @@ the CSV file.</p>
 
           
           <div class="method-source-code" id="to_hash-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/timeseries_csv.rb, line 123</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/timeseries_csv.rb, line 133</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_hash</span>
   <span class="ruby-identifier">result</span> = {}
   <span class="ruby-identifier">directory_path</span> = <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-ivar">@run_dir</span>.<span class="ruby-identifier">to_s</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-keyword">__FILE__</span>)) <span class="ruby-keyword">if</span> <span class="ruby-ivar">@run_dir</span>
@@ -670,12 +666,13 @@ the CSV file.</p>
     </section>
   
   </section>
+
 </main>
 
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="https://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.0.1.1.
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

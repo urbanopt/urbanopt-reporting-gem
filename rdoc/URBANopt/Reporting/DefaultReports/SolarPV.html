@@ -19,7 +19,11 @@
 
 <link href="../../../css/fonts.css" rel="stylesheet">
 <link href="../../../css/rdoc.css" rel="stylesheet">
+
+
 <link href="../../../custom_rdoc_styles.css" rel="stylesheet">
+
+
 
 
 
@@ -113,6 +117,19 @@
       </header>
 
       
+      <div id="attribute-i-location" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">location</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
       <div id="attribute-i-size_kw" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">size_kw</span><span
@@ -155,7 +172,7 @@
 
           
           <div class="method-source-code" id="add_pv-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/solar_pv.rb, line 81</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/solar_pv.rb, line 94</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">add_pv</span>(<span class="ruby-identifier">existing_pv</span>, <span class="ruby-identifier">new_pv</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">existing_pv</span>.<span class="ruby-identifier">size_kw</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">new_pv</span>.<span class="ruby-identifier">size_kw</span>.<span class="ruby-identifier">nil?</span>
     <span class="ruby-identifier">existing_pv</span>.<span class="ruby-identifier">size_kw</span> = <span class="ruby-keyword">nil</span>
@@ -188,26 +205,24 @@
 
         <div class="method-description">
           
-          <p>Initialize <a href="SolarPV.html">SolarPV</a> attributes from a hash. Solar
-PV attributes currently are limited to power capacity.</p>
+          <p>Initialize <a href="SolarPV.html"><code>SolarPV</code></a> attributes from a hash. Solar PV attributes currently are limited to power capacity.</p>
 <dl class="rdoc-list label-list"><dt>parameters:
 <dd></dd></dl>
 <ul><li>
-<p><code>hash</code> - <em>Hash</em> - A hash containting a
-<code>:size_kw</code> key/value pair which represents the nameplate
-capacity in kilowatts (kW)</p>
+<p><code>hash</code> - <em>Hash</em> - A hash containting a <code>:size_kw</code> key/value pair which represents the nameplate capacity in kilowatts (kW)</p>
 </li></ul>
           
           
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/solar_pv.rb, line 53</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/solar_pv.rb, line 64</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">hash</span> = {})
   <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">delete_if</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">nil?</span> }
 
   <span class="ruby-ivar">@size_kw</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:size_kw</span>]
   <span class="ruby-ivar">@id</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:id</span>]
+  <span class="ruby-ivar">@location</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:location</span>]
 
   <span class="ruby-comment"># initialize class variables @@validator and @@schema</span>
   <span class="ruby-identifier">@@validator</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Validator</span>.<span class="ruby-identifier">new</span>
@@ -253,11 +268,12 @@ capacity in kilowatts (kW)</p>
 
           
           <div class="method-source-code" id="to_hash-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/solar_pv.rb, line 70</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/solar_pv.rb, line 82</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_hash</span>
   <span class="ruby-identifier">result</span> = {}
 
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:size_kw</span>] = <span class="ruby-ivar">@size_kw</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@size_kw</span>
+  <span class="ruby-identifier">result</span>[<span class="ruby-value">:location</span>] = <span class="ruby-ivar">@location</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@location</span>
 
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">result</span>
 <span class="ruby-keyword">end</span></pre>
@@ -274,12 +290,13 @@ capacity in kilowatts (kW)</p>
     </section>
   
   </section>
+
 </main>
 
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="https://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.0.1.1.
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

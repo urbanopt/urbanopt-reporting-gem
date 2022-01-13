@@ -19,7 +19,11 @@
 
 <link href="../../../css/fonts.css" rel="stylesheet">
 <link href="../../../css/rdoc.css" rel="stylesheet">
+
+
 <link href="../../../custom_rdoc_styles.css" rel="stylesheet">
+
+
 
 
 
@@ -100,8 +104,7 @@
 
   <section class="description">
     
-<p><a href="Program.html">Program</a> includes all building program related
-information.</p>
+<p><a href="Program.html"><code>Program</code></a> includes all building program related information.</p>
 
   </section>
 
@@ -135,39 +138,17 @@ information.</p>
 
         <div class="method-description">
           
-          <p><a href="Program.html">Program</a> class initialize building program
-attributes: <code>:site_area_sqft</code> , <code>:floor_area_sqft</code> ,
-<code>:conditioned_area_sqft</code> , <code>:unconditioned_area_sqft</code>
-, <code>:footprint_area_sqft</code> , +:maximum_roof_height_ft,
-<code>:maximum_number_of_stories</code> ,
-<code>:maximum_number_of_stories_above_ground</code> ,
-<code>:parking_area_sqft</code> , <code>:number_of_parking_spaces</code> ,
-<code>:number_of_parking_spaces_charging</code> ,
-<code>:parking_footprint_area_sqft</code> ,
-<code>:maximum_parking_height_ft</code> ,
-<code>:maximum_number_of_parking_stories</code> ,
-<code>:maximum_number_of_parking_stories_above_ground</code> ,
-<code>:number_of_residential_units</code> , <code>:building_types</code> ,
-<code>:building_type</code> , <code>:maximum_occupancy</code> ,
-<code>:area_sqft</code> , <code>:window_area_sqft</code> ,
-<code>:north_window_area_sqft</code> , <code>:south_window_area_sqft</code>
-, <code>:east_window_area_sqft</code> , <code>:west_window_area_sqft</code>
-, <code>:wall_area_sqft</code> , <code>:roof_area_sqft</code> ,
-<code>:equipment_roof_area_sqft</code> ,
-<code>:photovoltaic_roof_area_sqft</code> ,
-<code>:available_roof_area_sqft</code> , <code>:total_roof_area_sqft</code>
-, <code>:orientation_deg</code> , <code>:aspect_ratio</code></p>
+          <p><a href="Program.html"><code>Program</code></a> class initialize building program attributes: <code>:site_area_sqft</code> , <code>:floor_area_sqft</code> , <code>:conditioned_area_sqft</code> , <code>:unconditioned_area_sqft</code> , <code>:footprint_area_sqft</code> , +:maximum_roof_height_ft, <code>:maximum_number_of_stories</code> , <code>:maximum_number_of_stories_above_ground</code> , <code>:parking_area_sqft</code> , <code>:number_of_parking_spaces</code> , <code>:number_of_parking_spaces_charging</code> , <code>:parking_footprint_area_sqft</code> , <code>:maximum_parking_height_ft</code> , <code>:maximum_number_of_parking_stories</code> , <code>:maximum_number_of_parking_stories_above_ground</code> , <code>:number_of_residential_units</code> , <code>:building_types</code> , <code>:building_type</code> , <code>:maximum_occupancy</code> , <code>:area_sqft</code> , <code>:window_area_sqft</code> , <code>:north_window_area_sqft</code> , <code>:south_window_area_sqft</code> , <code>:east_window_area_sqft</code> , <code>:west_window_area_sqft</code> , <code>:wall_area_sqft</code> , <code>:roof_area_sqft</code> , <code>:equipment_roof_area_sqft</code> , <code>:photovoltaic_roof_area_sqft</code> , <code>:available_roof_area_sqft</code> , <code>:total_roof_area_sqft</code> , <code>:orientation_deg</code> , <code>:aspect_ratio</code></p>
 <dl class="rdoc-list label-list"><dt>parameters:
 <dd>
-<p><code>hash</code> - <em>Hash</em> - A hash which may contain a deserialized
-program.</p>
+<p><code>hash</code> - <em>Hash</em> - A hash which may contain a deserialized program.</p>
 </dd></dl>
           
           
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/program.rb, line 59</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/program.rb, line 70</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">hash</span> = {})
   <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">delete_if</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">nil?</span> }
   <span class="ruby-identifier">hash</span> = <span class="ruby-identifier">defaults</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">hash</span>)
@@ -231,19 +212,17 @@ program.</p>
 
         <div class="method-description">
           
-          <p>Merges program objects to each other by summing up values or taking the
-maximum value of the attributes.</p>
+          <p>Merges program objects to each other by summing up values or taking the maximum value of the attributes.</p>
 <dl class="rdoc-list label-list"><dt>parameters:
 <dd>
-<p><code>other</code> - <em>Program</em> - An object of <a
-href="Program.html">Program</a> class.</p>
+<p><code>other</code> - <em>Program</em> - An object of <a href="Program.html"><code>Program</code></a> class.</p>
 </dd></dl>
           
           
 
           
           <div class="method-source-code" id="add_program-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/program.rb, line 223</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/program.rb, line 234</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">add_program</span>(<span class="ruby-identifier">other</span>)
   <span class="ruby-ivar">@site_area_sqft</span> = <span class="ruby-identifier">add_values</span>(<span class="ruby-ivar">@site_area_sqft</span>, <span class="ruby-identifier">other</span>.<span class="ruby-identifier">site_area_sqft</span>)
 
@@ -306,22 +285,19 @@ href="Program.html">Program</a> class.</p>
 
         <div class="method-description">
           
-          <p>Adds up <code>existing_value</code> and <code>new_values</code> if not
-nill.</p>
+          <p>Adds up <code>existing_value</code> and <code>new_values</code> if not nill.</p>
 <dl class="rdoc-list label-list"><dt>parameters:
 <dd>
-<p><code>existing_value</code> - <em>Float</em> - A value corresponding to a
-<a href="Program.html">Program</a> attribute.</p>
+<p><code>existing_value</code> - <em>Float</em> - A value corresponding to a <a href="Program.html"><code>Program</code></a> attribute.</p>
 
-<p><code>new_value</code> - <em>Float</em> - A value corresponding to a <a
-href="Program.html">Program</a> attribute.</p>
+<p><code>new_value</code> - <em>Float</em> - A value corresponding to a <a href="Program.html"><code>Program</code></a> attribute.</p>
 </dd></dl>
           
           
 
           
           <div class="method-source-code" id="add_values-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/program.rb, line 208</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/program.rb, line 219</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">add_values</span>(<span class="ruby-identifier">existing_value</span>, <span class="ruby-identifier">new_value</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">existing_value</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">new_value</span>
     <span class="ruby-identifier">existing_value</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">new_value</span>
@@ -359,7 +335,7 @@ href="Program.html">Program</a> attribute.</p>
 
           
           <div class="method-source-code" id="defaults-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/program.rb, line 95</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/program.rb, line 106</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">defaults</span>
   <span class="ruby-identifier">hash</span> = {}
   <span class="ruby-identifier">hash</span>[<span class="ruby-value">:site_area_sqft</span>] = <span class="ruby-keyword">nil</span>
@@ -410,22 +386,19 @@ href="Program.html">Program</a> attribute.</p>
 
         <div class="method-description">
           
-          <p>Return the maximum value from <code>existing_value</code> and
-<code>new_value</code>.</p>
+          <p>Return the maximum value from <code>existing_value</code> and <code>new_value</code>.</p>
 <dl class="rdoc-list label-list"><dt>parameters:
 <dd>
-<p><code>existing_value</code> - <em>Float</em> - A value corresponding to a
-<a href="Program.html">Program</a> attribute.</p>
+<p><code>existing_value</code> - <em>Float</em> - A value corresponding to a <a href="Program.html"><code>Program</code></a> attribute.</p>
 
-<p><code>new_value</code> - <em>Float</em> - A value corresponding to a <a
-href="Program.html">Program</a> attribute.</p>
+<p><code>new_value</code> - <em>Float</em> - A value corresponding to a <a href="Program.html"><code>Program</code></a> attribute.</p>
 </dd></dl>
           
           
 
           
           <div class="method-source-code" id="max_value-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/program.rb, line 191</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/program.rb, line 202</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">max_value</span>(<span class="ruby-identifier">existing_value</span>, <span class="ruby-identifier">new_value</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">existing_value</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">new_value</span>
     [<span class="ruby-identifier">existing_value</span>, <span class="ruby-identifier">new_value</span>].<span class="ruby-identifier">max</span>
@@ -468,7 +441,7 @@ href="Program.html">Program</a> attribute.</p>
 
           
           <div class="method-source-code" id="to_hash-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/program.rb, line 129</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/program.rb, line 140</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_hash</span>
   <span class="ruby-identifier">result</span> = {}
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:site_area_sqft</span>] = <span class="ruby-ivar">@site_area_sqft</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@site_area_sqft</span>
@@ -478,7 +451,7 @@ href="Program.html">Program</a> attribute.</p>
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:footprint_area_sqft</span>] = <span class="ruby-ivar">@footprint_area_sqft</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@footprint_area_sqft</span>
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:maximum_roof_height_ft</span>] = <span class="ruby-ivar">@maximum_roof_height_ft</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@maximum_roof_height_ft</span>
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:maximum_number_of_stories</span>] = <span class="ruby-ivar">@maximum_number_of_stories</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@maximum_number_of_stories</span>
-  <span class="ruby-identifier">result</span>[<span class="ruby-value">:maximum_number_of_stories_above_ground</span>] = <span class="ruby-ivar">@maximum_number_of_stories_above_ground</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@maximum_number_of_parking_stories_above_ground</span>
+  <span class="ruby-identifier">result</span>[<span class="ruby-value">:maximum_number_of_stories_above_ground</span>] = <span class="ruby-ivar">@maximum_number_of_stories_above_ground</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@maximum_number_of_stories_above_ground</span>
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:parking_area_sqft</span>] = <span class="ruby-ivar">@parking_area_sqft</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@parking_area_sqft</span>
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:number_of_parking_spaces</span>] = <span class="ruby-ivar">@number_of_parking_spaces</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@number_of_parking_spaces</span>
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:number_of_parking_spaces_charging</span>] = <span class="ruby-ivar">@number_of_parking_spaces_charging</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@number_of_parking_spaces_charging</span>
@@ -535,12 +508,13 @@ href="Program.html">Program</a> attribute.</p>
     </section>
   
   </section>
+
 </main>
 
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="https://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.0.1.1.
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

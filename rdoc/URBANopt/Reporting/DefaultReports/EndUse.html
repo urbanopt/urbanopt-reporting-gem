@@ -19,7 +19,11 @@
 
 <link href="../../../css/fonts.css" rel="stylesheet">
 <link href="../../../css/rdoc.css" rel="stylesheet">
+
+
 <link href="../../../custom_rdoc_styles.css" rel="stylesheet">
+
+
 
 
 
@@ -77,6 +81,8 @@
     
     <li ><a href="#method-c-new">::new</a>
     
+    <li ><a href="#method-i-add_values">#add_values</a>
+    
     <li ><a href="#method-i-defaults">#defaults</a>
     
     <li ><a href="#method-i-merge_end_use-21">#merge_end_use!</a>
@@ -130,25 +136,17 @@
 
         <div class="method-description">
           
-          <p><a href="EndUse.html">EndUse</a> class intialize all enduse atributes:
-<code>:heating</code> , <code>:cooling</code> ,
-<code>:interior_lighting</code> , <code>:exterior_lighting</code> ,
-<code>:interior_equipment</code> , <code>:exterior_equipment</code> ,
-<code>:fans</code> , <code>:pumps</code> , <code>:heat_rejection</code> ,
-<code>:humidification</code> , <code>:heat_recovery</code> ,
-<code>:water_systems</code> , <code>:refrigeration</code> ,
-<code>:generators</code></p>
+          <p><a href="EndUse.html"><code>EndUse</code></a> class intialize all enduse atributes: <code>:heating</code> , <code>:cooling</code> , <code>:interior_lighting</code> , <code>:exterior_lighting</code> , <code>:interior_equipment</code> , <code>:exterior_equipment</code> , <code>:fans</code> , <code>:pumps</code> , <code>:heat_rejection</code> , <code>:humidification</code> , <code>:heat_recovery</code> , <code>:water_systems</code> , <code>:refrigeration</code> , <code>:generators</code></p>
 <dl class="rdoc-list label-list"><dt>parameters:
 <dd>
-<p><code>hash</code> - <em>Hash</em> - A hash which may contain a deserialized
-end_use.</p>
+<p><code>hash</code> - <em>Hash</em> - A hash which may contain a deserialized end_use.</p>
 </dd></dl>
           
           
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/end_use.rb, line 52</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/end_use.rb, line 62</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">hash</span> = {})
   <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">delete_if</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">nil?</span> }
   <span class="ruby-identifier">hash</span> = <span class="ruby-identifier">defaults</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">hash</span>)
@@ -159,6 +157,7 @@ end_use.</p>
   <span class="ruby-ivar">@exterior_lighting</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:exterior_lighting</span>]
   <span class="ruby-ivar">@interior_equipment</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:interior_equipment</span>]
   <span class="ruby-ivar">@exterior_equipment</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:exterior_equipment</span>]
+  <span class="ruby-ivar">@electric_vehicles</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:electric_vehicles</span>]
   <span class="ruby-ivar">@fans</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:fans</span>]
   <span class="ruby-ivar">@pumps</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:pumps</span>]
   <span class="ruby-ivar">@heat_rejection</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:heat_rejection</span>]
@@ -190,6 +189,50 @@ end_use.</p>
        </header>
 
     
+      <div id="method-i-add_values" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">add_values</span><span
+            class="method-args">(existing_value, new_value)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Adds up <code>existing_value</code> and <code>new_values</code> if not nill.</p>
+<dl class="rdoc-list label-list"><dt>parameter:
+<dd>
+<p><code>existing_value</code> - <em>Float</em> - A value corresponding to a <a href="EndUse.html"><code>EndUse</code></a> attribute.</p>
+
+<p><code>new_value</code> - <em>Float</em> - A value corresponding to a <a href="EndUse.html"><code>EndUse</code></a> attribute.</p>
+</dd></dl>
+          
+          
+
+          
+          <div class="method-source-code" id="add_values-source">
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/end_use.rb, line 153</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">add_values</span>(<span class="ruby-identifier">existing_value</span>, <span class="ruby-identifier">new_value</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">existing_value</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">new_value</span>
+    <span class="ruby-identifier">existing_value</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">new_value</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">new_value</span>
+    <span class="ruby-identifier">existing_value</span> = <span class="ruby-identifier">new_value</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">existing_value</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-defaults" class="method-detail ">
         
         <div class="method-heading">
@@ -209,7 +252,7 @@ end_use.</p>
 
           
           <div class="method-source-code" id="defaults-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/end_use.rb, line 79</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/end_use.rb, line 90</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">defaults</span>
   <span class="ruby-identifier">hash</span> = {}
 
@@ -219,6 +262,7 @@ end_use.</p>
   <span class="ruby-identifier">hash</span>[<span class="ruby-value">:exterior_lighting</span>] = <span class="ruby-keyword">nil</span>
   <span class="ruby-identifier">hash</span>[<span class="ruby-value">:interior_equipment</span>] = <span class="ruby-keyword">nil</span>
   <span class="ruby-identifier">hash</span>[<span class="ruby-value">:exterior_equipment</span>] = <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">hash</span>[<span class="ruby-value">:electric_vehicles</span>] = <span class="ruby-keyword">nil</span>
   <span class="ruby-identifier">hash</span>[<span class="ruby-value">:fans</span>] = <span class="ruby-keyword">nil</span>
   <span class="ruby-identifier">hash</span>[<span class="ruby-value">:pumps</span>] = <span class="ruby-keyword">nil</span>
   <span class="ruby-identifier">hash</span>[<span class="ruby-value">:heat_rejection</span>] = <span class="ruby-keyword">nil</span>
@@ -244,7 +288,7 @@ end_use.</p>
         
         <div class="method-heading">
           <span class="method-name">merge_end_use!</span><span
-            class="method-args">(new_end_use)</span>
+            class="method-args">(other)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -253,33 +297,33 @@ end_use.</p>
 
         <div class="method-description">
           
-          <p>Aggregate values of each <a href="EndUse.html">EndUse</a> attribute.</p>
+          <p>Aggregate values of each <a href="EndUse.html"><code>EndUse</code></a> attribute.</p>
 <dl class="rdoc-list label-list"><dt>Parameters:
 <dd>
-<p><code>new_end_use</code> - <em>EndUse</em> - An object of <a
-href="EndUse.html">EndUse</a> class.</p>
+<p><code>other</code> - <em>EndUse</em> - An object of <a href="EndUse.html"><code>EndUse</code></a> class.</p>
 </dd></dl>
           
           
 
           
           <div class="method-source-code" id="merge_end_use-21-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/end_use.rb, line 138</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">merge_end_use!</span>(<span class="ruby-identifier">new_end_use</span>)
-  <span class="ruby-ivar">@heating</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">new_end_use</span>.<span class="ruby-identifier">heating</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">new_end_use</span>.<span class="ruby-identifier">heating</span>
-  <span class="ruby-ivar">@cooling</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">new_end_use</span>.<span class="ruby-identifier">cooling</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">new_end_use</span>.<span class="ruby-identifier">cooling</span>
-  <span class="ruby-ivar">@interior_lighting</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">new_end_use</span>.<span class="ruby-identifier">interior_lighting</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">new_end_use</span>.<span class="ruby-identifier">interior_lighting</span>
-  <span class="ruby-ivar">@exterior_lighting</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">new_end_use</span>.<span class="ruby-identifier">exterior_lighting</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">new_end_use</span>.<span class="ruby-identifier">exterior_lighting</span>
-  <span class="ruby-ivar">@interior_equipment</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">new_end_use</span>.<span class="ruby-identifier">interior_equipment</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">new_end_use</span>.<span class="ruby-identifier">interior_equipment</span>
-  <span class="ruby-ivar">@exterior_equipment</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">new_end_use</span>.<span class="ruby-identifier">exterior_equipment</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">new_end_use</span>.<span class="ruby-identifier">exterior_equipment</span>
-  <span class="ruby-ivar">@fans</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">new_end_use</span>.<span class="ruby-identifier">fans</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">new_end_use</span>.<span class="ruby-identifier">fans</span>
-  <span class="ruby-ivar">@pumps</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">new_end_use</span>.<span class="ruby-identifier">pumps</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">new_end_use</span>.<span class="ruby-identifier">pumps</span>
-  <span class="ruby-ivar">@heat_rejection</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">new_end_use</span>.<span class="ruby-identifier">heat_rejection</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">new_end_use</span>.<span class="ruby-identifier">heat_rejection</span>
-  <span class="ruby-ivar">@humidification</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">new_end_use</span>.<span class="ruby-identifier">humidification</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">new_end_use</span>.<span class="ruby-identifier">humidification</span>
-  <span class="ruby-ivar">@heat_recovery</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">new_end_use</span>.<span class="ruby-identifier">heat_recovery</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">new_end_use</span>.<span class="ruby-identifier">heat_recovery</span>
-  <span class="ruby-ivar">@water_systems</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">new_end_use</span>.<span class="ruby-identifier">water_systems</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">new_end_use</span>.<span class="ruby-identifier">water_systems</span>
-  <span class="ruby-ivar">@refrigeration</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">new_end_use</span>.<span class="ruby-identifier">refrigeration</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">new_end_use</span>.<span class="ruby-identifier">refrigeration</span>
-  <span class="ruby-ivar">@generators</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">new_end_use</span>.<span class="ruby-identifier">generators</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">new_end_use</span>.<span class="ruby-identifier">generators</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/end_use.rb, line 168</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">merge_end_use!</span>(<span class="ruby-identifier">other</span>)
+  <span class="ruby-ivar">@heating</span> = <span class="ruby-identifier">add_values</span>(<span class="ruby-ivar">@heating</span>, <span class="ruby-identifier">other</span>.<span class="ruby-identifier">heating</span>)
+  <span class="ruby-ivar">@cooling</span> = <span class="ruby-identifier">add_values</span>(<span class="ruby-ivar">@cooling</span>, <span class="ruby-identifier">other</span>.<span class="ruby-identifier">cooling</span>)
+  <span class="ruby-ivar">@interior_lighting</span> = <span class="ruby-identifier">add_values</span>(<span class="ruby-ivar">@interior_lighting</span>, <span class="ruby-identifier">other</span>.<span class="ruby-identifier">interior_lighting</span>)
+  <span class="ruby-ivar">@exterior_lighting</span> = <span class="ruby-identifier">add_values</span>(<span class="ruby-ivar">@exterior_lighting</span>, <span class="ruby-identifier">other</span>.<span class="ruby-identifier">exterior_lighting</span>)
+  <span class="ruby-ivar">@interior_equipment</span> = <span class="ruby-identifier">add_values</span>(<span class="ruby-ivar">@interior_equipment</span>, <span class="ruby-identifier">other</span>.<span class="ruby-identifier">interior_equipment</span>)
+  <span class="ruby-ivar">@exterior_equipment</span> = <span class="ruby-identifier">add_values</span>(<span class="ruby-ivar">@exterior_equipment</span>, <span class="ruby-identifier">other</span>.<span class="ruby-identifier">exterior_equipment</span>)
+  <span class="ruby-ivar">@electric_vehicles</span> = <span class="ruby-identifier">add_values</span>(<span class="ruby-ivar">@electric_vehicles</span>, <span class="ruby-identifier">other</span>.<span class="ruby-identifier">electric_vehicles</span>)
+  <span class="ruby-ivar">@fans</span> = <span class="ruby-identifier">add_values</span>(<span class="ruby-ivar">@fans</span>, <span class="ruby-identifier">other</span>.<span class="ruby-identifier">fans</span>)
+  <span class="ruby-ivar">@pumps</span> = <span class="ruby-identifier">add_values</span>(<span class="ruby-ivar">@pumps</span>, <span class="ruby-identifier">other</span>.<span class="ruby-identifier">pumps</span>)
+  <span class="ruby-ivar">@heat_rejection</span> = <span class="ruby-identifier">add_values</span>(<span class="ruby-ivar">@heat_rejection</span>, <span class="ruby-identifier">other</span>.<span class="ruby-identifier">heat_rejection</span>)
+  <span class="ruby-ivar">@humidification</span> = <span class="ruby-identifier">add_values</span>(<span class="ruby-ivar">@humidification</span>, <span class="ruby-identifier">other</span>.<span class="ruby-identifier">humidification</span>)
+  <span class="ruby-ivar">@heat_recovery</span> = <span class="ruby-identifier">add_values</span>(<span class="ruby-ivar">@heat_recovery</span>, <span class="ruby-identifier">other</span>.<span class="ruby-identifier">heat_recovery</span>)
+  <span class="ruby-ivar">@water_systems</span> = <span class="ruby-identifier">add_values</span>(<span class="ruby-ivar">@water_systems</span>, <span class="ruby-identifier">other</span>.<span class="ruby-identifier">water_systems</span>)
+  <span class="ruby-ivar">@refrigeration</span> = <span class="ruby-identifier">add_values</span>(<span class="ruby-ivar">@refrigeration</span>, <span class="ruby-identifier">other</span>.<span class="ruby-identifier">refrigeration</span>)
+  <span class="ruby-ivar">@generators</span> = <span class="ruby-identifier">add_values</span>(<span class="ruby-ivar">@generators</span>, <span class="ruby-identifier">other</span>.<span class="ruby-identifier">generators</span>)
 
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">self</span>
 <span class="ruby-keyword">end</span></pre>
@@ -317,7 +361,7 @@ href="EndUse.html">EndUse</a> class.</p>
 
           
           <div class="method-source-code" id="to_hash-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/end_use.rb, line 106</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/end_use.rb, line 118</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_hash</span>
   <span class="ruby-identifier">result</span> = {}
 
@@ -327,6 +371,7 @@ href="EndUse.html">EndUse</a> class.</p>
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:exterior_lighting</span>] = <span class="ruby-ivar">@exterior_lighting</span>
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:interior_equipment</span>] = <span class="ruby-ivar">@interior_equipment</span>
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:exterior_equipment</span>] = <span class="ruby-ivar">@exterior_equipment</span>
+  <span class="ruby-identifier">result</span>[<span class="ruby-value">:electric_vehicles</span>] = <span class="ruby-ivar">@electric_vehicles</span>
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:fans</span>] = <span class="ruby-ivar">@fans</span>
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:pumps</span>] = <span class="ruby-ivar">@pumps</span>
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:heat_rejection</span>] = <span class="ruby-ivar">@heat_rejection</span>
@@ -356,12 +401,13 @@ href="EndUse.html">EndUse</a> class.</p>
     </section>
   
   </section>
+
 </main>
 
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="https://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.0.1.1.
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

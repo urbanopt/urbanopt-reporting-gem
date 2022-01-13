@@ -19,7 +19,11 @@
 
 <link href="../../../../../css/fonts.css" rel="stylesheet">
 <link href="../../../../../css/rdoc.css" rel="stylesheet">
+
+
 <link href="../../../../../custom_rdoc_styles.css" rel="stylesheet">
+
+
 
 
 
@@ -68,6 +72,8 @@
     <li><a href="../../../../../CONTRIBUTING_md.html">CONTRIBUTING</a>
   
     <li><a href="../../../../../RDOC_MAIN_md.html">RDOC_MAIN</a>
+  
+    <li><a href="../../../../../building_loads_csv.html">building_loads.csv</a>
   
     <li><a href="../../../../../lib/urbanopt/reporting/default_reports/schema/scenario_csv_columns_txt.html">scenario_csv_columns</a>
   
@@ -212,6 +218,15 @@
                         &quot;size_kw&quot;: {
                                 &quot;description&quot;: &quot;rated power in kW&quot;,
                                 &quot;type&quot;: &quot;string&quot;
+                        },
+                        &quot;location&quot;: {
+                                &quot;description&quot;: &quot;Location of PV. Available options are roof, ground or both.&quot;,
+                                &quot;type&quot;: &quot;string&quot;,
+                                &quot;enum&quot;: [
+                                        &quot;roof&quot;,
+                                        &quot;ground&quot;,
+                                        &quot;both&quot;
+                                ]
                         }
                 }
         },
@@ -355,6 +370,18 @@
                                 &quot;description&quot;: &quot;Total source energy used, does not include generation (kWh)&quot;,
                                 &quot;type&quot;: &quot;number&quot;
                         },
+                        &quot;site_EUI_kwh_per_m2&quot;: {
+                                &quot;type&quot;: &quot;number&quot;
+                        },
+                        &quot;site_EUI_kBtu_per_ft2&quot;: {
+                                &quot;type&quot;: &quot;number&quot;
+                        },
+                        &quot;source_EUI_kwh_per_m2&quot;: {
+                                &quot;type&quot;: &quot;number&quot;
+                        },
+                        &quot;source_EUI_kBtu_per_ft2&quot;: {
+                                &quot;type&quot;: &quot;number&quot;
+                        },
                         &quot;net_site_energy_kwh&quot;: {
                                 &quot;description&quot;: &quot;Net site energy (kWh)&quot;,
                                 &quot;type&quot;: &quot;number&quot;
@@ -385,14 +412,14 @@
                                 &quot;description&quot;: &quot;Sum of all natural gas end uses consumption (kWh)&quot;,
                                 &quot;type&quot;: &quot;number&quot;
                         },
-&quot;propane_kwh&quot;: {
+                        &quot;propane_kwh&quot;: {
                                 &quot;description&quot;: &quot;Sum of all propane end uses consumption (kWh)&quot;,
                                 &quot;type&quot;: &quot;number&quot;
-},
-&quot;fuel_oil_kwh&quot;: {
+                        },
+                        &quot;fuel_oil_kwh&quot;: {
                                 &quot;description&quot;: &quot;Sum of all fuel oil #2 end uses consumption (kWh)&quot;,
                                 &quot;type&quot;: &quot;number&quot;
-},
+                        },
                         &quot;other_fuels_kwh&quot;: {
                                 &quot;description&quot;: &quot;Sum of all other (fuel oil #1, diesel, gasoline, coal, steam) fuel end uses consumption (kWh)&quot;,
                                 &quot;type&quot;: &quot;number&quot;
@@ -463,12 +490,12 @@
                         &quot;natural_gas_kwh&quot;: {
                                 &quot;$ref&quot;: &quot;#/definitions/EndUse&quot;
                         },
-&quot;propane_kwh&quot;: {
-  &quot;$ref&quot;: &quot;#/definitions/EndUse&quot;
-},
-&quot;fuel_oil_kwh&quot;: {
-  &quot;$ref&quot;: &quot;#/definitions/EndUse&quot;
-},
+                        &quot;propane_kwh&quot;: {
+                                &quot;$ref&quot;: &quot;#/definitions/EndUse&quot;
+                        },
+                        &quot;fuel_oil_kwh&quot;: {
+                                &quot;$ref&quot;: &quot;#/definitions/EndUse&quot;
+                        },
                         &quot;other_fuels_kwh&quot;: {
                                 &quot;$ref&quot;: &quot;#/definitions/EndUse&quot;
                         },
@@ -503,6 +530,9 @@
                                 &quot;type&quot;: &quot;number&quot;
                         },
                         &quot;exterior_equipment&quot;: {
+                                &quot;type&quot;: &quot;number&quot;
+                        },
+                        &quot;electric_vehicles&quot;: {
                                 &quot;type&quot;: &quot;number&quot;
                         },
                         &quot;fans&quot;: {
@@ -620,8 +650,8 @@
                                 &quot;enum&quot;: [
                                         &quot;Electricity&quot;,
                                         &quot;Natural Gas&quot;,
-    &quot;Propane&quot;,
-    &quot;Fuel Oil&quot;,
+                                        &quot;Propane&quot;,
+                                        &quot;Fuel Oil&quot;,
                                         &quot;District Cooling&quot;,
                                         &quot;District Heating&quot;,
                                         &quot;Other Fuels&quot;,
@@ -975,13 +1005,14 @@
 }</pre>
 
 <p>}</p>
+
 </main>
 
 
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="https://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.0.1.1.
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 
