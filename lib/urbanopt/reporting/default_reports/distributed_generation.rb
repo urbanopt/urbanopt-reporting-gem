@@ -440,6 +440,7 @@ module URBANopt
         # Merge a distributed generation system with a new system
         ##
         def self.merge_distributed_generation(existing_dgen, new_dgen)
+          existing_dgen.annual_renewable_electricity_pct = add_values(existing_dgen.annual_renewable_electricity_pct, new_dgen.annual_renewable_electricity_pct)
           existing_dgen.lcc_us_dollars = add_values(existing_dgen.lcc_us_dollars, new_dgen.lcc_us_dollars)
           existing_dgen.lcc_bau_us_dollars = add_values(existing_dgen.lcc_bau_us_dollars, new_dgen.lcc_bau_us_dollars)
           existing_dgen.npv_us_dollars = add_values(existing_dgen.npv_us_dollars, new_dgen.npv_us_dollars)
