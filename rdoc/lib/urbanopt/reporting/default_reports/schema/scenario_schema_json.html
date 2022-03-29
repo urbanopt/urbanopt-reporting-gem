@@ -73,8 +73,6 @@
   
     <li><a href="../../../../../RDOC_MAIN_md.html">RDOC_MAIN</a>
   
-    <li><a href="../../../../../building_loads_csv.html">building_loads.csv</a>
-  
     <li><a href="../../../../../lib/urbanopt/reporting/default_reports/schema/scenario_csv_columns_txt.html">scenario_csv_columns</a>
   
     <li><a href="../../../../../lib/urbanopt/reporting/default_reports/schema/scenario_schema_json.html">scenario_schema.json</a>
@@ -156,6 +154,9 @@
                         },
                         &quot;thermal_storage&quot;: {
                                 &quot;$ref&quot;: &quot;#/definitions/ThermalStorage&quot;
+                        },
+                        &quot;scenario_power_distribution&quot;: {
+                                &quot;$ref&quot;: &quot;#definitions/ScenarioPowerDistribution&quot;
                         }
                 },
                 &quot;required&quot;: [
@@ -171,9 +172,55 @@
                 ],
                 &quot;additionalProperties&quot;: false
         },
+        &quot;ScenarioPowerDistribution&quot;: {
+                &quot;type&quot;: &quot;object&quot;,
+                &quot;properties&quot;: {
+                        &quot;substations&quot;: {
+                                &quot;description&quot;: &quot;Array of electrical substations&quot;,
+                                &quot;type&quot;: &quot;array&quot;,
+                                &quot;items&quot;: {
+                                        &quot;type&quot;: &quot;object&quot;,
+                                        &quot;properties&quot;: {
+                                                &quot;nominal_voltage&quot;: {
+                                                        &quot;description&quot;: &quot;Nominal Voltage (V)&quot;,
+                                                        &quot;type&quot;: &quot;number&quot;
+                                                }
+                                        }
+                                }
+                        },
+                        &quot;distribution_lines&quot;: {
+                                &quot;description&quot;: &quot;Array of distribution lines&quot;,
+                                &quot;type&quot;: &quot;array&quot;,
+                                &quot;items&quot;: {
+                                        &quot;type&quot;: &quot;object&quot;,
+                                        &quot;properties&quot;: {
+                                                &quot;length&quot;: {
+                                                        &quot;description&quot;: &quot;Length of the line (m)&quot;,
+                                                        &quot;type&quot;: &quot;number&quot;
+                                                },
+                                                &quot;ampacity&quot;: {
+                                                        &quot;description&quot;: &quot;Maximum ampacity of the line (A)&quot;,
+                                                        &quot;type&quot;: &quot;number&quot;
+                                                },
+                                                &quot;commercial_line_type&quot;: {
+                                                        &quot;description&quot;: &quot;Array of the wire types that make up the line&quot;,
+                                                        &quot;type&quot;: &quot;array&quot;,
+                                                        &quot;items&quot;: {
+                                                                &quot;type&quot;: &quot;string&quot;
+                                                        }
+                                                }
+                                        }
+                                }
+                        }
+                }
+        },
         &quot;DistributedGeneration&quot;: {
                 &quot;type&quot;: &quot;object&quot;,
                 &quot;properties&quot;: {
+                        &quot;annual_renewable_electricity_pct&quot;: {
+                                &quot;description&quot;: &quot;Percentage of annual renewable electricity generation&quot;,
+                                &quot;type&quot;: &quot;number&quot;
+                        },
                         &quot;lcc_us_dollars&quot;: {
                                 &quot;description&quot;: &quot;Optimal lifecycle cost&quot;,
                                 &quot;type&quot;: &quot;number&quot;
@@ -217,7 +264,7 @@
                 &quot;properties&quot;: {
                         &quot;size_kw&quot;: {
                                 &quot;description&quot;: &quot;rated power in kW&quot;,
-                                &quot;type&quot;: &quot;string&quot;
+                                &quot;type&quot;: &quot;number&quot;
                         },
                         &quot;location&quot;: {
                                 &quot;description&quot;: &quot;Location of PV. Available options are roof, ground or both.&quot;,
@@ -227,6 +274,14 @@
                                         &quot;ground&quot;,
                                         &quot;both&quot;
                                 ]
+                        },
+                        &quot;tilt&quot;: {
+                                &quot;description&quot;: &quot;PV system tilt&quot;,
+                                &quot;type&quot;: &quot;number&quot;
+                        },
+                        &quot;azimuth&quot;: {
+                                &quot;description&quot;: &quot;PV azimuth angle&quot;,
+                                &quot;type&quot;: &quot;number&quot;
                         }
                 }
         },
@@ -235,6 +290,14 @@
                 &quot;properties&quot;: {
                         &quot;size_kw&quot;: {
                                 &quot;description&quot;: &quot;rated power in kW&quot;,
+                                &quot;type&quot;: &quot;number&quot;
+                        },
+                        &quot;average_yearly_energy_produced_kwh&quot;: {
+                                &quot;description&quot;: &quot;average yearly energy produced in kWh&quot;,
+                                &quot;type&quot;: &quot;number&quot;
+                        },
+                        &quot;size_class&quot;: {
+                                &quot;description&quot;: &quot;Turbine size-class. One of [residential, commercial, medium, large]&quot;,
                                 &quot;type&quot;: &quot;string&quot;
                         }
                 }
@@ -244,7 +307,7 @@
                 &quot;properties&quot;: {
                         &quot;size_kw&quot;: {
                                 &quot;description&quot;: &quot;rated power in kW&quot;,
-                                &quot;type&quot;: &quot;string&quot;
+                                &quot;type&quot;: &quot;number&quot;
                         }
                 }
         },
@@ -253,11 +316,11 @@
                 &quot;properties&quot;: {
                         &quot;size_kw&quot;: {
                                 &quot;description&quot;: &quot;rated power in kW&quot;,
-                                &quot;type&quot;: &quot;string&quot;
+                                &quot;type&quot;: &quot;number&quot;
                         },
-                        &quot;size_kw&quot;: {
+                        &quot;size_kwh&quot;: {
                                 &quot;description&quot;: &quot;rated capacity in kWh&quot;,
-                                &quot;type&quot;: &quot;string&quot;
+                                &quot;type&quot;: &quot;number&quot;
                         }
                 }
         },
@@ -1012,7 +1075,7 @@
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="https://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.1.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

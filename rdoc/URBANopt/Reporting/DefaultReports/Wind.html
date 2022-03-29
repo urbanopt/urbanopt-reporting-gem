@@ -117,6 +117,32 @@
       </header>
 
       
+      <div id="attribute-i-average_yearly_energy_produced_kwh" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">average_yearly_energy_produced_kwh</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p><em>Float</em> - power capacity in kilowatts</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-size_class" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">size_class</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p><em>Float</em> - power capacity in kilowatts</p>
+        
+        </div>
+      </div>
+      
       <div id="attribute-i-size_kw" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">size_kw</span><span
@@ -159,12 +185,17 @@
 
           
           <div class="method-source-code" id="add_wind-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/wind.rb, line 90</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/wind.rb, line 94</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">add_wind</span>(<span class="ruby-identifier">existing_wind</span>, <span class="ruby-identifier">new_wind</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">existing_wind</span>.<span class="ruby-identifier">size_kw</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">new_wind</span>.<span class="ruby-identifier">size_kw</span>.<span class="ruby-identifier">nil?</span>
     <span class="ruby-identifier">existing_wind</span>.<span class="ruby-identifier">size_kw</span> = <span class="ruby-keyword">nil</span>
   <span class="ruby-keyword">else</span>
     <span class="ruby-identifier">existing_wind</span>.<span class="ruby-identifier">size_kw</span> = (<span class="ruby-identifier">existing_wind</span>.<span class="ruby-identifier">size_kw</span> <span class="ruby-operator">||</span> <span class="ruby-value">0</span>) <span class="ruby-operator">+</span> (<span class="ruby-identifier">new_wind</span>.<span class="ruby-identifier">size_kw</span> <span class="ruby-operator">||</span> <span class="ruby-value">0</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">existing_wind</span>.<span class="ruby-identifier">average_yearly_energy_produced_kwh</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">new_wind</span>.<span class="ruby-identifier">average_yearly_energy_produced_kwh</span>.<span class="ruby-identifier">nil?</span>
+    <span class="ruby-identifier">existing_wind</span>.<span class="ruby-identifier">average_yearly_energy_produced_kwh</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">existing_wind</span>.<span class="ruby-identifier">average_yearly_energy_produced_kwh</span> = (<span class="ruby-identifier">existing_wind</span>.<span class="ruby-identifier">average_yearly_energy_produced_kwh</span> <span class="ruby-operator">||</span> <span class="ruby-value">0</span>) <span class="ruby-operator">+</span> (<span class="ruby-identifier">new_wind</span>.<span class="ruby-identifier">average_yearly_energy_produced_kwh</span> <span class="ruby-operator">||</span> <span class="ruby-value">0</span>)
   <span class="ruby-keyword">end</span>
 
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">existing_wind</span>
@@ -208,6 +239,8 @@
   <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">delete_if</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">nil?</span> }
 
   <span class="ruby-ivar">@size_kw</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:size_kw</span>]
+  <span class="ruby-ivar">@avg_energy_kwh</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:average_yearly_energy_produced_kwh</span>]
+  <span class="ruby-ivar">@size_class</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:size_class</span>]
 
   <span class="ruby-comment"># initialize class variables @@validator and @@schema</span>
   <span class="ruby-identifier">@@validator</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Validator</span>.<span class="ruby-identifier">new</span>
@@ -253,11 +286,13 @@
 
           
           <div class="method-source-code" id="to_hash-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/wind.rb, line 79</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/wind.rb, line 81</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_hash</span>
   <span class="ruby-identifier">result</span> = {}
 
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:size_kw</span>] = <span class="ruby-ivar">@size_kw</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@size_kw</span>
+  <span class="ruby-identifier">result</span>[<span class="ruby-value">:average_yearly_energy_produced_kwh</span>] = <span class="ruby-ivar">@avg_energy_kwh</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@avg_energy_kwh</span>
+  <span class="ruby-identifier">result</span>[<span class="ruby-value">:size_class</span>] = <span class="ruby-ivar">@size_class</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@size_class</span>
 
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">result</span>
 <span class="ruby-keyword">end</span></pre>
@@ -280,7 +315,7 @@
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="https://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.1.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

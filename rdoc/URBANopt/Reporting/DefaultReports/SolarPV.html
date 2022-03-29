@@ -117,9 +117,35 @@
       </header>
 
       
+      <div id="attribute-i-azimuth" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">azimuth</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
       <div id="attribute-i-location" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">location</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-module_type" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">module_type</span><span
             class="attribute-access-type">[RW]</span>
         </div>
 
@@ -139,6 +165,19 @@
         <div class="method-description">
         
         <p><em>Float</em> - power capacity in kilowatts</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-tilt" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">tilt</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
         
         </div>
       </div>
@@ -172,7 +211,7 @@
 
           
           <div class="method-source-code" id="add_pv-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/solar_pv.rb, line 94</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/solar_pv.rb, line 103</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">add_pv</span>(<span class="ruby-identifier">existing_pv</span>, <span class="ruby-identifier">new_pv</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">existing_pv</span>.<span class="ruby-identifier">size_kw</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">new_pv</span>.<span class="ruby-identifier">size_kw</span>.<span class="ruby-identifier">nil?</span>
     <span class="ruby-identifier">existing_pv</span>.<span class="ruby-identifier">size_kw</span> = <span class="ruby-keyword">nil</span>
@@ -216,13 +255,16 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/solar_pv.rb, line 64</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/solar_pv.rb, line 67</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">hash</span> = {})
   <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">delete_if</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">nil?</span> }
 
   <span class="ruby-ivar">@size_kw</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:size_kw</span>]
   <span class="ruby-ivar">@id</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:id</span>]
   <span class="ruby-ivar">@location</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:location</span>]
+  <span class="ruby-ivar">@tilt</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:tilt</span>]
+  <span class="ruby-ivar">@azimuth</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:azimuth</span>]
+  <span class="ruby-ivar">@module_type</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:module_type</span>]
 
   <span class="ruby-comment"># initialize class variables @@validator and @@schema</span>
   <span class="ruby-identifier">@@validator</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Validator</span>.<span class="ruby-identifier">new</span>
@@ -268,12 +310,15 @@
 
           
           <div class="method-source-code" id="to_hash-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/solar_pv.rb, line 82</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/solar_pv.rb, line 88</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_hash</span>
   <span class="ruby-identifier">result</span> = {}
 
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:size_kw</span>] = <span class="ruby-ivar">@size_kw</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@size_kw</span>
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:location</span>] = <span class="ruby-ivar">@location</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@location</span>
+  <span class="ruby-identifier">result</span>[<span class="ruby-value">:tilt</span>] = <span class="ruby-ivar">@tilt</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@tilt</span>
+  <span class="ruby-identifier">result</span>[<span class="ruby-value">:azimuth</span>] = <span class="ruby-ivar">@azimuth</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@azimuth</span>
+  <span class="ruby-identifier">result</span>[<span class="ruby-value">:module_type</span>] = <span class="ruby-ivar">@module_type</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@module_type</span>
 
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">result</span>
 <span class="ruby-keyword">end</span></pre>
@@ -296,7 +341,7 @@
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="https://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.1.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 
