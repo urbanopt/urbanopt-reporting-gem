@@ -66,6 +66,12 @@
 				},
 				"thermal_storage": {
 					"$ref": "#/definitions/ThermalStorage"
+				},
+				"rnm_results": {
+					"$ref": "#definitions/RnmResults"
+        },
+				"scenario_power_distribution": {
+					"$ref": "#definitions/ScenarioPowerDistribution"
 				}
 			},
 			"required": [
@@ -81,9 +87,59 @@
 			],
 			"additionalProperties": false
 		},
+		"ScenarioPowerDistribution": {
+			"type": "object",
+			"properties": {
+				"substations": {
+					"description": "Array of electrical substations",
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"nominal_voltage": {
+								"description": "Nominal Voltage (V)",
+								"type": "number"
+							}
+						}
+					}
+				},
+				"distribution_lines": {
+					"description": "Array of distribution lines",
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"length": {
+								"description": "Length of the line (m)",
+								"type": "number"
+							},
+							"ampacity": {
+								"description": "Maximum ampacity of the line (A)",
+								"type": "number"
+							},
+							"commercial_line_type": {
+								"description": "Array of the wire types that make up the line",
+								"type": "array",
+								"items": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
 		"DistributedGeneration": {
 			"type": "object",
 			"properties": {
+				"reopt_assumptions_file_path": {
+					"description": "File path of REopt assumptions file used to generate results, if known",
+					"type": "string"
+				},
+				"annual_renewable_electricity_pct": {
+					"description": "Percentage of annual renewable electricity generation",
+					"type": "number"
+				},
 				"lcc_us_dollars": {
 					"description": "Optimal lifecycle cost",
 					"type": "number"
@@ -127,7 +183,7 @@
 			"properties": {
 				"size_kw": {
 					"description": "rated power in kW",
-					"type": "string"
+					"type": "number"
 				},
 				"location": {
 					"description": "Location of PV. Available options are roof, ground or both.",
@@ -137,6 +193,14 @@
 						"ground",
 						"both"
 					]
+				},
+				"tilt": {
+					"description": "PV system tilt",
+					"type": "number"
+				},
+				"azimuth": {
+					"description": "PV azimuth angle",
+					"type": "number"
 				}
 			}
 		},
@@ -145,6 +209,14 @@
 			"properties": {
 				"size_kw": {
 					"description": "rated power in kW",
+					"type": "number"
+				},
+				"average_yearly_energy_produced_kwh": {
+					"description": "average yearly energy produced in kWh",
+					"type": "number"
+				},
+				"size_class": {
+					"description": "Turbine size-class. One of [residential, commercial, medium, large]",
 					"type": "string"
 				}
 			}
@@ -154,7 +226,7 @@
 			"properties": {
 				"size_kw": {
 					"description": "rated power in kW",
-					"type": "string"
+					"type": "number"
 				}
 			}
 		},
@@ -163,12 +235,137 @@
 			"properties": {
 				"size_kw": {
 					"description": "rated power in kW",
-					"type": "string"
+					"type": "number"
 				},
-				"size_kw": {
+				"size_kwh": {
 					"description": "rated capacity in kWh",
-					"type": "string"
+					"type": "number"
 				}
+			}
+		},
+		"RnmResults": {
+			"type": "object",
+			"properties": {
+				"demand_generation_planning": {
+					"description": "Demand generation planning",
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/DemandGenPlanning"
+					}
+				},
+				"electrical_lines_length": {
+					"description": "Electrical lines length",
+					"type": "object",
+					"properties": {
+						"low_voltage": {
+							"description": "Low voltage electrical lines length",
+							"type": "object",
+							"properties": {
+								"$ref": "#/definitions/LineLength"
+							}
+						},
+						"medium_voltage": {
+							"description": "Medium voltage electrical lines length",
+							"type": "object",
+							"properties": {
+								"$ref": "#/definitions/LineLength"
+							}
+						}
+					}
+				},
+				"distribution_transformers_capacity_kva": {
+					"description": "Distribution transformers capacity in kVA",
+					"type": "number"
+				},
+				"costs": {
+					"description": "Costs",
+					"type": "object",
+					"properties": {
+						"investment": {
+							"description": "Investment cost",
+							"type": "object",
+							"properties": {
+								"$ref": "#/definitions/RnmCost"
+							}
+						},
+						"yearly_maintenance": {
+							"description": "Yearly maintenance cost",
+							"type": "object",
+							"properties": {
+								"$ref": "#/definitions/RnmCost"
+							}
+						}
+					}
+				},
+				"reliability_indexes": {
+					"description": "Reliability Indexes",
+					"type": "object",
+					"properties": {
+						"SAIDI": {
+							"description": "System Average Interruption Duration Index",
+							"type": "number"
+						},
+						"SAIFI": {
+							"description": "System Average Interruption Frequency Index",
+							"type": "number"
+						}
+					}
+				}
+			}
+		},
+		"DemandGenPlanning": {
+			"type": "object",
+			"properties": {
+				"type": {
+					"description": "Type of demand generation planning",
+					"type": "string",
+					"enum": [
+						"Low Voltage (LV) Consumers",
+						"Medium Voltage (MV) Consumers",
+						"Low Voltage (LV) Distributed generators",
+						"Medium Voltage (MV) Distributed generators"
+					]
+				},
+				"peak_demand_kw": {
+					"description": "Peak demand in kw for this type",
+					"type": "number"
+				},
+				"number_of_nodes_in_network": {
+					"description": "Number of nodes of this type in the network",
+					"type": "number"
+				}
+			}
+		},
+		"LineLength": {
+			"overhead_mi": {
+				"description": "Length of overhead lines (miles)",
+				"type": "number"
+			},
+			"underground_mi": {
+				"description": "Length of underground lines (miles)",
+				"type": "number"
+			}
+		},
+		"RnmCost": {
+			"low_voltage_network": {
+				"description": "Low Voltage Network Cost ($)",
+				"type": "number"
+			},
+			"distribution_transformers": {
+				"description": "Distribution Transformers Cost ($)",
+				"type": "number"
+			},
+			"medium_voltage_network": {
+				"description": "Medium Voltage Network Cost ($)",
+				"type": "number"
+			},
+			"primary_substations": {
+				"description": "Primary Substations Cost ($)",
+				"type": "number"
+			},
+			"total": {
+				"description": "Total Cost ($)",
+				"type": "number"
 			}
 		},
 		"FeatureReport": {
@@ -371,6 +568,43 @@
 				},
 				"comfort_result": {
 					"$ref": "#/definitions/ComfortResult"
+				},
+				"emissions": {
+					"type": "object",
+					"properties": {
+						"future_annual_emissions_mt": {
+							"description": "Future emissions in metric ton (mt) calculated based on an annual emission factor value for the selected future year",
+							"type": "number"
+						},
+						"future_hourly_emissions_mt": {
+							"description": "Future emissions in metric ton (mt) calculated based on hourly emission factor values for the selected future year",
+							"type": "number"
+						},
+						"historical_annual_emissions_mt": {
+							"description": "Historical emissions in metric ton (mt) calculated based on an annual emission factor value for the selected historical year",
+							"type": "number"
+						},
+						"historical_hourly_emissions_mt": {
+							"description": "Historical emissions in metric ton (mt) calculated based on hourly emission factor values for the selected historical year",
+							"type": "number"
+						},
+						"future_annual_emissions_intensity_kg_per_ft2": {
+							"description": "Future emissions intensity in kg/ft2 calculated based on an annual emission factor value for the selected future year",
+							"type": "number"
+						},
+						"future_hourly_emissions_intensity_kg_per_ft2": {
+							"description": "Future emissions intensity in kg/ft2 calculated based on hourly emission factor values for the selected future year",
+							"type": "number"
+						},
+						"historical_annual_emissions_intensity_kg_per_ft2": {
+							"description": "Historical emissions intensity in kg/ft2 calculated based on an annual emission factor value for the selected historical year",
+							"type": "number"
+						},
+						"historical_hourly_emissions_intensity_kg_per_ft2": {
+							"description": "Historical emissions intensity in kg.ft2 calculated based on hourly emission factor values for the selected historical year",
+							"type": "number"
+						}
+					}
 				}
 			},
 			"additionalProperties": false

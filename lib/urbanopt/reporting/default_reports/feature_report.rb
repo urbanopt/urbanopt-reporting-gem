@@ -1,5 +1,5 @@
 # *********************************************************************************
-# URBANopt™, Copyright (c) 2019-2021, Alliance for Sustainable Energy, LLC, and other
+# URBANopt™, Copyright (c) 2019-2022, Alliance for Sustainable Energy, LLC, and other
 # contributors. All rights reserved.
 
 # Redistribution and use in source and binary forms, with or without modification,
@@ -259,7 +259,7 @@ module URBANopt
           FileUtils.mkdir_p File.dirname(@timeseries_csv.path)
           @timeseries_csv.save_data
 
-          ## save json rport
+          ## save json report
           # feature_hash
           feature_hash = to_hash
 

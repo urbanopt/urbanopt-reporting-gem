@@ -38,6 +38,8 @@
 # OF THE POSSIBILITY OF SUCH DAMAGE.
 # *********************************************************************************
 
+require_relative 'validator'
+
 require 'json'
 require 'json-schema'
 
@@ -45,69 +47,100 @@ module URBANopt
   module Reporting
     module DefaultReports
       ##
-      # Onsite storage system attributes
+      # scenario_power_distribution include eletrical power distribution systems information.
       ##
-      class Storage
-        ##
-        # _Float_ - power capacity in kilowatts
-        #
-        attr_accessor :size_kw
+      class ScenarioPowerDistribution
+        attr_accessor :substations, :distribution_lines, :capacitors
 
         ##
-        # _Float_ - storage capacity in kilowatt-hours
-        #
-        attr_accessor :size_kwh
-
-        ##
-        # Initialize Storage attributes from a hash. Storage attributes currently are limited to power and storage capacity.
+        # ScenarioPowerDistribution class initialize all scenario_power_distribution attributes:
+        # +:substations+ , +:distribution_lines+
         ##
         # [parameters:]
-        #
-        # * +hash+ - _Hash_ - A hash containting +:size_kw+ and +:size_kwh+ key/value pair which represents the power and storage capacity in kilowatts (kW) and kilowatt-hours respectively.
-        #
+        # +hash+ - _Hash_ - A hash which may contain a deserialized power_distribution.
+        ##
         def initialize(hash = {})
           hash.delete_if { |k, v| v.nil? }
+          hash = defaults.merge(hash)
 
-          @size_kw = hash[:size_kw]
-          @size_kwh = hash[:size_kwh]
+          @substations = hash[:substations]
+          @distribution_lines = hash[:distribution_lines]
+          @capacitors = hash[:capacitors]
 
           # initialize class variables @@validator and @@schema
           @@validator ||= Validator.new
           @@schema ||= @@validator.schema
-
-          # initialize @@logger
-          @@logger ||= URBANopt::Reporting::DefaultReports.logger
         end
 
         ##
-        # Convert to a Hash equivalent for JSON serialization
+        # Assigns default values if attribute values do not exist.
+        ##
+        def defaults
+          hash = {}
+          hash[:substations] = []
+          hash[:distribution_lines] = []
+          hash[:capacitors] = []
+
+          return hash
+        end
+
+        ##
+        # Converts to a Hash equivalent for JSON serialization.
+        ##
+        # - Exclude attributes with nil values.
+        # - Validate power_distribution hash properties against schema.
         ##
         def to_hash
           result = {}
+          result[:substations] = @substations if @substations
+          result[:distribution_lines] = @distribution_lines if @distribution_lines
+          result[:capacitors] = @capacitors if @capacitors
 
-          result[:size_kw] = @size_kw if @size_kw
-          result[:size_kwh] = @size_kwh if @size_kwh
+          # validate power_distribution properties against schema
+          if @@validator.validate(@@schema[:definitions][:ScenarioPowerDistribution][:properties], result).any?
+            raise "scenario_power_distribution properties does not match schema: #{@@validator.validate(@@schema[:definitions][:ScenarioPowerDistribution][:properties], result)}"
+          end
 
           return result
         end
 
         ##
-        # Merge Storage systems
+        # Add a substation
         ##
-        def self.add_storage(existing_storage, new_storage)
-          if existing_storage.size_kw.nil?
-            existing_storage.size_kw = new_storage.size_kw
-          else
-            existing_storage.size_kw = (existing_storage.size_kw || 0) + (new_storage.size_kw || 0)
-          end
+        def add_substation(hash = {})
+          hash.delete_if { |k, v| v.nil? }
+          hash = defaults.merge(hash)
+          # field: nominal_voltage
+          substation = {}
+          substation['nominal_voltage'] = hash[:nominal_voltage]
+          @substations << substation
+        end
 
-          if existing_storage.size_kw.nil?
-            existing_storage.size_kwh = new_storage.size_kwh
-          else
-            existing_storage.size_kwh = (existing_storage.size_kwh || 0) + (new_storage.size_kwh || 0)
-          end
+        ##
+        # Add a line
+        ##
+        def add_line(hash = {})
+          hash.delete_if { |k, v| v.nil? }
+          hash = defaults.merge(hash)
+          # fields: length, ampacity, commercial_line_type
+          line = {}
+          line['length'] = hash[:length]
+          line['ampacity'] = hash[:ampacity]
+          line['commercial_line_type'] = hash[:commercial_line_type]
 
-          return existing_storage
+          @distribution_lines << line
+        end
+
+        ##
+        # Add a capacitor
+        ##
+        def add_capacitor(hash = {})
+          hash.delete_if { |k, v| v.nil? }
+          hash = defaults.merge(hash)
+          # fields: nominal_capacity
+          cap = {}
+          cap['nominal_capacity'] = hash[:nominal_capacity]
+          cap
         end
       end
     end
