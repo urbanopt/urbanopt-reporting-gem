@@ -211,14 +211,14 @@
 
           
           <div class="method-source-code" id="add_pv-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/solar_pv.rb, line 103</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/solar_pv.rb, line 133</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">add_pv</span>(<span class="ruby-identifier">existing_pv</span>, <span class="ruby-identifier">new_pv</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">existing_pv</span>.<span class="ruby-identifier">size_kw</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">new_pv</span>.<span class="ruby-identifier">size_kw</span>.<span class="ruby-identifier">nil?</span>
     <span class="ruby-identifier">existing_pv</span>.<span class="ruby-identifier">size_kw</span> = <span class="ruby-keyword">nil</span>
   <span class="ruby-keyword">else</span>
     <span class="ruby-identifier">existing_pv</span>.<span class="ruby-identifier">size_kw</span> = (<span class="ruby-identifier">existing_pv</span>.<span class="ruby-identifier">size_kw</span> <span class="ruby-operator">||</span> <span class="ruby-value">0</span>) <span class="ruby-operator">+</span> (<span class="ruby-identifier">new_pv</span>.<span class="ruby-identifier">size_kw</span> <span class="ruby-operator">||</span> <span class="ruby-value">0</span>)
   <span class="ruby-keyword">end</span>
-
+  <span class="ruby-comment"># KAF: todo, recalculate area?</span>
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">existing_pv</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -255,16 +255,46 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/solar_pv.rb, line 67</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/solar_pv.rb, line 64</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">hash</span> = {})
   <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">delete_if</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">nil?</span> }
 
   <span class="ruby-ivar">@size_kw</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:size_kw</span>]
   <span class="ruby-ivar">@id</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:id</span>]
   <span class="ruby-ivar">@location</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:location</span>]
-  <span class="ruby-ivar">@tilt</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:tilt</span>]
-  <span class="ruby-ivar">@azimuth</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:azimuth</span>]
-  <span class="ruby-ivar">@module_type</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:module_type</span>]
+  <span class="ruby-ivar">@approx_area_m2</span> = <span class="ruby-value">0</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">hash</span>[<span class="ruby-value">:azimuth</span>]
+    <span class="ruby-ivar">@azimuth</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:azimuth</span>]
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">hash</span>[<span class="ruby-value">:tilt</span>]
+    <span class="ruby-ivar">@tilt</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:tilt</span>]
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">hash</span>[<span class="ruby-value">:module_type</span>]
+    <span class="ruby-ivar">@module_type</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:module_type</span>]
+
+    <span class="ruby-comment"># calculate area with PVWatts formulas</span>
+    <span class="ruby-comment"># Size (kW) = Array Area (m²) × 1 kW/m² × Module Efficiency (%)</span>
+    <span class="ruby-comment"># also grab module efficiency: 0 (standard) = 15%, 1 (premium) = 19%, 2 (thin film) = 10%</span>
+    <span class="ruby-identifier">eff</span> = <span class="ruby-value">0</span>
+    <span class="ruby-keyword">case</span> <span class="ruby-ivar">@module_type</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-value">0</span>
+      <span class="ruby-identifier">eff</span> = <span class="ruby-value">0.15</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-value">1</span>
+      <span class="ruby-identifier">eff</span> = <span class="ruby-value">0.19</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-value">2</span>
+      <span class="ruby-identifier">eff</span> = <span class="ruby-value">0.10</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@size_kw</span> <span class="ruby-operator">!=</span> <span class="ruby-value">0</span>
+      <span class="ruby-ivar">@approx_area_m2</span> = (<span class="ruby-ivar">@size_kw</span> <span class="ruby-operator">/</span> <span class="ruby-identifier">eff</span>).<span class="ruby-identifier">round</span>(<span class="ruby-value">3</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">hash</span>[<span class="ruby-value">:gcr</span>]
+    <span class="ruby-ivar">@gcr</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:gcr</span>]
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">hash</span>[<span class="ruby-value">:average_yearly_energy_produced_kwh</span>]
+    <span class="ruby-ivar">@annual_energy_produced</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:average_yearly_energy_produced_kwh</span>]
+  <span class="ruby-keyword">end</span>
 
   <span class="ruby-comment"># initialize class variables @@validator and @@schema</span>
   <span class="ruby-identifier">@@validator</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Validator</span>.<span class="ruby-identifier">new</span>
@@ -310,15 +340,18 @@
 
           
           <div class="method-source-code" id="to_hash-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/solar_pv.rb, line 88</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/solar_pv.rb, line 115</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_hash</span>
   <span class="ruby-identifier">result</span> = {}
 
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:size_kw</span>] = <span class="ruby-ivar">@size_kw</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@size_kw</span>
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:location</span>] = <span class="ruby-ivar">@location</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@location</span>
-  <span class="ruby-identifier">result</span>[<span class="ruby-value">:tilt</span>] = <span class="ruby-ivar">@tilt</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@tilt</span>
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:azimuth</span>] = <span class="ruby-ivar">@azimuth</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@azimuth</span>
+  <span class="ruby-identifier">result</span>[<span class="ruby-value">:tilt</span>] = <span class="ruby-ivar">@tilt</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@tilt</span>
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:module_type</span>] = <span class="ruby-ivar">@module_type</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@module_type</span>
+  <span class="ruby-identifier">result</span>[<span class="ruby-value">:approximate_area_m2</span>] = <span class="ruby-ivar">@approx_area_m2</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@approx_area_m2</span>
+  <span class="ruby-identifier">result</span>[<span class="ruby-value">:gcr</span>] = <span class="ruby-ivar">@gcr</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@gcr</span>
+  <span class="ruby-identifier">result</span>[<span class="ruby-value">:average_yearly_energy_produced_kwh</span>] = <span class="ruby-ivar">@annual_energy_produced</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@annual_energy_produced</span>
 
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">result</span>
 <span class="ruby-keyword">end</span></pre>

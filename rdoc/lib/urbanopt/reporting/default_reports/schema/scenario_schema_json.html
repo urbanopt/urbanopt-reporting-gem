@@ -155,6 +155,9 @@
                         &quot;thermal_storage&quot;: {
                                 &quot;$ref&quot;: &quot;#/definitions/ThermalStorage&quot;
                         },
+                        &quot;rnm_results&quot;: {
+                                &quot;$ref&quot;: &quot;#definitions/RnmResults&quot;
+},
                         &quot;scenario_power_distribution&quot;: {
                                 &quot;$ref&quot;: &quot;#definitions/ScenarioPowerDistribution&quot;
                         }
@@ -217,6 +220,10 @@
         &quot;DistributedGeneration&quot;: {
                 &quot;type&quot;: &quot;object&quot;,
                 &quot;properties&quot;: {
+                        &quot;reopt_assumptions_file_path&quot;: {
+                                &quot;description&quot;: &quot;File path of REopt assumptions file used to generate results, if known&quot;,
+                                &quot;type&quot;: &quot;string&quot;
+                        },
                         &quot;annual_renewable_electricity_pct&quot;: {
                                 &quot;description&quot;: &quot;Percentage of annual renewable electricity generation&quot;,
                                 &quot;type&quot;: &quot;number&quot;
@@ -322,6 +329,131 @@
                                 &quot;description&quot;: &quot;rated capacity in kWh&quot;,
                                 &quot;type&quot;: &quot;number&quot;
                         }
+                }
+        },
+        &quot;RnmResults&quot;: {
+                &quot;type&quot;: &quot;object&quot;,
+                &quot;properties&quot;: {
+                        &quot;demand_generation_planning&quot;: {
+                                &quot;description&quot;: &quot;Demand generation planning&quot;,
+                                &quot;type&quot;: &quot;array&quot;,
+                                &quot;items&quot;: {
+                                        &quot;$ref&quot;: &quot;#/definitions/DemandGenPlanning&quot;
+                                }
+                        },
+                        &quot;electrical_lines_length&quot;: {
+                                &quot;description&quot;: &quot;Electrical lines length&quot;,
+                                &quot;type&quot;: &quot;object&quot;,
+                                &quot;properties&quot;: {
+                                        &quot;low_voltage&quot;: {
+                                                &quot;description&quot;: &quot;Low voltage electrical lines length&quot;,
+                                                &quot;type&quot;: &quot;object&quot;,
+                                                &quot;properties&quot;: {
+                                                        &quot;$ref&quot;: &quot;#/definitions/LineLength&quot;
+                                                }
+                                        },
+                                        &quot;medium_voltage&quot;: {
+                                                &quot;description&quot;: &quot;Medium voltage electrical lines length&quot;,
+                                                &quot;type&quot;: &quot;object&quot;,
+                                                &quot;properties&quot;: {
+                                                        &quot;$ref&quot;: &quot;#/definitions/LineLength&quot;
+                                                }
+                                        }
+                                }
+                        },
+                        &quot;distribution_transformers_capacity_kva&quot;: {
+                                &quot;description&quot;: &quot;Distribution transformers capacity in kVA&quot;,
+                                &quot;type&quot;: &quot;number&quot;
+                        },
+                        &quot;costs&quot;: {
+                                &quot;description&quot;: &quot;Costs&quot;,
+                                &quot;type&quot;: &quot;object&quot;,
+                                &quot;properties&quot;: {
+                                        &quot;investment&quot;: {
+                                                &quot;description&quot;: &quot;Investment cost&quot;,
+                                                &quot;type&quot;: &quot;object&quot;,
+                                                &quot;properties&quot;: {
+                                                        &quot;$ref&quot;: &quot;#/definitions/RnmCost&quot;
+                                                }
+                                        },
+                                        &quot;yearly_maintenance&quot;: {
+                                                &quot;description&quot;: &quot;Yearly maintenance cost&quot;,
+                                                &quot;type&quot;: &quot;object&quot;,
+                                                &quot;properties&quot;: {
+                                                        &quot;$ref&quot;: &quot;#/definitions/RnmCost&quot;
+                                                }
+                                        }
+                                }
+                        },
+                        &quot;reliability_indexes&quot;: {
+                                &quot;description&quot;: &quot;Reliability Indexes&quot;,
+                                &quot;type&quot;: &quot;object&quot;,
+                                &quot;properties&quot;: {
+                                        &quot;SAIDI&quot;: {
+                                                &quot;description&quot;: &quot;System Average Interruption Duration Index&quot;,
+                                                &quot;type&quot;: &quot;number&quot;
+                                        },
+                                        &quot;SAIFI&quot;: {
+                                                &quot;description&quot;: &quot;System Average Interruption Frequency Index&quot;,
+                                                &quot;type&quot;: &quot;number&quot;
+                                        }
+                                }
+                        }
+                }
+        },
+        &quot;DemandGenPlanning&quot;: {
+                &quot;type&quot;: &quot;object&quot;,
+                &quot;properties&quot;: {
+                        &quot;type&quot;: {
+                                &quot;description&quot;: &quot;Type of demand generation planning&quot;,
+                                &quot;type&quot;: &quot;string&quot;,
+                                &quot;enum&quot;: [
+                                        &quot;Low Voltage (LV) Consumers&quot;,
+                                        &quot;Medium Voltage (MV) Consumers&quot;,
+                                        &quot;Low Voltage (LV) Distributed generators&quot;,
+                                        &quot;Medium Voltage (MV) Distributed generators&quot;
+                                ]
+                        },
+                        &quot;peak_demand_kw&quot;: {
+                                &quot;description&quot;: &quot;Peak demand in kw for this type&quot;,
+                                &quot;type&quot;: &quot;number&quot;
+                        },
+                        &quot;number_of_nodes_in_network&quot;: {
+                                &quot;description&quot;: &quot;Number of nodes of this type in the network&quot;,
+                                &quot;type&quot;: &quot;number&quot;
+                        }
+                }
+        },
+        &quot;LineLength&quot;: {
+                &quot;overhead_mi&quot;: {
+                        &quot;description&quot;: &quot;Length of overhead lines (miles)&quot;,
+                        &quot;type&quot;: &quot;number&quot;
+                },
+                &quot;underground_mi&quot;: {
+                        &quot;description&quot;: &quot;Length of underground lines (miles)&quot;,
+                        &quot;type&quot;: &quot;number&quot;
+                }
+        },
+        &quot;RnmCost&quot;: {
+                &quot;low_voltage_network&quot;: {
+                        &quot;description&quot;: &quot;Low Voltage Network Cost ($)&quot;,
+                        &quot;type&quot;: &quot;number&quot;
+                },
+                &quot;distribution_transformers&quot;: {
+                        &quot;description&quot;: &quot;Distribution Transformers Cost ($)&quot;,
+                        &quot;type&quot;: &quot;number&quot;
+                },
+                &quot;medium_voltage_network&quot;: {
+                        &quot;description&quot;: &quot;Medium Voltage Network Cost ($)&quot;,
+                        &quot;type&quot;: &quot;number&quot;
+                },
+                &quot;primary_substations&quot;: {
+                        &quot;description&quot;: &quot;Primary Substations Cost ($)&quot;,
+                        &quot;type&quot;: &quot;number&quot;
+                },
+                &quot;total&quot;: {
+                        &quot;description&quot;: &quot;Total Cost ($)&quot;,
+                        &quot;type&quot;: &quot;number&quot;
                 }
         },
         &quot;FeatureReport&quot;: {
@@ -524,6 +656,43 @@
                         },
                         &quot;comfort_result&quot;: {
                                 &quot;$ref&quot;: &quot;#/definitions/ComfortResult&quot;
+                        },
+                        &quot;emissions&quot;: {
+                                &quot;type&quot;: &quot;object&quot;,
+                                &quot;properties&quot;: {
+                                        &quot;future_annual_emissions_mt&quot;: {
+                                                &quot;description&quot;: &quot;Future emissions in metric ton (mt) calculated based on an annual emission factor value for the selected future year&quot;,
+                                                &quot;type&quot;: &quot;number&quot;
+                                        },
+                                        &quot;future_hourly_emissions_mt&quot;: {
+                                                &quot;description&quot;: &quot;Future emissions in metric ton (mt) calculated based on hourly emission factor values for the selected future year&quot;,
+                                                &quot;type&quot;: &quot;number&quot;
+                                        },
+                                        &quot;historical_annual_emissions_mt&quot;: {
+                                                &quot;description&quot;: &quot;Historical emissions in metric ton (mt) calculated based on an annual emission factor value for the selected historical year&quot;,
+                                                &quot;type&quot;: &quot;number&quot;
+                                        },
+                                        &quot;historical_hourly_emissions_mt&quot;: {
+                                                &quot;description&quot;: &quot;Historical emissions in metric ton (mt) calculated based on hourly emission factor values for the selected historical year&quot;,
+                                                &quot;type&quot;: &quot;number&quot;
+                                        },
+                                        &quot;future_annual_emissions_intensity_kg_per_ft2&quot;: {
+                                                &quot;description&quot;: &quot;Future emissions intensity in kg/ft2 calculated based on an annual emission factor value for the selected future year&quot;,
+                                                &quot;type&quot;: &quot;number&quot;
+                                        },
+                                        &quot;future_hourly_emissions_intensity_kg_per_ft2&quot;: {
+                                                &quot;description&quot;: &quot;Future emissions intensity in kg/ft2 calculated based on hourly emission factor values for the selected future year&quot;,
+                                                &quot;type&quot;: &quot;number&quot;
+                                        },
+                                        &quot;historical_annual_emissions_intensity_kg_per_ft2&quot;: {
+                                                &quot;description&quot;: &quot;Historical emissions intensity in kg/ft2 calculated based on an annual emission factor value for the selected historical year&quot;,
+                                                &quot;type&quot;: &quot;number&quot;
+                                        },
+                                        &quot;historical_hourly_emissions_intensity_kg_per_ft2&quot;: {
+                                                &quot;description&quot;: &quot;Historical emissions intensity in kg.ft2 calculated based on hourly emission factor values for the selected historical year&quot;,
+                                                &quot;type&quot;: &quot;number&quot;
+                                        }
+                                }
                         }
                 },
                 &quot;additionalProperties&quot;: false

@@ -156,8 +156,6 @@
   <span class="ruby-ivar">@nominal_voltage</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:nominal_voltage</span>] <span class="ruby-comment"># in V</span>
   <span class="ruby-ivar">@max_power_kw</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:max_power_kw</span>]
   <span class="ruby-ivar">@max_reactive_power_kvar</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:max_reactive_power_kvar</span>]
-
-
   <span class="ruby-comment"># initialize class variables @@validator and @@schema</span>
   <span class="ruby-identifier">@@validator</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Validator</span>.<span class="ruby-identifier">new</span>
   <span class="ruby-identifier">@@schema</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">@@validator</span>.<span class="ruby-identifier">schema</span>
@@ -199,7 +197,7 @@
 
           
           <div class="method-source-code" id="defaults-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/power_distribution.rb, line 84</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/power_distribution.rb, line 82</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">defaults</span>
   <span class="ruby-identifier">hash</span> = {}
   <span class="ruby-identifier">hash</span>[<span class="ruby-value">:under_voltage_hours</span>] = <span class="ruby-keyword">nil</span>
@@ -243,7 +241,7 @@
 
           
           <div class="method-source-code" id="merge_power_distribution-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/power_distribution.rb, line 125</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/power_distribution.rb, line 123</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">merge_power_distribution</span>
   <span class="ruby-comment"># method to be developed for any attributes to be aggregated or merged</span>
 <span class="ruby-keyword">end</span></pre>
@@ -281,7 +279,7 @@
 
           
           <div class="method-source-code" id="to_hash-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/power_distribution.rb, line 103</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/power_distribution.rb, line 101</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_hash</span>
   <span class="ruby-identifier">result</span> = {}
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:under_voltage_hours</span>] = <span class="ruby-ivar">@under_voltage_hours</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@under_voltage_hours</span>

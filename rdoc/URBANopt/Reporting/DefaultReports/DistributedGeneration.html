@@ -223,6 +223,19 @@
         </div>
       </div>
       
+      <div id="attribute-i-reopt_assumptions_file_path" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">reopt_assumptions_file_path</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p><em>String</em> - Filepath of reopt assumptions file used, if known</p>
+        
+        </div>
+      </div>
+      
       <div id="attribute-i-resilience_hours_avg" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">resilience_hours_avg</span><span
@@ -525,7 +538,7 @@
 
           
           <div class="method-source-code" id="merge_distributed_generation-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/distributed_generation.rb, line 442</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/distributed_generation.rb, line 452</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">merge_distributed_generation</span>(<span class="ruby-identifier">existing_dgen</span>, <span class="ruby-identifier">new_dgen</span>)
   <span class="ruby-identifier">existing_dgen</span>.<span class="ruby-identifier">annual_renewable_electricity_pct</span> = <span class="ruby-identifier">add_values</span>(<span class="ruby-identifier">existing_dgen</span>.<span class="ruby-identifier">annual_renewable_electricity_pct</span>, <span class="ruby-identifier">new_dgen</span>.<span class="ruby-identifier">annual_renewable_electricity_pct</span>)
   <span class="ruby-identifier">existing_dgen</span>.<span class="ruby-identifier">lcc_us_dollars</span> = <span class="ruby-identifier">add_values</span>(<span class="ruby-identifier">existing_dgen</span>.<span class="ruby-identifier">lcc_us_dollars</span>, <span class="ruby-identifier">new_dgen</span>.<span class="ruby-identifier">lcc_us_dollars</span>)
@@ -632,7 +645,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/distributed_generation.rb, line 211</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/distributed_generation.rb, line 215</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">hash</span> = {})
   <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">delete_if</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">nil?</span> }
 
@@ -657,6 +670,12 @@
   <span class="ruby-ivar">@probs_of_surviving</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:probs_of_surviving</span>]
   <span class="ruby-ivar">@probs_of_surviving_by_month</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:probs_of_surviving_by_month</span>]
   <span class="ruby-ivar">@probs_of_surviving_by_hour_of_the_day</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:probs_of_surviving_by_hour_of_the_day</span>]
+
+  <span class="ruby-comment"># optional</span>
+  <span class="ruby-ivar">@reopt_assumptions_file_path</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">hash</span>[<span class="ruby-value">:reopt_assumptions_file_path</span>]
+    <span class="ruby-ivar">@reopt_assumptions_file_path</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:reopt_assumptions_file_path</span>]
+  <span class="ruby-keyword">end</span>
 
   <span class="ruby-ivar">@total_solar_pv_kw</span> = <span class="ruby-keyword">nil</span>
   <span class="ruby-ivar">@total_wind_kw</span> = <span class="ruby-keyword">nil</span>
@@ -782,7 +801,7 @@
 
           
           <div class="method-source-code" id="add_tech-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/distributed_generation.rb, line 327</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/distributed_generation.rb, line 337</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">add_tech</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">tech</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39;solar_pv&#39;</span>
     <span class="ruby-ivar">@solar_pv</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">tech</span>
@@ -851,10 +870,10 @@
 
           
           <div class="method-source-code" id="to_hash-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/distributed_generation.rb, line 370</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/distributed_generation.rb, line 380</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_hash</span>
   <span class="ruby-identifier">result</span> = {}
-
+  <span class="ruby-identifier">result</span>[<span class="ruby-value">:reopt_assumptions_file_path</span>] = <span class="ruby-ivar">@reopt_assumptions_file_path</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@reopt_assumptions_file_path</span>
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:annual_renewable_electricity_pct</span>] = <span class="ruby-ivar">@annual_renewable_electricity_pct</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@annual_renewable_electricity_pct</span>
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:lcc_us_dollars</span>] = <span class="ruby-ivar">@lcc_us_dollars</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@lcc_us_dollars</span>
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:lcc_bau_us_dollars</span>] = <span class="ruby-ivar">@lcc_bau_us_dollars</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@lcc_bau_us_dollars</span>
