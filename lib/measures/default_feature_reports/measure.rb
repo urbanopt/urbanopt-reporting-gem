@@ -920,8 +920,30 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
       'Emission Intensity Schedule Output',
       'EV Charging Effective Schedule',
       'EV Charging Original Schedule',
-      'EV Charging Original Load'
+      'EV Charging Original Load',
+      'PV Generation Schedule Output', 
+      'Current Whole Building Demand Output'
     ]
+
+
+
+    ### add aumc special outputs
+    aumc_outputs = ['Cooling Setpoint Original Output'
+    'Heating Setpoint Original Output'
+    'Cooling Setpoint Controlled Output'
+    'Heating Setpoint Controlled Output']
+
+    aumc_outputs_f = []
+
+    aumc_outputs_i.each do |output|
+      100.times do |i|
+        output_f = "#{output}" + '_' + i.to_s
+        aumc_outputs_f << output_f
+      end
+    end
+    requested_timeseries_names += aumc_outputs_f
+
+
 
     # add thermal comfort timeseries
     comfortTimeseries = ['Zone Thermal Comfort Fanger Model PMV', 'Zone Thermal Comfort Fanger Model PPD']
@@ -965,6 +987,9 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     key_cnt = 0
     # this is recording the name of these final timeseries to write in the header of the CSV
     final_timeseries_names = []
+
+
+
 
     # loop over requested timeseries
     requested_timeseries_names.each_index do |i|
