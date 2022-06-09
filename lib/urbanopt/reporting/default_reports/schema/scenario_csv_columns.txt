@@ -68,3 +68,9 @@ Emission Intensity Schedule Output
 EV Charging Effective Schedule
 EV Charging Original Schedule
 EV Charging Original Load
+PV Generation Schedule Output
+Current Whole Building Demand Output
+Cooling Setpoint Original Output
+Heating Setpoint Original Output
+Cooling Setpoint Controlled Output
+Heating Setpoint Controlled Output
