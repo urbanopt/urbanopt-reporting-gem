@@ -922,28 +922,25 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
       'EV Charging Original Schedule',
       'EV Charging Original Load',
       'PV Generation Schedule Output', 
-      'Current Whole Building Demand Output'
+      'Current Whole Building Demand Output',
+      'EV Charging Effective Load'
     ]
 
-
-
     ### add aumc special outputs
-    aumc_outputs = ['Cooling Setpoint Original Output'
-    'Heating Setpoint Original Output'
-    'Cooling Setpoint Controlled Output'
+    aumc_outputs_i = ['Cooling Setpoint Original Output',
+    'Heating Setpoint Original Output',
+    'Cooling Setpoint Controlled Output',
     'Heating Setpoint Controlled Output']
 
     aumc_outputs_f = []
 
     aumc_outputs_i.each do |output|
-      100.times do |i|
-        output_f = "#{output}" + '_' + i.to_s
+      10.times do |i|
+        output_f = "#{output}" + '_' + (i+1).to_s
         aumc_outputs_f << output_f
       end
     end
     requested_timeseries_names += aumc_outputs_f
-
-
 
     # add thermal comfort timeseries
     comfortTimeseries = ['Zone Thermal Comfort Fanger Model PMV', 'Zone Thermal Comfort Fanger Model PPD']
