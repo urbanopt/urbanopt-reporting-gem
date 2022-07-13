@@ -38,4 +38,4 @@ jobs:
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: "./coverage/lcov/urbanopt-scenario-gem.lcov"
+          path-to-lcov: "./coverage/lcov/urbanopt-reporting-gem.lcov"
