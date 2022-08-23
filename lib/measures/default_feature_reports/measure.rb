@@ -233,7 +233,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     # result << OpenStudio::IdfObject.load("Output:Variable,*,Exterior Equipment:Electric Vehicles,#{reporting_frequency};").get
 
     ## add environmental factor outputs
-    #result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,Output:EnvironmentalImpactFactors,#{reporting_frequency};").get
+    # result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,Output:EnvironmentalImpactFactors,#{reporting_frequency};").get
     # result << OpenStudio::IdfObject.load("Output:Variable,*,Environmental Impact Total N2O Emissions Carbon Equivalent Mass,#{reporting_frequency}; !- HVAC Sum [kg];").get
     # result << OpenStudio::IdfObject.load("Output:Variable,*,Environmental Impact Total CH4 Emissions Carbon Equivalent Mass,#{reporting_frequency}; !- HVAC Sum [kg];").get
     # result << OpenStudio::IdfObject.load("Output:Variable,*,Environmental Impact Total CO2 Emissions Carbon Equivalent Mass,#{reporting_frequency}; !- HVAC Sum [kg];").get
@@ -252,11 +252,9 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     ev_timeseries_data = ['Exterior Equipment:Electric Vehicles']
 
     emissions_timeseries_data = ['Future_Annual_Electricity_Emissions', 'Future_Hourly_Electricity_Emissions',
-                                  'Historical_Annual_Electricity_Emissions', 'Historical_Hourly_Electricity_Emissions',
-                                  'Future_Annual_Electricity_Emissions_Intensity', 'Future_Hourly_Electricity_Emissions_Intensity',
-                                  'Historical_Annual_Electricity_Emissions_Intensity', 'Historical_Hourly_Electricity_Emissions_Intensity']
-
-
+                                 'Historical_Annual_Electricity_Emissions', 'Historical_Hourly_Electricity_Emissions',
+                                 'Future_Annual_Electricity_Emissions_Intensity', 'Future_Hourly_Electricity_Emissions_Intensity',
+                                 'Historical_Annual_Electricity_Emissions_Intensity', 'Historical_Hourly_Electricity_Emissions_Intensity']
 
     timeseries_data += tes_timeseries_data
     timeseries_data += emissions_timeseries_data
@@ -289,6 +287,43 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     end
 
     return val
+  end
+
+  def feature_qaqc_flags(feature_folder)
+    # QAQC flags by category
+    qaqc_flags = {} # Make a hash for count of flags of each category for this scenario
+    # TODO: If we get straight into the feature folder, several of these lines are unnecessary
+    scenario_run_dir = Pathname.new(scenario_dir)
+    dirs_in_scenario = scenario_run_dir.children.select(&:directory?)
+    # This will occasionally pick up the opendss folder or similar, but the 'next unless' line will skip that dir for us
+    dirs_in_scenario.each do |dir_in_scenario| # Go through the list of features in the scenario
+      # skip unless an 'out.osw' file is present in the folder - indicating a successfully run feature
+      next unless File.file?(File.join(dir_in_scenario, 'out.osw'))
+
+      osw = JSON.parse(File.read(File.join(dir_in_scenario, 'out.osw'))) # Get the qaqc measure data from out.osw
+      osw['steps'].each do |step| # Go through the list of steps in out.osw
+        next unless step['measure_dir_name'] == 'generic_qaqc'
+
+        step['result']['step_values'].each do |step_value| # Go through the list of step values in qaqc
+          if step_value['units'] == 'flags' && step_value['value'] > 0 # Find categories with flags
+            # If the category has already been made in the flag hash, add to it; otherwise create the category and populate it
+            if qaqc_flags[step_value['name']]
+              qaqc_flags[step_value['name']] += step_value['value']
+            else qaqc_flags[step_value['name']] = step_value['value']
+            end
+          end
+        end
+      end
+      # Filthy hack to put 'total_qaqc_flags' at the end of the hash
+      # Purpose is to make it look reasonable when displayed in visualization html report
+      temp_hash_for_ordering = { 'total_qaqc_flags' => qaqc_flags['total_qaqc_flags'] }
+      qaqc_flags.delete('total_qaqc_flags')
+      qaqc_flags['total_qaqc_flags'] = temp_hash_for_ordering['total_qaqc_flags']
+
+      # This line is used near the bottom of scenario-gem/scenario_visualization.rb, to stick it into scenarioData.js
+      # results['qaqc_flags'] = qaqc_flags
+    end
+    return qaqc_flags
   end
 
   # unit conversion method
@@ -402,6 +437,9 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     feature_report.timesteps_per_hour = timesteps_per_hour
 
     feature_report.simulation_status = 'Complete'
+
+    feature_report.qaqc_flags = feature_qaqc_flags(asdf)
+    # TODO: how do I get the feature folder to the qaqc method - so I know where to read the out.osw file from?
 
     feature_report.reporting_periods << URBANopt::Reporting::DefaultReports::ReportingPeriod.new
 
@@ -836,7 +874,6 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
 
     # electricity emissions
     begin
-
       # future_annual_emissions
       future_annual_emissions_ts = sql_file.timeSeries(ann_env_pd.to_s, reporting_frequency.to_s, 'Future_Annual_Electricity_Emissions', 'EMS')
       feature_report.reporting_periods[0].emissions[:future_annual_electricity_emissions_mt] = future_annual_emissions_ts.get.values.sum
@@ -868,7 +905,6 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
       # historical_hourly_emissions_intensity
       historical_hourly_emissions_intensity_ts = sql_file.timeSeries(ann_env_pd.to_s, reporting_frequency.to_s, 'Historical_Hourly_Electricity_Emissions_Intensity', 'EMS')
       feature_report.reporting_periods[0].emissions[:historical_hourly_electricity_emissions_intensity_kg_per_ft2] = historical_hourly_emissions_intensity_ts.get.values.sum
-
     rescue StandardError
       @@logger.info('Emissions are not reported for this feature')
     end
@@ -887,7 +923,6 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     lpg_val = 323.896704
     fo1_val = 294.962046
     fo2_val = 294.962046
-
 
     ##########################################################################################################################
     ######################################## Reporting TImeseries Results FOR CSV File #######################################
@@ -948,7 +983,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
       'Historical_Hourly_Electricity_Emissions_Intensity',
       'Natural_Gas_Emissions',
       'Natural_Gas_Emissions_Intensity',
-      'Propane_Emissions', 
+      'Propane_Emissions',
       'Propane_Emissions_Intensity',
       'FuelOilNo2_Emissions',
       'FuelOilNo2_Emissions_Intensity',
@@ -980,7 +1015,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     runner.registerInfo("All timeseries: #{requested_timeseries_names}")
 
     # timeseries variables to keep to calculate power
-    tsToKeep = ['Electricity:Facility', 'ElectricityProduced:Facility','Propane:Facility', 'NaturalGas:Facility', 'FuelOilNo2:Facility', 'FuelOilNo1:Facility']
+    tsToKeep = ['Electricity:Facility', 'ElectricityProduced:Facility', 'Propane:Facility', 'NaturalGas:Facility', 'FuelOilNo2:Facility', 'FuelOilNo1:Facility']
     tsToKeepIndexes = {}
 
     ### powerFactor ###
@@ -1145,7 +1180,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
         if timeseries_name == 'Natural_Gas_Emissions'
           newVals = Array.new(n, 0)
           (0..n - 1).each do |j|
-            newVals[j] = (nat_gas_val * (values[tsToKeepIndexes['NaturalGas:Facility']][j].to_f * conv_kbtu_J.to_f) / conv_J_mwh.to_f ) * conv_kg_mt.to_f 
+            newVals[j] = (nat_gas_val * (values[tsToKeepIndexes['NaturalGas:Facility']][j].to_f * conv_kbtu_J.to_f) / conv_J_mwh.to_f) * conv_kg_mt.to_f
             j += 1
           end
           new_unit = 'MT'
@@ -1158,7 +1193,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
         if timeseries_name == 'Propane_Emissions'
           newVals = Array.new(n, 0)
           (0..n - 1).each do |j|
-            newVals[j] = (lpg_val * (values[tsToKeepIndexes['Propane:Facility']][j].to_f * conv_kbtu_J.to_f) / conv_J_mwh.to_f ) * conv_kg_mt.to_f 
+            newVals[j] = (lpg_val * (values[tsToKeepIndexes['Propane:Facility']][j].to_f * conv_kbtu_J.to_f) / conv_J_mwh.to_f) * conv_kg_mt.to_f
             j += 1
           end
           new_unit = 'MT'
@@ -1171,7 +1206,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
         if timeseries_name == 'FuelOilNo2_Emissions'
           newVals = Array.new(n, 0)
           (0..n - 1).each do |j|
-            newVals[j] = (fo2_val * (values[tsToKeepIndexes['FuelOilNo2:Facility']][j].to_f * conv_kbtu_J.to_f) / conv_J_mwh.to_f ) * conv_kg_mt.to_f 
+            newVals[j] = (fo2_val * (values[tsToKeepIndexes['FuelOilNo2:Facility']][j].to_f * conv_kbtu_J.to_f) / conv_J_mwh.to_f) * conv_kg_mt.to_f
             j += 1
           end
           new_unit = 'MT'
@@ -1183,12 +1218,12 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
 
         ### calculate emissions intensity metric
         # get flr_area
-        flr_area = building.floorArea * 10.764 #change from m2 to ft2
+        flr_area = building.floorArea * 10.764 # change from m2 to ft2
 
         if timeseries_name == 'Natural_Gas_Emissions_Intensity'
           newVals = Array.new(n, 0)
           (0..n - 1).each do |j|
-            newVals[j] = (((nat_gas_val * (values[tsToKeepIndexes['NaturalGas:Facility']][j].to_f * conv_kbtu_J.to_f) / conv_J_mwh.to_f ) * conv_kg_mt.to_f ) * 1000 / flr_area) # unit: kg/ft2 - changed mt to kg
+            newVals[j] = (((nat_gas_val * (values[tsToKeepIndexes['NaturalGas:Facility']][j].to_f * conv_kbtu_J.to_f) / conv_J_mwh.to_f) * conv_kg_mt.to_f) * 1000 / flr_area) # unit: kg/ft2 - changed mt to kg
             j += 1
           end
           new_unit = 'KG/FT2'
@@ -1201,7 +1236,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
         if timeseries_name == 'Propane_Emissions_Intensity'
           newVals = Array.new(n, 0)
           (0..n - 1).each do |j|
-            newVals[j] = (((lpg_val * (values[tsToKeepIndexes['Propane:Facility']][j].to_f * conv_kbtu_J.to_f) / conv_J_mwh.to_f ) * conv_kg_mt.to_f ) * 1000 / flr_area) # unit: kg/ft2 - changed mt to kg
+            newVals[j] = (((lpg_val * (values[tsToKeepIndexes['Propane:Facility']][j].to_f * conv_kbtu_J.to_f) / conv_J_mwh.to_f) * conv_kg_mt.to_f) * 1000 / flr_area) # unit: kg/ft2 - changed mt to kg
             j += 1
           end
           new_unit = 'KG/FT2'
@@ -1214,7 +1249,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
         if timeseries_name == 'FuelOilNo2_Emissions_Intensity'
           newVals = Array.new(n, 0)
           (0..n - 1).each do |j|
-            newVals[j] = (((fo2_val * (values[tsToKeepIndexes['FuelOilNo2:Facility']][j].to_f * conv_kbtu_J.to_f) / conv_J_mwh.to_f ) * conv_kg_mt.to_f ) * 1000 / flr_area) # unit: kg/ft2 - changed mt to kg
+            newVals[j] = (((fo2_val * (values[tsToKeepIndexes['FuelOilNo2:Facility']][j].to_f * conv_kbtu_J.to_f) / conv_J_mwh.to_f) * conv_kg_mt.to_f) * 1000 / flr_area) # unit: kg/ft2 - changed mt to kg
             j += 1
           end
           new_unit = 'KG/FT2'
@@ -1280,8 +1315,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
               end
             end
           end
-        end          
-          
+        end
 
         # append units to headers
         new_timeseries_name += "(#{new_unit})"
