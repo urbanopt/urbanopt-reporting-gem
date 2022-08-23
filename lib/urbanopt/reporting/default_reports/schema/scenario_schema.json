@@ -368,6 +368,55 @@
 				"type": "number"
 			}
 		},
+		"QAQC":{
+			"type": "object",
+			"properties": {
+				"eui_reasonableness": {
+					"description": "Whether the EUI is within ASHRAE 90.1-2013 bounds for that building type",
+					"type":"integer"
+				},
+				"end_use_by_category":{
+					"description": "Whether building energy use is within ASHRAE 90.1-2013 bounds for that building type",
+					"type": "integer"
+				},
+				"internal_loads":{
+					"description": "Whether lighting, plug, and equipment use is within ASHRAE 90.1-2013 bounds for that building type",
+					"type": "integer"
+				},
+				"schedules":{
+					"description": "Whether lighting, ventilation, occupant, plug, and equipment schedules are within ASHRAE 90.1-2013 bounds for that building type",
+					"type": "integer"
+				},
+				"envelope_r_value":{
+					"description": "Whether building envelope is within ASHRAE 90.1-2013 bounds for that building type",
+					"type": "integer"
+				},
+				"domestic_hot_water":{
+					"description": "Whether DHW energy use is within 2011 ASHRAE handbook bounds for that building type",
+					"type": "integer"
+				},
+				"simultaneous_heating_and_cooling":{
+					"description": "Whether heating and cooling are occuring during the same hour when cooling load exists",
+					"type": "integer"
+				},
+				"supply_and_zone_air_temperature":{
+					"description": "Whether fan effectiveness is within ASHRAE 90.1-2013 bounds for that building type",
+					"type": "integer"
+				},
+				"mechanical_system_part_load_efficiency":{
+					"description": "Whether 40% & 80% heating and cooling efficiency is within ASHRAE 90.1-2013 bounds for that building type",
+					"type": "integer"
+				},
+				"mechanical_system_efficiency":{
+					"description": "Whether heating and cooling efficiency is within ASHRAE 90.1-2013 bounds for that building type",
+					"type": "integer"
+				},
+				"total_qaqc_flags":{
+					"description": "How many QAQC flags have been raised for this feature or scenario",
+					"type": "integer"
+				}
+			}
+		},
 		"FeatureReport": {
 			"type": "object",
 			"properties": {
@@ -428,6 +477,9 @@
 				},
 				"thermal_storage": {
 					"$ref": "#/definitions/ThermalStorage"
+				},
+				"qaqc_flags":{
+					"$ref": "#/definitions/QAQC"
 				}
 			},
 			"required": [
@@ -628,7 +680,7 @@
 							"description": "FuelOilNo2 emissions intensity in kg/ft2 calculated based on EPA eGRID data and calculated using 20-year GWP horizon based on ASHRAE 189.1",
 							"type": "number"
 						}
-						
+
 					}
 				}
 			},
