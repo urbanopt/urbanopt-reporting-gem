@@ -41,6 +41,7 @@
 require 'urbanopt/reporting/default_reports'
 require 'csv'
 require 'benchmark'
+require 'json'
 require 'logger'
 
 @@logger = Logger.new($stdout)
@@ -289,39 +290,26 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     return val
   end
 
-  def feature_qaqc_flags(feature_folder)
+  def feature_qaqc_flags(feature_folder_path)
     # QAQC flags by category
     qaqc_flags = {} # Make a hash for count of flags of each category for this scenario
-    # TODO: If we get straight into the feature folder, several of these lines are unnecessary
-    scenario_run_dir = Pathname.new(scenario_dir)
-    dirs_in_scenario = scenario_run_dir.children.select(&:directory?)
-    # This will occasionally pick up the opendss folder or similar, but the 'next unless' line will skip that dir for us
-    dirs_in_scenario.each do |dir_in_scenario| # Go through the list of features in the scenario
-      # skip unless an 'out.osw' file is present in the folder - indicating a successfully run feature
-      next unless File.file?(File.join(dir_in_scenario, 'out.osw'))
+    osw = JSON.parse(File.read(File.join(feature_folder_path, 'out.osw'))) # Get the qaqc measure data from out.osw
+    osw['steps'].each do |step| # Go through the list of steps in out.osw
+      next unless step['measure_dir_name'] == 'generic_qaqc'
 
-      osw = JSON.parse(File.read(File.join(dir_in_scenario, 'out.osw'))) # Get the qaqc measure data from out.osw
-      osw['steps'].each do |step| # Go through the list of steps in out.osw
-        next unless step['measure_dir_name'] == 'generic_qaqc'
-
-        step['result']['step_values'].each do |step_value| # Go through the list of step values in qaqc
-          if step_value['units'] == 'flags' && step_value['value'] > 0 # Find categories with flags
-            # If the category has already been made in the flag hash, add to it; otherwise create the category and populate it
-            if qaqc_flags[step_value['name']]
-              qaqc_flags[step_value['name']] += step_value['value']
-            else qaqc_flags[step_value['name']] = step_value['value']
-            end
+      step['result']['step_values'].each do |step_value| # Go through the list of step values in qaqc
+        if step_value['units'] == 'flags' && step_value['value'] > 0 # Find categories with flags
+          # If the category has already been made in the flag hash, add to it; otherwise create the category and populate it
+          if qaqc_flags[step_value['name']]
+            qaqc_flags[step_value['name']] += step_value['value']
+          else qaqc_flags[step_value['name']] = step_value['value']
           end
         end
       end
-      # Filthy hack to put 'total_qaqc_flags' at the end of the hash
-      # Purpose is to make it look reasonable when displayed in visualization html report
+      # Hack to put 'total_qaqc_flags' at the end of the hash
       temp_hash_for_ordering = { 'total_qaqc_flags' => qaqc_flags['total_qaqc_flags'] }
       qaqc_flags.delete('total_qaqc_flags')
       qaqc_flags['total_qaqc_flags'] = temp_hash_for_ordering['total_qaqc_flags']
-
-      # This line is used near the bottom of scenario-gem/scenario_visualization.rb, to stick it into scenarioData.js
-      # results['qaqc_flags'] = qaqc_flags
     end
     return qaqc_flags
   end
@@ -438,8 +426,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
 
     feature_report.simulation_status = 'Complete'
 
-    feature_report.qaqc_flags = feature_qaqc_flags(asdf)
-    # TODO: how do I get the feature folder to the qaqc method - so I know where to read the out.osw file from?
+    feature_report.qaqc_flags = feature_qaqc_flags(feature_report.directory_name)
 
     feature_report.reporting_periods << URBANopt::Reporting::DefaultReports::ReportingPeriod.new
 
