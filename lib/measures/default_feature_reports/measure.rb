@@ -44,10 +44,9 @@ require 'benchmark'
 require 'json'
 require 'logger'
 
-@@logger = Logger.new($stdout)
-
 # start the measure
 class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
+  @@logger = Logger.new($stdout)
   # human readable name
   def name
     return 'DefaultFeatureReports'
@@ -425,8 +424,6 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     feature_report.timesteps_per_hour = timesteps_per_hour
 
     feature_report.simulation_status = 'Complete'
-
-    feature_report.qaqc_flags = feature_qaqc_flags(feature_report.directory_name)
 
     feature_report.reporting_periods << URBANopt::Reporting::DefaultReports::ReportingPeriod.new
 
@@ -1445,6 +1442,11 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     feature_report.timeseries_csv.path = File.join(Dir.pwd, 'default_feature_reports.csv')
     feature_report.timeseries_csv.first_report_datetime = '0'
     feature_report.timeseries_csv.column_names = final_timeseries_names
+
+    feature_report.qaqc_flags = feature_qaqc_flags(feature_report.directory_name.to_s)
+
+    puts "\nasdf asdf asdf"
+    puts "qaqc outputs: #{feature_qaqc_flags(feature_report.directory_name.to_s)}"
 
     ##### Save the 'default_feature_reports.json' file
 
