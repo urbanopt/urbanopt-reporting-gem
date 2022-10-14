@@ -368,7 +368,7 @@
 				"type": "number"
 			}
 		},
-		"QAQC":{
+		"qaqc_flags":{
 			"type": "object",
 			"properties": {
 				"eui_reasonableness": {
@@ -479,7 +479,7 @@
 					"$ref": "#/definitions/ThermalStorage"
 				},
 				"qaqc_flags":{
-					"$ref": "#/definitions/QAQC"
+					"$ref": "#/definitions/qaqc_flags"
 				}
 			},
 			"required": [

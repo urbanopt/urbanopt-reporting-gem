@@ -289,26 +289,69 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     return val
   end
 
-  def feature_qaqc_flags(feature_folder_path)
+  def feature_qaqc_flags(runner)
     # QAQC flags by category
     qaqc_flags = {} # Make a hash for count of flags of each category for this scenario
-    osw = JSON.parse(File.read(File.join(feature_folder_path, 'out.osw'))) # Get the qaqc measure data from out.osw
-    osw['steps'].each do |step| # Go through the list of steps in out.osw
-      next unless step['measure_dir_name'] == 'generic_qaqc'
 
-      step['result']['step_values'].each do |step_value| # Go through the list of step values in qaqc
-        if step_value['units'] == 'flags' && step_value['value'] > 0 # Find categories with flags
-          # If the category has already been made in the flag hash, add to it; otherwise create the category and populate it
-          if qaqc_flags[step_value['name']]
-            qaqc_flags[step_value['name']] += step_value['value']
-          else qaqc_flags[step_value['name']] = step_value['value']
-          end
+    runner.workflow.workflowSteps.each do |step|# Go through the list of steps in out.osw
+
+      if step.to_MeasureStep.is_initialized
+        measure_step = step.to_MeasureStep.get
+
+        measure_name = measure_step.measureDirName
+
+        if measure_step.name.is_initialized
+          measure_name = measure_step.name.get
         end
+
+        if measure_name.include? 'qaqc'
+          puts "measure_name = #{measure_name}"
+          if measure_step.result.is_initialized
+            result = measure_step.result.get
+            puts " result = #{result}"
+
+            result.stepValues.each do |step_value|
+
+              #get name 
+              name = step_value.name
+
+              # get value
+              # check if value, double, int, or bool
+              value_type = step_value.variantType.valueDescription
+              if value_type == "Double"
+                value = step_value.valueAsDouble
+              elsif value_type == "Integer"
+                value = step_value.valueAsInteger
+              elsif value_type == "Boolean"
+                value = step_value.valueAsBoolean
+              elsif value_type == "String"
+                value = step_value.valueAsString
+              else
+                # catchall for unexpected value types
+                value = step_value.valueAsVariant.to_s
+              end
+              
+              if qaqc_flags[name]
+                qaqc_flags[name] += value
+              else 
+                qaqc_flags[name] = value
+              end
+
+            end
+
+            puts "qaqc_flags = #{qaqc_flags}"
+
+            # Hack to put 'total_qaqc_flags' at the end of the hash
+            temp_hash_for_ordering = { 'total_qaqc_flags' => qaqc_flags['total_qaqc_flags'] }
+            qaqc_flags.delete('total_qaqc_flags')
+            qaqc_flags['total_qaqc_flags'] = temp_hash_for_ordering['total_qaqc_flags']
+
+          end
+        
+        end
+
       end
-      # Hack to put 'total_qaqc_flags' at the end of the hash
-      temp_hash_for_ordering = { 'total_qaqc_flags' => qaqc_flags['total_qaqc_flags'] }
-      qaqc_flags.delete('total_qaqc_flags')
-      qaqc_flags['total_qaqc_flags'] = temp_hash_for_ordering['total_qaqc_flags']
+
     end
     return qaqc_flags
   end
@@ -893,6 +936,9 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
       @@logger.info('Emissions are not reported for this feature')
     end
 
+    # add qaqc results to feature report 
+    feature_report.qaqc_flags = feature_qaqc_flags(runner)
+
     ##########################################################################################################################
     # set conversion variables
     conv_J_mwh = 1000000 * 60 * 60 # J to MWh (1000000J/MJ * 60hr/min * 60 min/sec)
@@ -1432,7 +1478,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
       end
     end
 
-    puts "values = #{values}"
+    #puts "values = #{values}"
 
     # closing the sql file
     sql_file.close
@@ -1443,13 +1489,8 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     feature_report.timeseries_csv.first_report_datetime = '0'
     feature_report.timeseries_csv.column_names = final_timeseries_names
 
-    feature_report.qaqc_flags = feature_qaqc_flags(feature_report.directory_name.to_s)
-
-    puts "\nasdf asdf asdf"
-    puts "qaqc outputs: #{feature_qaqc_flags(feature_report.directory_name.to_s)}"
 
     ##### Save the 'default_feature_reports.json' file
-
     feature_report_hash = feature_report.to_hash
 
     File.open('default_feature_reports.json', 'w') do |f|
