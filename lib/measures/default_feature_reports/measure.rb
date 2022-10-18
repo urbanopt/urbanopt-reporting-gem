@@ -291,9 +291,9 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
 
   def feature_qaqc_flags(runner)
     # QAQC flags by category
-    qaqc_flags = {} # Make a hash for count of flags of each category for this scenario
+    qaqc_flags = {} # Make a hash for count of flags of each category
 
-    runner.workflow.workflowSteps.each do |step|# Go through the list of steps in out.osw
+    runner.workflow.workflowSteps.each do |step| # Go through all the steps
 
       if step.to_MeasureStep.is_initialized
         measure_step = step.to_MeasureStep.get
@@ -310,31 +310,40 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
             result = measure_step.result.get
             puts " result = #{result}"
 
+            qaqc_flags_list = ['eui_reasonableness' , 'end_use_by_category',
+            'mechanical_system_part_load_efficiency', 'simultaneous_heating_and_cooling', 
+            'internal_loads', 'schedules', 'envelope_r_value', 'domestic_hot_water',
+            'mechanical_system_efficiency', 'supply_and_zone_air_temperature', 'total_qaqc_flags' ]
+            
             result.stepValues.each do |step_value|
-
+              
               #get name 
               name = step_value.name
 
-              # get value
-              # check if value, double, int, or bool
-              value_type = step_value.variantType.valueDescription
-              if value_type == "Double"
-                value = step_value.valueAsDouble
-              elsif value_type == "Integer"
-                value = step_value.valueAsInteger
-              elsif value_type == "Boolean"
-                value = step_value.valueAsBoolean
-              elsif value_type == "String"
-                value = step_value.valueAsString
-              else
-                # catchall for unexpected value types
-                value = step_value.valueAsVariant.to_s
-              end
-              
-              if qaqc_flags[name]
-                qaqc_flags[name] += value
-              else 
-                qaqc_flags[name] = value
+              if qaqc_flags_list.include? name
+
+                # get value
+                # check if value, double, int, or bool
+                value_type = step_value.variantType.valueDescription
+                if value_type == "Double"
+                  value = step_value.valueAsDouble
+                elsif value_type == "Integer"
+                  value = step_value.valueAsInteger
+                elsif value_type == "Boolean"
+                  value = step_value.valueAsBoolean
+                elsif value_type == "String"
+                  value = step_value.valueAsString
+                else
+                  # catchall for unexpected value types
+                  value = step_value.valueAsVariant.to_s
+                end
+                
+                if qaqc_flags[name]
+                  qaqc_flags[name] += value
+                else 
+                  qaqc_flags[name] = value
+                end
+
               end
 
             end
