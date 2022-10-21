@@ -291,7 +291,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
 
   def feature_qaqc_flags(runner)
     # QAQC flags by category
-    qaqc_flags = {} # Make a hash for count of flags of each category
+    qaqc_flags_hash = {} # Make a hash for count of flags of each category
 
     runner.workflow.workflowSteps.each do |step| # Go through all the steps
 
@@ -310,6 +310,9 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
             result = measure_step.result.get
             puts " result = #{result}"
 
+            ## Adding quaqc_flags_list to check the step value name since units key is missing from the result 
+            ## It does show in the out.osw but not in the runner.workflow.workflowSteps object
+            # use this list to define the flags you want to report 
             qaqc_flags_list = ['eui_reasonableness' , 'end_use_by_category',
             'mechanical_system_part_load_efficiency', 'simultaneous_heating_and_cooling', 
             'internal_loads', 'schedules', 'envelope_r_value', 'domestic_hot_water',
@@ -338,22 +341,22 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
                   value = step_value.valueAsVariant.to_s
                 end
                 
-                if qaqc_flags[name]
-                  qaqc_flags[name] += value
+                if qaqc_flags_hash[name]
+                  qaqc_flags_hash[name] += value
                 else 
-                  qaqc_flags[name] = value
+                  qaqc_flags_hash[name] = value
                 end
 
               end
 
             end
 
-            puts "qaqc_flags = #{qaqc_flags}"
+            puts "qaqc_flags_hash = #{qaqc_flags_hash}"
 
             # Hack to put 'total_qaqc_flags' at the end of the hash
-            temp_hash_for_ordering = { 'total_qaqc_flags' => qaqc_flags['total_qaqc_flags'] }
-            qaqc_flags.delete('total_qaqc_flags')
-            qaqc_flags['total_qaqc_flags'] = temp_hash_for_ordering['total_qaqc_flags']
+            temp_hash_for_ordering = { 'total_qaqc_flags' => qaqc_flags_hash['total_qaqc_flags'] }
+            qaqc_flags_hash.delete('total_qaqc_flags')
+            qaqc_flags_hash['total_qaqc_flags'] = temp_hash_for_ordering['total_qaqc_flags']
 
           end
         
@@ -362,7 +365,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
       end
 
     end
-    return qaqc_flags
+    return qaqc_flags_hash
   end
 
   # unit conversion method
@@ -946,7 +949,18 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     end
 
     # add qaqc results to feature report 
-    feature_report.qaqc_flags = feature_qaqc_flags(runner)
+    qaqc_flags_hash = feature_qaqc_flags(runner)
+    feature_report.qaqc_flags.eui_reasonableness = qaqc_flags_hash['eui_reasonableness']
+    feature_report.qaqc_flags.end_use_by_category = qaqc_flags_hash['end_use_by_category']
+    feature_report.qaqc_flags.mechanical_system_part_load_efficiency = qaqc_flags_hash['mechanical_system_part_load_efficiency']
+    feature_report.qaqc_flags.simultaneous_heating_and_cooling = qaqc_flags_hash['simultaneous_heating_and_cooling']
+    feature_report.qaqc_flags.internal_loads = qaqc_flags_hash['internal_loads']
+    feature_report.qaqc_flags.schedules = qaqc_flags_hash['schedules']
+    feature_report.qaqc_flags.envelope_r_value = qaqc_flags_hash['envelope_r_value']
+    feature_report.qaqc_flags.domestic_hot_water = qaqc_flags_hash['domestic_hot_water']
+    feature_report.qaqc_flags.mechanical_system_efficiency = qaqc_flags_hash['mechanical_system_efficiency']
+    feature_report.qaqc_flags.supply_and_zone_air_temperature = qaqc_flags_hash['supply_and_zone_air_temperature']
+    feature_report.qaqc_flags.total_qaqc_flags = qaqc_flags_hash['total_qaqc_flags']
 
     ##########################################################################################################################
     # set conversion variables
