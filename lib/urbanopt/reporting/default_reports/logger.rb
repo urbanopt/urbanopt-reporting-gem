@@ -45,7 +45,7 @@ module URBANopt
     module DefaultReports
       @@logger = Logger.new($stdout)
 
-      @@logger = Logger::WARN
+      @@logger.level = Logger::WARN
       ##
       # Definining class variable "@@logger" to log errors, info and warning messages.
       def self.logger
