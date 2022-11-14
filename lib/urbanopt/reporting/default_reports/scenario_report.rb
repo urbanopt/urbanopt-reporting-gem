@@ -66,8 +66,7 @@ module URBANopt
         attr_accessor :id, :name, :directory_name, :timesteps_per_hour, :number_of_not_started_simulations,
                       :number_of_started_simulations, :number_of_complete_simulations, :number_of_failed_simulations,
                       :timeseries_csv, :location, :program, :construction_costs, :reporting_periods, :feature_reports, :distributed_generation,
-                      :scenario_power_distribution, :scenario_power_distribution_cost # :nodoc:
-                      :qaqc_flags # :nodoc:
+                      :scenario_power_distribution, :scenario_power_distribution_cost, :qaqc_flags # :nodoc:
 
         # ScenarioReport class intializes the scenario report attributes:
         # +:id+ , +:name+ , +:directory_name+, +:timesteps_per_hour+ , +:number_of_not_started_simulations+ ,
@@ -97,7 +96,7 @@ module URBANopt
           @program = Program.new(hash[:program])
           @distributed_generation = DistributedGeneration.new(hash[:distributed_generation] || {})
           @scenario_power_distribution = ScenarioPowerDistribution.new(hash[:scenario_power_distribution] || {})
-          @scenario_power_distribution_cost = ScenarioPowerDistributionCost.new(hash[:scenario_power_distribution_cost] || {}) 
+          @scenario_power_distribution_cost = ScenarioPowerDistributionCost.new(hash[:scenario_power_distribution_cost] || {})
           @qaqc_flags = QAQC.new(hash[:qaqc_flags])
 
           @construction_costs = []
@@ -109,8 +108,6 @@ module URBANopt
           hash[:reporting_periods].each do |rp|
             @reporting_periods << ReportingPeriod.new(rp)
           end
-
-
 
           # feature_report is intialized here to be used in the add_feature_report method
           @feature_reports = []
@@ -184,7 +181,6 @@ module URBANopt
             @timeseries_csv.path = File.join(@directory_name, "#{file_name}.csv")
             @timeseries_csv.save_data
           end
-
 
           hash = {}
           hash[:scenario_report] = to_hash
@@ -265,7 +261,9 @@ module URBANopt
           end
 
           # have to use the module method because we have not yet initialized the class one
-          @@logger.info("Scenario name: #{@name}")
+          unless @name == '' || @name.nil?
+            @@logger.info("Scenario name: #{@name}")
+          end
 
           return result
         end
@@ -352,7 +350,6 @@ module URBANopt
 
           # scenario report location takes the location of the first feature in the list
           @location = feature_reports[0].location
-          
         end
       end
     end
