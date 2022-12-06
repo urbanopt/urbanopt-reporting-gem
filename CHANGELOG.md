@@ -1,5 +1,14 @@
 # URBANopt Reporting Gem
 
+## Version 0.7.0
+Date Range: 08/18/22 - 12/5/22
+
+- Update Dependencies for OpenStudio 3.5.0
+- Fixed [#106]( https://github.com/urbanopt/urbanopt-reporting-gem/issues/106 ), Update UO reporting schema to include DISCO outputs
+- Fixed [#107]( https://github.com/urbanopt/urbanopt-reporting-gem/issues/107 ), QAQC reporting rollup in feature report and scenario report
+- Fixed [#127]( https://github.com/urbanopt/urbanopt-reporting-gem/issues/127 ), Clean up log output to stdout
+
+
 ## Version 0.6.2
 Date Range: 06/28/22 - 08/17/22
 
