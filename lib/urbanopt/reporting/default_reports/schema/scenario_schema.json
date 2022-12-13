@@ -69,9 +69,15 @@
 				},
 				"rnm_results": {
 					"$ref": "#definitions/RnmResults"
-        },
+				},
 				"scenario_power_distribution": {
 					"$ref": "#definitions/ScenarioPowerDistribution"
+				},
+				"scenario_power_distribution_cost": {
+					"$ref": "#definitions/ScenarioPowerDistributionCost"
+				},
+				"qaqc_flags": {
+					"$ref": "#/definitions/qaqc_flags"
 				}
 			},
 			"required": [
@@ -128,6 +134,281 @@
 					}
 				}
 			}
+		},
+		"ScenarioPowerDistributionCost": {
+			"type": "object",
+			"properties": {
+				"title": "UpgradeParamsBaseModel",
+				"description": "Contains results from all jobs in the simulation.",
+				"type": "object",
+				"properties": {
+					"results": {
+						"title": "results",
+						"description": "Results summary for each job",
+						"type": "array",
+						"items": {}
+					},
+					"outputs": {
+						"title": "outputs",
+						"description": "Outputs for each job in the simulation.",
+						"allOf": [{
+							"$ref": "#/definitions/UpgradeSimulationOutputModel"
+						}]
+					},
+					"violation_summary": {
+						"title": "upgrade_summary",
+						"description": "Contains thermal or voltage upgrade results for each job",
+						"type": "array",
+						"items": {
+							"$ref": "#/definitions/UpgradeViolationResultModel"
+						}
+					},
+					"costs_per_equipment": {
+						"title": "costs_per_equipment",
+						"description": "Contains upgrade cost information for each job by equipment type",
+						"type": "array",
+						"items": {
+							"$ref": "#/definitions/TotalUpgradeCostsResultModel"
+						}
+					},
+					"equipment": {
+						"title": "equipment",
+						"description": "Contains equipment information for each job",
+						"type": "array",
+						"items": {}
+					}
+				},
+				"additionalProperties": false,
+				"definitions": {
+					"UpgradeJobOutputModel": {
+						"title": "UpgradeParamsBaseModel",
+						"description": "Contains outputs from one job.",
+						"type": "object",
+						"properties": {
+							"upgraded_opendss_model_file": {
+								"title": "upgraded_opendss_model_file",
+								"description": "Path to file that will load the upgraded network.",
+								"type": "string"
+							},
+							"feeder_stats": {
+								"title": "feeder_stats",
+								"description": "Path to file containing feeder metadata and equipment details before and after upgrades.",
+								"type": "string"
+							},
+							"return_code": {
+								"title": "return_code",
+								"description": "Return code from process. Zero is success, non-zero is a failure.",
+								"type": "integer"
+							}
+						},
+						"required": [
+							"upgraded_opendss_model_file",
+							"feeder_stats",
+							"return_code"
+						],
+						"additionalProperties": false
+					},
+					"UpgradeSimulationOutputModel": {
+						"title": "UpgradeParamsBaseModel",
+						"description": "Contains outputs from all jobs in the simulation.",
+						"type": "object",
+						"properties": {
+							"log_file": {
+								"title": "log_file",
+								"description": "Path to log file for the simulation.",
+								"type": "string"
+							},
+							"jobs": {
+								"title": "jobs",
+								"description": "Outputs for each job in the simulation.",
+								"type": "array",
+								"items": {
+									"$ref": "#/definitions/UpgradeJobOutputModel"
+								}
+							}
+						},
+						"required": [
+							"log_file",
+							"jobs"
+						],
+						"additionalProperties": false
+					},
+					"UpgradeViolationResultModel": {
+						"title": "UpgradeParamsBaseModel",
+						"description": "Defines result parameters for thermal upgrades.",
+						"type": "object",
+						"properties": {
+							"name": {
+								"title": "name",
+								"description": "Job name that produced the result",
+								"type": "string"
+							},
+							"scenario": {
+								"title": "scenario",
+								"description": "Simulation scenario describing the controls being used",
+								"default": "control_mode",
+								"type": "string"
+							},
+							"stage": {
+								"title": "stage",
+								"description": "Stage of upgrades: initial (before upgrades) or final (after upgrades)",
+								"type": "string"
+							},
+							"upgrade_type": {
+								"title": "upgrade_type",
+								"description": "Type of upgrade: thermal or voltage",
+								"type": "string"
+							},
+							"simulation_time_s": {
+								"title": "simulation_time_s",
+								"description": "Simulation time to perform upgrades (seconds)",
+								"type": "number"
+							},
+							"thermal_violations_present": {
+								"title": "thermal_violations_present",
+								"description": "Flag indicating whether thermal violations are present",
+								"type": "boolean"
+							},
+							"voltage_violations_present": {
+								"title": "voltage_violations_present",
+								"description": "Flag indicating whether voltage violations are present",
+								"type": "boolean"
+							},
+							"max_bus_voltage": {
+								"title": "max_bus_voltage",
+								"description": "Maximum voltage recorded on any bus",
+								"units": "pu",
+								"type": "number"
+							},
+							"min_bus_voltage": {
+								"title": "min_bus_voltage",
+								"description": "Minimum voltage recorded on any bus",
+								"units": "pu",
+								"type": "number"
+							},
+							"num_voltage_violation_buses": {
+								"title": "num_voltage_violation_buses",
+								"description": "Number of buses with voltage violations",
+								"type": "integer"
+							},
+							"num_overvoltage_violation_buses": {
+								"title": "num_overvoltage_violation_buses",
+								"description": "Number of buses with voltage above voltage_upper_limit",
+								"type": "integer"
+							},
+							"voltage_upper_limit": {
+								"title": "voltage_upper_limit",
+								"description": "Voltage upper limit, the threshold considered for determining overvoltages",
+								"units": "pu",
+								"type": "number"
+							},
+							"num_undervoltage_violation_buses": {
+								"title": "num_undervoltage_violation_buses",
+								"description": "Number of buses with voltage below voltage_lower_limit",
+								"type": "integer"
+							},
+							"voltage_lower_limit": {
+								"title": "voltage_lower_limit",
+								"description": "Voltage lower limit, the threshold considered for determining undervoltages",
+								"units": "pu",
+								"type": "number"
+							},
+							"max_line_loading": {
+								"title": "max_line_loading",
+								"description": "Maximum line loading",
+								"units": "pu",
+								"type": "number"
+							},
+							"max_transformer_loading": {
+								"title": "max_transformer_loading",
+								"description": "Maximum transformer loading",
+								"units": "pu",
+								"type": "number"
+							},
+							"num_line_violations": {
+								"title": "num_line_violations",
+								"description": "Number of lines with loading above line upper limit",
+								"type": "integer"
+							},
+							"line_upper_limit": {
+								"title": "line_upper_limit",
+								"description": "Line upper limit, the threshold considered for determining line overloading",
+								"units": "pu",
+								"type": "number"
+							},
+							"num_transformer_violations": {
+								"title": "num_transformer_violations",
+								"description": "Number of transformers with loading above transformer upper limit",
+								"type": "integer"
+							},
+							"transformer_upper_limit": {
+								"title": "transformer_upper_limit",
+								"description": "Transformer upper limit, the threshold considered for determining transformer overloading",
+								"units": "pu",
+								"type": "number"
+							}
+						},
+						"required": [
+							"name",
+							"stage",
+							"upgrade_type",
+							"simulation_time_s",
+							"thermal_violations_present",
+							"voltage_violations_present",
+							"max_bus_voltage",
+							"min_bus_voltage",
+							"num_voltage_violation_buses",
+							"num_overvoltage_violation_buses",
+							"voltage_upper_limit",
+							"num_undervoltage_violation_buses",
+							"voltage_lower_limit",
+							"max_line_loading",
+							"max_transformer_loading",
+							"num_line_violations",
+							"line_upper_limit",
+							"num_transformer_violations",
+							"transformer_upper_limit"
+						],
+						"additionalProperties": false
+					},
+					"TotalUpgradeCostsResultModel": {
+						"title": "UpgradeParamsBaseModel",
+						"description": "Provides total output costs for upgrading a type of equipment.",
+						"type": "object",
+						"properties": {
+							"name": {
+								"title": "name",
+								"description": "Job name",
+								"type": "string"
+							},
+							"type": {
+								"title": "type",
+								"description": "Equipment type",
+								"type": "string"
+							},
+							"count": {
+								"title": "count",
+								"description": "Count of upgraded equipment",
+								"type": "integer"
+							},
+							"total_cost_usd": {
+								"title": "total_cost_usd",
+								"description": "Total cost in US dollars",
+								"units": "dollars",
+								"type": "number"
+							}
+						},
+						"required": [
+							"name",
+							"type",
+							"count",
+							"total_cost_usd"
+						],
+						"additionalProperties": false
+					}
+				}
+			}
+
 		},
 		"DistributedGeneration": {
 			"type": "object",
@@ -254,24 +535,7 @@
 					}
 				},
 				"electrical_lines_length": {
-					"description": "Electrical lines length",
-					"type": "object",
-					"properties": {
-						"low_voltage": {
-							"description": "Low voltage electrical lines length",
-							"type": "object",
-							"properties": {
-								"$ref": "#/definitions/LineLength"
-							}
-						},
-						"medium_voltage": {
-							"description": "Medium voltage electrical lines length",
-							"type": "object",
-							"properties": {
-								"$ref": "#/definitions/LineLength"
-							}
-						}
-					}
+					"$ref": "#/definitions/LineLength"
 				},
 				"distribution_transformers_capacity_kva": {
 					"description": "Distribution transformers capacity in kVA",
@@ -282,18 +546,10 @@
 					"type": "object",
 					"properties": {
 						"investment": {
-							"description": "Investment cost",
-							"type": "object",
-							"properties": {
-								"$ref": "#/definitions/RnmCost"
-							}
+							"$ref": "#/definitions/RnmCost"
 						},
 						"yearly_maintenance": {
-							"description": "Yearly maintenance cost",
-							"type": "object",
-							"properties": {
-								"$ref": "#/definitions/RnmCost"
-							}
+							"$ref": "#/definitions/RnmCost"
 						}
 					}
 				},
@@ -344,6 +600,17 @@
 			"underground_mi": {
 				"description": "Length of underground lines (miles)",
 				"type": "number"
+			},
+			"type": "object",
+			"properties": {
+				"overhead_mi": {
+					"description": "Length of overhead lines (miles)",
+					"type": "number"
+				},
+				"underground_mi": {
+					"description": "Length of underground lines (miles)",
+					"type": "number"
+				}
 			}
 		},
 		"RnmCost": {
@@ -366,6 +633,78 @@
 			"total": {
 				"description": "Total Cost ($)",
 				"type": "number"
+			},
+			"type": "object",
+			"properties": {
+				"low_voltage_network": {
+					"description": "Low Voltage Network Cost ($)",
+					"type": "number"
+				},
+				"distribution_transformers": {
+					"description": "Distribution Transformers Cost ($)",
+					"type": "number"
+				},
+				"medium_voltage_network": {
+					"description": "Medium Voltage Network Cost ($)",
+					"type": "number"
+				},
+				"primary_substations": {
+					"description": "Primary Substations Cost ($)",
+					"type": "number"
+				},
+				"total": {
+					"description": "TOtal Cost ($)",
+					"type": "number"
+				}
+			}
+		},
+		"qaqc_flags": {
+			"type": "object",
+			"properties": {
+				"eui_reasonableness": {
+					"description": "Whether the EUI is within ASHRAE 90.1-2013 bounds for that building type",
+					"type": ["integer", "null"]
+				},
+				"end_use_by_category": {
+					"description": "Whether building energy use is within ASHRAE 90.1-2013 bounds for that building type",
+					"type": ["integer", "null"]
+				},
+				"mechanical_system_part_load_efficiency": {
+					"description": "Whether 40% & 80% heating and cooling efficiency is within ASHRAE 90.1-2013 bounds for that building type",
+					"type": ["integer", "null"]
+				},
+				"simultaneous_heating_and_cooling": {
+					"description": "Whether heating and cooling are occuring during the same hour when cooling load exists",
+					"type": ["integer", "null"]
+				},
+				"internal_loads": {
+					"description": "Whether lighting, plug, and equipment use is within ASHRAE 90.1-2013 bounds for that building type",
+					"type": ["integer", "null"]
+				},
+				"schedules": {
+					"description": "Whether lighting, ventilation, occupant, plug, and equipment schedules are within ASHRAE 90.1-2013 bounds for that building type",
+					"type": ["integer", "null"]
+				},
+				"envelope_r_value": {
+					"description": "Whether building envelope is within ASHRAE 90.1-2013 bounds for that building type",
+					"type": ["integer", "null"]
+				},
+				"domestic_hot_water": {
+					"description": "Whether DHW energy use is within 2011 ASHRAE handbook bounds for that building type",
+					"type": ["integer", "null"]
+				},
+				"mechanical_system_efficiency": {
+					"description": "Whether heating and cooling efficiency is within ASHRAE 90.1-2013 bounds for that building type",
+					"type": ["integer", "null"]
+				},
+				"supply_and_zone_air_temperature": {
+					"description": "Whether fan effectiveness is within ASHRAE 90.1-2013 bounds for that building type",
+					"type": ["integer", "null"]
+				},
+				"total_qaqc_flags": {
+					"description": "How many QAQC flags have been raised for this feature or scenario",
+					"type": ["integer", "null"]
+				}
 			}
 		},
 		"FeatureReport": {
@@ -428,6 +767,9 @@
 				},
 				"thermal_storage": {
 					"$ref": "#/definitions/ThermalStorage"
+				},
+				"qaqc_flags": {
+					"$ref": "#/definitions/qaqc_flags"
 				}
 			},
 			"required": [
@@ -628,7 +970,6 @@
 							"description": "FuelOilNo2 emissions intensity in kg/ft2 calculated based on EPA eGRID data and calculated using 20-year GWP horizon based on ASHRAE 189.1",
 							"type": "number"
 						}
-						
 					}
 				}
 			},

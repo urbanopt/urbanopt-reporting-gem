@@ -47,6 +47,8 @@ require_relative 'timeseries_csv'
 require_relative 'distributed_generation'
 require_relative 'validator'
 require_relative 'scenario_power_distribution'
+require_relative 'scenario_power_distribution_cost'
+require_relative 'qaqc_flags'
 
 require 'json'
 require 'json-schema'
@@ -64,12 +66,13 @@ module URBANopt
         attr_accessor :id, :name, :directory_name, :timesteps_per_hour, :number_of_not_started_simulations,
                       :number_of_started_simulations, :number_of_complete_simulations, :number_of_failed_simulations,
                       :timeseries_csv, :location, :program, :construction_costs, :reporting_periods, :feature_reports, :distributed_generation,
-                      :scenario_power_distribution # :nodoc:
+                      :scenario_power_distribution, :scenario_power_distribution_cost, :qaqc_flags # :nodoc:
 
         # ScenarioReport class intializes the scenario report attributes:
         # +:id+ , +:name+ , +:directory_name+, +:timesteps_per_hour+ , +:number_of_not_started_simulations+ ,
         # +:number_of_started_simulations+ , +:number_of_complete_simulations+ , +:number_of_failed_simulations+ ,
-        # +:timeseries_csv+ , +:location+ , +:program+ , +:construction_costs+ , +:reporting_periods+ , +:feature_reports+
+        # +:timeseries_csv+ , +:location+ , +:program+ , +:construction_costs+ , +:reporting_periods+ , +:feature_reports+,
+        # +:distributed_generation+, +:scenario_power_distribution+, +:qaqc_flags+
         ##
         # Each ScenarioReport object corresponds to a single Scenario.
         ##
@@ -93,6 +96,8 @@ module URBANopt
           @program = Program.new(hash[:program])
           @distributed_generation = DistributedGeneration.new(hash[:distributed_generation] || {})
           @scenario_power_distribution = ScenarioPowerDistribution.new(hash[:scenario_power_distribution] || {})
+          @scenario_power_distribution_cost = ScenarioPowerDistributionCost.new(hash[:scenario_power_distribution_cost] || {})
+          @qaqc_flags = QAQC.new(hash[:qaqc_flags])
 
           @construction_costs = []
           hash[:construction_costs].each do |cc|
@@ -136,6 +141,7 @@ module URBANopt
           hash[:timeseries_csv] = TimeseriesCSV.new.to_hash
           hash[:location] = Location.new.defaults
           hash[:program] = Program.new.to_hash
+          hash[:qaqc_flags] = QAQC.new.to_hash
           hash[:construction_costs] = []
           hash[:reporting_periods] = []
           hash[:feature_reports] = []
@@ -161,18 +167,20 @@ module URBANopt
         ##
         # [parameters]:
         # +file_name+ - _String_ - Assign a name to the saved scenario results file without an extension
-        def save(file_name = 'default_scenario_report', save_feature_reports = true)
+        def save(file_name = 'default_scenario_report', save_feature_reports = true, save_csv_reports = true)
           # reassign the initialize local variable @file_name to the file name input.
           @file_name = file_name
 
-          # save the scenario reports csv and json data
-          old_timeseries_path = nil
-          if !@timeseries_csv.path.nil?
-            old_timeseries_path = @timeseries_csv.path
-          end
+          if save_csv_reports == true
+            # save the scenario reports csv and json data
+            old_timeseries_path = nil
+            if !@timeseries_csv.path.nil?
+              old_timeseries_path = @timeseries_csv.path
+            end
 
-          @timeseries_csv.path = File.join(@directory_name, "#{file_name}.csv")
-          @timeseries_csv.save_data
+            @timeseries_csv.path = File.join(@directory_name, "#{file_name}.csv")
+            @timeseries_csv.save_data
+          end
 
           hash = {}
           hash[:scenario_report] = to_hash
@@ -193,10 +201,12 @@ module URBANopt
             end
           end
 
-          if !old_timeseries_path.nil?
-            @timeseries_csv.path = old_timeseries_path
-          else
-            @timeseries_csv.path = File.join(@directory_name, "#{file_name}.csv")
+          if save_csv_reports == true
+            if !old_timeseries_path.nil?
+              @timeseries_csv.path = old_timeseries_path
+            else
+              @timeseries_csv.path = File.join(@directory_name, "#{file_name}.csv")
+            end
           end
 
           if save_feature_reports
@@ -233,6 +243,8 @@ module URBANopt
           result[:program] = @program.to_hash if @program
           result[:distributed_generation] = @distributed_generation.to_hash if @distributed_generation
           result[:scenario_power_distribution] = @scenario_power_distribution.to_hash if @scenario_power_distribution
+          result[:scenario_power_distribution_cost] = @scenario_power_distribution_cost.to_hash if @scenario_power_distribution_cost
+          result[:qaqc_flags] = @qaqc_flags.to_hash if @qaqc_flags
 
           result[:construction_costs] = []
           @construction_costs&.each { |cc| result[:construction_costs] << cc.to_hash }
@@ -249,7 +261,9 @@ module URBANopt
           end
 
           # have to use the module method because we have not yet initialized the class one
-          @@logger.info("Scenario name: #{@name}")
+          unless @name == '' || @name.nil?
+            @@logger.info("Scenario name: #{@name}")
+          end
 
           return result
         end
@@ -261,6 +275,7 @@ module URBANopt
         # - check feature simulation status
         # - merge timeseries_csv information
         # - merge program information
+        # - merge qaqc_flags information
         # - merge construction_cost information
         # - merge reporting_periods information
         # - add the array of feature_reports
@@ -324,7 +339,11 @@ module URBANopt
           # merge reporting_periods information
           @reporting_periods = ReportingPeriod.merge_reporting_periods(@reporting_periods, feature_report.reporting_periods)
 
+          # merge distributed_generation information
           @distributed_generation = DistributedGeneration.merge_distributed_generation(@distributed_generation, feature_report.distributed_generation)
+
+          # merge qaqc_flags information
+          @qaqc_flags.add_qaqc_flags(feature_report.qaqc_flags)
 
           # add feature_report
           @feature_reports << feature_report
