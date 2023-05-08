@@ -1,10 +1,11 @@
 <?xml version="1.0"?>
 <measure>
   <schema_version>3.0</schema_version>
+  <error>wrong number of arguments (given 1, expected 0)</error>
   <name>default_feature_reports</name>
   <uid>9ee3135a-8070-4408-bfa1-b75fecf9dd4f</uid>
-  <version_id>0c47e26d-c74a-4a54-9058-87b364216171</version_id>
-  <version_modified>20230508T210852Z</version_modified>
+  <version_id>ac9bbb58-a4a2-4cbf-b2f1-e9e4fe5775a9</version_id>
+  <version_modified>20230508T212419Z</version_modified>
   <xml_checksum>FB304155</xml_checksum>
   <class_name>DefaultFeatureReports</class_name>
   <display_name>DefaultFeatureReports</display_name>
@@ -50,12 +51,14 @@
     <argument>
       <name>feature_location</name>
       <display_name>URBANopt Feature Location'</display_name>
-      <descrption>Writes default_feature_reports.json and default_feature_reports.csv files used by URBANopt Scenario Default Post Processor</descrption>
+      <description></description>
       <type>String</type>
       <units></units>
       <required>true</required>
       <model_dependent>false</model_dependent>
       <default_value>1</default_value>
+      <min_value></min_value>
+      <max_value></max_value>
     </argument>
     <argument>
       <name>reporting_frequency</name>
