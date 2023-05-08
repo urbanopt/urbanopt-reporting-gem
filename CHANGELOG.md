@@ -1,5 +1,11 @@
 # URBANopt Reporting Gem
 
+## Version 0.7.1
+Date Range: 12/12/22 - 05/08/23
+
+- Added in the `feature_location` argument in measure.xml
+- Updated copyrights
+
 ## Version 0.7.0
 Date Range: 08/18/22 - 12/12/22
 
