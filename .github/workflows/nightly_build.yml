@@ -24,7 +24,7 @@ jobs:
     # https://github.com/rbenv/ruby-build/discussions/1940
     runs-on: ubuntu-latest
     container:
-      image: docker://nrel/openstudio:3.5.1
+      image: docker://nrel/openstudio:3.6.1
     steps:
       - uses: actions/checkout@v3
       - name: Update gems
