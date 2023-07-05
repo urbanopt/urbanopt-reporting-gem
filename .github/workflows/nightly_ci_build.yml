@@ -46,8 +46,8 @@ jobs:
             spec/**
             # coverage/
           retention-days: 7 # save for 1 week before deleting
-      # coveralls action docs: https://github.com/marketplace/actions/coveralls-github-action
       - name: Coveralls
+        # coveralls action docs: https://github.com/marketplace/actions/coveralls-github-action
         uses: coverallsapp/github-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
