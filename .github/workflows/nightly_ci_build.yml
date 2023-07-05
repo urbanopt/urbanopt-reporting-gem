@@ -27,9 +27,18 @@ jobs:
         continue-on-error: true
         # Continue to upload step even if a test fails, so we can troubleshoot
         run: bundle exec rspec
+      - name: List OpenStudio measures
+        continue-on-error: true
+        run: bundle exec rake openstudio:list_measures
+      - name: List OpenStudio measures
+        continue-on-error: true
+        run: bundle exec rake openstudio:update_measures
+      - name: List OpenStudio measures
+        continue-on-error: true
+        run: bundle exec rake openstudio:test_with_openstudio
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
-        # Only upload if rspec fails
+        # Only upload if tests fail
         if: ${{ failure() }}
         with:
           name: rspec_results
