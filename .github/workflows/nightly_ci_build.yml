@@ -30,10 +30,10 @@ jobs:
       - name: List OpenStudio measures
         continue-on-error: true
         run: bundle exec rake openstudio:list_measures
-      - name: List OpenStudio measures
+      - name: Update OpenStudio measures
         continue-on-error: true
         run: bundle exec rake openstudio:update_measures
-      - name: List OpenStudio measures
+      - name: Test OpenStudio measures
         continue-on-error: true
         run: bundle exec rake openstudio:test_with_openstudio
       - name: Upload artifacts
@@ -47,7 +47,7 @@ jobs:
             # coverage/
           retention-days: 7 # save for 1 week before deleting
       # coveralls action docs: https://github.com/marketplace/actions/coveralls-github-action
-      - name: Coveralls GitHub Action
+      - name: Coveralls
         uses: coverallsapp/github-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
