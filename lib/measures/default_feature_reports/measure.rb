@@ -259,7 +259,6 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     qaqc_flags_hash = {} # Make a hash for count of flags of each category
 
     runner.workflow.workflowSteps.each do |step| # Go through all the steps
-
       if step.to_MeasureStep.is_initialized
         measure_step = step.to_MeasureStep.get
 
@@ -278,14 +277,14 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
             ## Adding quaqc_flags_list to check the step value name since units key is missing from the result
             ## It does show in the out.osw but not in the runner.workflow.workflowSteps object
             # use this list to define the flags you want to report
-            qaqc_flags_list = ['eui_reasonableness' , 'end_use_by_category',
-            'mechanical_system_part_load_efficiency', 'simultaneous_heating_and_cooling',
-            'internal_loads', 'schedules', 'envelope_r_value', 'domestic_hot_water',
-            'mechanical_system_efficiency', 'supply_and_zone_air_temperature', 'total_qaqc_flags' ]
+            qaqc_flags_list = [
+              'eui_reasonableness', 'end_use_by_category', 'mechanical_system_part_load_efficiency',
+              'simultaneous_heating_and_cooling', 'internal_loads', 'schedules', 'envelope_r_value',
+              'domestic_hot_water', 'mechanical_system_efficiency', 'supply_and_zone_air_temperature', 'total_qaqc_flags'
+            ]
 
             result.stepValues.each do |step_value|
-
-              #get name
+              # get name
               name = step_value.name
 
               if qaqc_flags_list.include? name
@@ -293,13 +292,14 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
                 # get value
                 # check if value, double, int, or bool
                 value_type = step_value.variantType.valueDescription
-                if value_type == "Double"
+                case value_type
+                when 'Double'
                   value = step_value.valueAsDouble
-                elsif value_type == "Integer"
+                when 'Integer'
                   value = step_value.valueAsInteger
-                elsif value_type == "Boolean"
+                when 'Boolean'
                   value = step_value.valueAsBoolean
-                elsif value_type == "String"
+                when 'String'
                   value = step_value.valueAsString
                 else
                   # catchall for unexpected value types
@@ -313,7 +313,6 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
                 end
 
               end
-
             end
 
             puts "qaqc_flags_hash = #{qaqc_flags_hash}"
@@ -328,7 +327,6 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
         end
 
       end
-
     end
     return qaqc_flags_hash
   end
@@ -1466,7 +1464,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
       end
     end
 
-    #puts "values = #{values}"
+    # puts "values = #{values}"
 
     # closing the sql file
     sql_file.close
@@ -1476,7 +1474,6 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     feature_report.timeseries_csv.path = File.join(Dir.pwd, 'default_feature_reports.csv')
     feature_report.timeseries_csv.first_report_datetime = '0'
     feature_report.timeseries_csv.column_names = final_timeseries_names
-
 
     ##### Save the 'default_feature_reports.json' file
     feature_report_hash = feature_report.to_hash
