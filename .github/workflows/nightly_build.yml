@@ -7,12 +7,6 @@ on:
     # 5 am UTC (11pm MDT the day before) every weekday night in MDT
     # - cron: '22 5 * * 2-6'
 
-# Cancels an existing job (of the same workflow) if it is still running
-# https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#example-only-cancel-in-progress-jobs-or-runs-for-the-current-workflow
-# concurrency:
-#   group: ${{ github.workflow }}-${{ github.ref }}
-#   cancel-in-progress: true
-
 env:
   # This env var should enforce develop branch of all dependencies
   FAVOR_LOCAL_GEMS: true
@@ -20,20 +14,32 @@ env:
 
 jobs:
   weeknight-tests:
-    # ubuntu-latest works since https://github.com/rbenv/ruby-build/releases/tag/v20220710 (July 10, 2022)
-    # https://github.com/rbenv/ruby-build/discussions/1940
     runs-on: ubuntu-latest
     container:
       image: docker://nrel/openstudio:3.6.1
     steps:
       - uses: actions/checkout@v3
       - name: Update gems
-        run: bundle update
+        run: |
+          ruby --version
+          bundle update
       - name: Run Rspec
+        continue-on-error: true
+        # Continue to upload step even if a test fails, so we can troubleshoot
         run: bundle exec rspec
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        # Only upload if rspec fails
+        if: ${{ failure() }}
+        with:
+          name: rspec_results
+          path: |
+            spec/**
+            # coverage/
+          retention-days: 7 # save for 1 week before deleting
       # coveralls action docs: https://github.com/marketplace/actions/coveralls-github-action
-      - name: Coveralls
-        uses: coverallsapp/github-action@master
+      - name: Coveralls GitHub Action
+        uses: coverallsapp/github-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: "./coverage/lcov/urbanopt-reporting-gem.lcov"
