@@ -1,41 +1,6 @@
 # *********************************************************************************
-# URBANopt™, Copyright (c) 2019-2022, Alliance for Sustainable Energy, LLC, and other
-# contributors. All rights reserved.
-
-# Redistribution and use in source and binary forms, with or without modification,
-# are permitted provided that the following conditions are met:
-
-# Redistributions of source code must retain the above copyright notice, this list
-# of conditions and the following disclaimer.
-
-# Redistributions in binary form must reproduce the above copyright notice, this
-# list of conditions and the following disclaimer in the documentation and/or other
-# materials provided with the distribution.
-
-# Neither the name of the copyright holder nor the names of its contributors may be
-# used to endorse or promote products derived from this software without specific
-# prior written permission.
-
-# Redistribution of this software, without modification, must refer to the software
-# by the same designation. Redistribution of a modified version of this software
-# (i) may not refer to the modified version by the same designation, or by any
-# confusingly similar designation, and (ii) must refer to the underlying software
-# originally provided by Alliance as “URBANopt”. Except to comply with the foregoing,
-# the term “URBANopt”, or any confusingly similar designation may not be used to
-# refer to any modified version of this software or any modified version of the
-# underlying software originally provided by Alliance without the prior written
-# consent of Alliance.
-
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-# ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-# IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
-# INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-# BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-# LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-# OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
-# OF THE POSSIBILITY OF SUCH DAMAGE.
+# URBANopt (tm), Copyright (c) Alliance for Sustainable Energy, LLC.
+# See also https://github.com/urbanopt/urbanopt-reporting-gem/blob/develop/LICENSE.md
 # *********************************************************************************
 
 require 'urbanopt/reporting/default_reports'
@@ -294,7 +259,6 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     qaqc_flags_hash = {} # Make a hash for count of flags of each category
 
     runner.workflow.workflowSteps.each do |step| # Go through all the steps
-
       if step.to_MeasureStep.is_initialized
         measure_step = step.to_MeasureStep.get
 
@@ -310,17 +274,17 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
             result = measure_step.result.get
             puts " result = #{result}"
 
-            ## Adding quaqc_flags_list to check the step value name since units key is missing from the result 
+            ## Adding quaqc_flags_list to check the step value name since units key is missing from the result
             ## It does show in the out.osw but not in the runner.workflow.workflowSteps object
-            # use this list to define the flags you want to report 
-            qaqc_flags_list = ['eui_reasonableness' , 'end_use_by_category',
-            'mechanical_system_part_load_efficiency', 'simultaneous_heating_and_cooling', 
-            'internal_loads', 'schedules', 'envelope_r_value', 'domestic_hot_water',
-            'mechanical_system_efficiency', 'supply_and_zone_air_temperature', 'total_qaqc_flags' ]
-            
+            # use this list to define the flags you want to report
+            qaqc_flags_list = [
+              'eui_reasonableness', 'end_use_by_category', 'mechanical_system_part_load_efficiency',
+              'simultaneous_heating_and_cooling', 'internal_loads', 'schedules', 'envelope_r_value',
+              'domestic_hot_water', 'mechanical_system_efficiency', 'supply_and_zone_air_temperature', 'total_qaqc_flags'
+            ]
+
             result.stepValues.each do |step_value|
-              
-              #get name 
+              # get name
               name = step_value.name
 
               if qaqc_flags_list.include? name
@@ -328,27 +292,27 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
                 # get value
                 # check if value, double, int, or bool
                 value_type = step_value.variantType.valueDescription
-                if value_type == "Double"
+                case value_type
+                when 'Double'
                   value = step_value.valueAsDouble
-                elsif value_type == "Integer"
+                when 'Integer'
                   value = step_value.valueAsInteger
-                elsif value_type == "Boolean"
+                when 'Boolean'
                   value = step_value.valueAsBoolean
-                elsif value_type == "String"
+                when 'String'
                   value = step_value.valueAsString
                 else
                   # catchall for unexpected value types
                   value = step_value.valueAsVariant.to_s
                 end
-                
+
                 if qaqc_flags_hash[name]
                   qaqc_flags_hash[name] += value
-                else 
+                else
                   qaqc_flags_hash[name] = value
                 end
 
               end
-
             end
 
             puts "qaqc_flags_hash = #{qaqc_flags_hash}"
@@ -359,11 +323,10 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
             qaqc_flags_hash['total_qaqc_flags'] = temp_hash_for_ordering['total_qaqc_flags']
 
           end
-        
+
         end
 
       end
-
     end
     return qaqc_flags_hash
   end
@@ -948,7 +911,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
       @@logger.info('Emissions are not reported for this feature')
     end
 
-    # add qaqc results to feature report 
+    # add qaqc results to feature report
     qaqc_flags_hash = feature_qaqc_flags(runner)
     feature_report.qaqc_flags.eui_reasonableness = qaqc_flags_hash['eui_reasonableness']
     feature_report.qaqc_flags.end_use_by_category = qaqc_flags_hash['end_use_by_category']
@@ -1501,7 +1464,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
       end
     end
 
-    #puts "values = #{values}"
+    # puts "values = #{values}"
 
     # closing the sql file
     sql_file.close
@@ -1511,7 +1474,6 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     feature_report.timeseries_csv.path = File.join(Dir.pwd, 'default_feature_reports.csv')
     feature_report.timeseries_csv.first_report_datetime = '0'
     feature_report.timeseries_csv.column_names = final_timeseries_names
-
 
     ##### Save the 'default_feature_reports.json' file
     feature_report_hash = feature_report.to_hash

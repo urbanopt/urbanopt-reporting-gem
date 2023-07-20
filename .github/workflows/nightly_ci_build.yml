@@ -1,0 +1,54 @@
+name: nightly_ci_build
+
+on:
+  push:
+  # schedule:
+    # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule
+    # 5 am UTC (11pm MDT the day before) every weekday night in MDT
+    # - cron: '22 5 * * 2-6'
+
+env:
+  # This env var should enforce develop branch of all dependencies
+  FAVOR_LOCAL_GEMS: true
+  GEM_DEVELOPER_KEY: ${{ secrets.GEM_DEVELOPER_KEY }}
+
+jobs:
+  weeknight-tests:
+    runs-on: ubuntu-latest
+    container:
+      image: docker://nrel/openstudio:3.6.1
+    steps:
+      - uses: actions/checkout@v3
+      - name: Update gems
+        run: |
+          ruby --version
+          bundle update
+      - name: List OpenStudio measures
+        continue-on-error: true
+        run: bundle exec rake openstudio:list_measures
+      - name: Update OpenStudio measures
+        continue-on-error: true
+        run: bundle exec rake openstudio:update_measures
+      - name: Test OpenStudio measures
+        continue-on-error: true
+        run: bundle exec rake openstudio:test_with_openstudio
+      - name: Run Rspec
+        continue-on-error: true
+        # Continue to upload step even if a test fails, so we can troubleshoot
+        run: bundle exec rspec
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        # Only upload if tests fail
+        if: ${{ failure() }}
+        with:
+          name: rspec_results
+          path: |
+            spec/**
+            # coverage/
+          retention-days: 7 # save for 1 week before deleting
+      - name: Coveralls
+        # coveralls action docs: https://github.com/marketplace/actions/coveralls-github-action
+        uses: coverallsapp/github-action@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: "./coverage/lcov/urbanopt-reporting-gem.lcov"
