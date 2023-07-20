@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>export_time_series_loads_csv</name>
   <uid>9fcf6116-c2eb-43d6-93f0-e1bdd822f768</uid>
-  <version_id>a8077bdb-5a06-49dc-83ba-391106a0b659</version_id>
-  <version_modified>2023-07-06T16:04:16Z</version_modified>
+  <version_id>562d7da7-5edf-46b5-8231-0cb55e4a78bd</version_id>
+  <version_modified>2023-07-20T19:21:47Z</version_modified>
   <xml_checksum>9BF1E6AC</xml_checksum>
   <class_name>ExportTimeSeriesLoadsCSV</class_name>
   <display_name>ExportTimeSeriesLoadsCSV</display_name>
@@ -85,6 +85,12 @@
       <checksum>08F470AC</checksum>
     </file>
     <file>
+      <filename>README.md</filename>
+      <filetype>md</filetype>
+      <usage_type>readme</usage_type>
+      <checksum>08F470AC</checksum>
+    </file>
+    <file>
       <filename>README.md.erb</filename>
       <filetype>erb</filetype>
       <usage_type>readmeerb</usage_type>
@@ -97,54 +103,6 @@
       <checksum>00000000</checksum>
     </file>
     <file>
-      <filename>USA_CO_Golden-NREL.724666_TMY3.epw</filename>
-      <filetype>epw</filetype>
-      <usage_type>test</usage_type>
-      <checksum>BDF687C1</checksum>
-    </file>
-    <file>
-      <filename>report.html.in</filename>
-      <filetype>in</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>3F69E3FB</checksum>
-    </file>
-    <file>
-      <filename>example_model.osm</filename>
-      <filetype>osm</filetype>
-      <usage_type>test</usage_type>
-      <checksum>15AD3659</checksum>
-    </file>
-    <file>
-      <filename>README.md</filename>
-      <filetype>md</filetype>
-      <usage_type>readme</usage_type>
-      <checksum>08F470AC</checksum>
-    </file>
-    <file>
-      <filename>building_loads.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>test</usage_type>
-      <checksum>393EEB17</checksum>
-    </file>
-    <file>
-      <filename>LICENSE.md</filename>
-      <filetype>md</filetype>
-      <usage_type>license</usage_type>
-      <checksum>5D9E1005</checksum>
-    </file>
-    <file>
-      <filename>os_lib_helper_methods.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>67568590</checksum>
-    </file>
-    <file>
-      <filename>export_time_series_modelica_test.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>test</usage_type>
-      <checksum>20E51ED3</checksum>
-    </file>
-    <file>
       <version>
         <software_program>OpenStudio</software_program>
         <identifier>3.0.1</identifier>
@@ -153,7 +111,43 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>51003B10</checksum>
+      <checksum>EC8615DF</checksum>
+    </file>
+    <file>
+      <filename>os_lib_helper_methods.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>D65F0AAE</checksum>
+    </file>
+    <file>
+      <filename>report.html.in</filename>
+      <filetype>in</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>3F69E3FB</checksum>
+    </file>
+    <file>
+      <filename>USA_CO_Golden-NREL.724666_TMY3.epw</filename>
+      <filetype>epw</filetype>
+      <usage_type>test</usage_type>
+      <checksum>BDF687C1</checksum>
+    </file>
+    <file>
+      <filename>building_loads.csv</filename>
+      <filetype>csv</filetype>
+      <usage_type>test</usage_type>
+      <checksum>393EEB17</checksum>
+    </file>
+    <file>
+      <filename>example_model.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>15AD3659</checksum>
+    </file>
+    <file>
+      <filename>export_time_series_modelica_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>37D0F3F4</checksum>
     </file>
   </files>
 </measure>
