@@ -1,10 +1,11 @@
 # URBANopt Reporting Gem
 
-## Version 0.7.1
-Date Range: 12/12/22 - 05/08/23
+## Version 0.8.0
+Date Range: 12/12/22 - 6/30/23
 
-- Added in the `feature_location` argument in measure.xml
-- Updated copyrights
+- Added the `feature_location` argument in measure.xml
+- Updated dependencies & CI for OpenStudio 3.6.1
+- Updated license and references to the license file
 
 ## Version 0.7.0
 Date Range: 08/18/22 - 12/12/22

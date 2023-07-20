@@ -1,41 +1,6 @@
 # *********************************************************************************
-# URBANopt™, Copyright (c) 2019-2023, Alliance for Sustainable Energy, LLC, and other
-# contributors. All rights reserved.
-
-# Redistribution and use in source and binary forms, with or without modification,
-# are permitted provided that the following conditions are met:
-
-# Redistributions of source code must retain the above copyright notice, this list
-# of conditions and the following disclaimer.
-
-# Redistributions in binary form must reproduce the above copyright notice, this
-# list of conditions and the following disclaimer in the documentation and/or other
-# materials provided with the distribution.
-
-# Neither the name of the copyright holder nor the names of its contributors may be
-# used to endorse or promote products derived from this software without specific
-# prior written permission.
-
-# Redistribution of this software, without modification, must refer to the software
-# by the same designation. Redistribution of a modified version of this software
-# (i) may not refer to the modified version by the same designation, or by any
-# confusingly similar designation, and (ii) must refer to the underlying software
-# originally provided by Alliance as “URBANopt”. Except to comply with the foregoing,
-# the term “URBANopt”, or any confusingly similar designation may not be used to
-# refer to any modified version of this software or any modified version of the
-# underlying software originally provided by Alliance without the prior written
-# consent of Alliance.
-
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-# ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-# IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
-# INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-# BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-# LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-# OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
-# OF THE POSSIBILITY OF SUCH DAMAGE.
+# URBANopt (tm), Copyright (c) Alliance for Sustainable Energy, LLC.
+# See also https://github.com/urbanopt/urbanopt-reporting-gem/blob/develop/LICENSE.md
 # *********************************************************************************
 
 require_relative 'end_uses'
@@ -60,7 +25,7 @@ module URBANopt
                       :time_setpoint_not_met_during_occupied_heating, :time_setpoint_not_met_during_occupied_hours, :hours_out_of_comfort_bounds_PMV, :hours_out_of_comfort_bounds_PPD,
                       :emissions, :future_annual_electricity_emissions_mt, :future_hourly_electricity_emissions_mt, :historical_annual_electricity_emissions_mt, :historical_hourly_electricity_emissions_mt,
                       :future_annual_electricity_emissions_intensity_kg_per_ft2, :future_hourly_electricity_emissions_intensity_kg_per_ft2, :historical_annual_electricity_emissions_intensity_kg_per_ft2, :historical_hourly_electricity_emissions_intensity_kg_per_ft2 ,
-                      :natural_gas_emissions_mt, :natural_gas_emissions_intensity_kg_per_ft2, :propane_emissions_mt, :propane_emissions_intensity_kg_per_ft2, 
+                      :natural_gas_emissions_mt, :natural_gas_emissions_intensity_kg_per_ft2, :propane_emissions_mt, :propane_emissions_intensity_kg_per_ft2,
                       :fueloil_no2_emissions_mt, :fueloil_no2_emissions_intensity_kg_per_ft2  #:nodoc:
 
         # ReportingPeriod class initializes the reporting period attributes:
@@ -71,7 +36,7 @@ module URBANopt
         # +:time_setpoint_not_met_during_occupied_heating+ , +:time_setpoint_not_met_during_occupied_hours+ , +:hours_out_of_comfort_bounds_PMV+ , +:hours_out_of_comfort_bounds_PPD+ ,
         # +:emissions, +:future_annual_electricity_emissions_mt+, +:future_hourly_electricity_emissions_mt+, +:historical_annual_electricity_emissions_mt+, +:historical_hourly_electricity_emissions_mt+,
         # +:future_annual_electricity_emissions_intensity_kg_per_ft2+, +:future_hourly_electricity_emissions_intensity_kg_per_ft2+, +:historical_annual_electricity_emissions_intensity_kg_per_ft2+, +:historical_hourly_electricity_emissions_intensity_kg_per_ft2+,
-        # +:natural_gas_emissions_mt+, +:natural_gas_emissions_intensity_kg_per_ft2+, +:propane_emissions_mt+, +:propane_emissions_intensity_kg_per_ft2+, 
+        # +:natural_gas_emissions_mt+, +:natural_gas_emissions_intensity_kg_per_ft2+, +:propane_emissions_mt+, +:propane_emissions_intensity_kg_per_ft2+,
         # +:fueloil_no2_emissions_mt+, +:fueloil_no2_emissions_intensity_kg_per_ft2+
         ##
         # [parameters:]
@@ -157,7 +122,7 @@ module URBANopt
           hash[:utility_costs_dollar] = [{ fuel_type: nil, total_cost_dollar: nil, usage_cost_dollar: nil, demand_cost_dollar: nil }]
           hash[:comfort_result] = { time_setpoint_not_met_during_occupied_cooling: nil, time_setpoint_not_met_during_occupied_heating: nil,
                                     time_setpoint_not_met_during_occupied_hours: nil, hours_out_of_comfort_bounds_PMV: nil, hours_out_of_comfort_bounds_PPD: nil }
-          hash[:emissions] = { future_annual_electricity_emissions_mt: nil, future_hourly_electricity_emissions_mt: nil, historical_annual_electricity_emissions_mt: nil, 
+          hash[:emissions] = { future_annual_electricity_emissions_mt: nil, future_hourly_electricity_emissions_mt: nil, historical_annual_electricity_emissions_mt: nil,
                               historical_hourly_electricity_emissions_mt: nil, future_annual_electricity_emissions_intensity_kg_per_ft2: nil,
                               future_hourly_electricity_emissions_intensity_kg_per_ft2: nil, historical_annual_electricity_emissions_intensity_kg_per_ft2: nil,
                               historical_hourly_electricity_emissions_intensity_kg_per_ft2: nil, natural_gas_emissions_mt: nil,
@@ -307,7 +272,7 @@ module URBANopt
             existing_period.emissions[:natural_gas_emissions_mt] = add_values(existing_period.emissions[:natural_gas_emissions_mt], new_period.emissions[:natural_gas_emissions_mt])
             existing_period.emissions[:propane_emissions_mt] = add_values(existing_period.emissions[:propane_emissions_mt], new_period.emissions[:propane_emissions_mt])
             existing_period.emissions[:fueloil_no2_emissions_mt] = add_values(existing_period.emissions[:fueloil_no2_emissions_mt], new_period.emissions[:fueloil_no2_emissions_mt])
-           
+
             existing_period.emissions[:future_annual_electricity_emissions_intensity_kg_per_ft2] = add_values(existing_period.emissions[:future_annual_electricity_emissions_intensity_kg_per_ft2], new_period.emissions[:future_annual_electricity_emissions_intensity_kg_per_ft2])
             existing_period.emissions[:future_hourly_electricity_emissions_intensity_kg_per_ft2] = add_values(existing_period.emissions[:future_hourly_electricity_emissions_intensity_kg_per_ft2], new_period.emissions[:future_hourly_electricity_emissions_intensity_kg_per_ft2])
             existing_period.emissions[:historical_annual_electricity_emissions_intensity_kg_per_ft2] = add_values(existing_period.emissions[:historical_annual_electricity_emissions_intensity_kg_per_ft2], new_period.emissions[:historical_annual_electricity_emissions_intensity_kg_per_ft2])

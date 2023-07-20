@@ -1,41 +1,6 @@
 # *********************************************************************************
-# URBANopt™, Copyright (c) 2019-2023, Alliance for Sustainable Energy, LLC, and other
-# contributors. All rights reserved.
-
-# Redistribution and use in source and binary forms, with or without modification,
-# are permitted provided that the following conditions are met:
-
-# Redistributions of source code must retain the above copyright notice, this list
-# of conditions and the following disclaimer.
-
-# Redistributions in binary form must reproduce the above copyright notice, this
-# list of conditions and the following disclaimer in the documentation and/or other
-# materials provided with the distribution.
-
-# Neither the name of the copyright holder nor the names of its contributors may be
-# used to endorse or promote products derived from this software without specific
-# prior written permission.
-
-# Redistribution of this software, without modification, must refer to the software
-# by the same designation. Redistribution of a modified version of this software
-# (i) may not refer to the modified version by the same designation, or by any
-# confusingly similar designation, and (ii) must refer to the underlying software
-# originally provided by Alliance as “URBANopt”. Except to comply with the foregoing,
-# the term “URBANopt”, or any confusingly similar designation may not be used to
-# refer to any modified version of this software or any modified version of the
-# underlying software originally provided by Alliance without the prior written
-# consent of Alliance.
-
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-# ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-# IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
-# INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-# BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-# LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-# OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
-# OF THE POSSIBILITY OF SUCH DAMAGE.
+# URBANopt (tm), Copyright (c) Alliance for Sustainable Energy, LLC.
+# See also https://github.com/urbanopt/urbanopt-reporting-gem/blob/develop/LICENSE.md
 # *********************************************************************************
 
 require 'erb'
@@ -208,13 +173,13 @@ class ExportModelicaLoads < OpenStudio::Measure::ReportingMeasure
     timesteps_per_hour = model.getTimestep.numberOfTimestepsPerHour.to_i
     timestep = 60 / timesteps_per_hour # timestep in minutes
 
-    sqlFile = runner.lastEnergyPlusSqlFile
-    if sqlFile.empty?
+    sql_file = runner.lastEnergyPlusSqlFile
+    if sql_file.empty?
       runner.registerError('Cannot find last sql file.')
       return false
     end
-    sqlFile = sqlFile.get
-    model.setSqlFile(sqlFile)
+    sql_file = sql_file.get
+    model.setSqlFile(sql_file)
 
     # create a new csv with the values and save to the reports directory.
     # assumptions:
@@ -230,7 +195,7 @@ class ExportModelicaLoads < OpenStudio::Measure::ReportingMeasure
 
     # just grab one of the variables to get the date/time stamps
     attribute_name = 'Electricity:Facility'
-    ts = sqlFile.timeSeries('RUN PERIOD 1', 'Zone Timestep', attribute_name)
+    ts = sql_file.timeSeries('RUN PERIOD 1', 'Zone Timestep', attribute_name)
     if ts.empty?
       runner.registerError("This feature does not have the attribute '#{attribute_name}' to enable this measure to work." \
       'To resolve, simulate a building with electricity or remove this measure from your workflow.')
@@ -254,22 +219,22 @@ class ExportModelicaLoads < OpenStudio::Measure::ReportingMeasure
     end
 
     # add in the other variables by columns -- should really pull this from the report variables defined above
-    extract_timeseries_into_matrix(sqlFile, rows, 'Site Outdoor Air Drybulb Temperature', 'Environment', 0, timestep)
-    extract_timeseries_into_matrix(sqlFile, rows, 'Site Outdoor Air Relative Humidity', 'Environment', 0, timestep)
-    extract_timeseries_into_matrix(sqlFile, rows, 'Heating:Electricity', nil, 0, timestep)
-    extract_timeseries_into_matrix(sqlFile, rows, 'Heating:NaturalGas', nil, 0, timestep)
-    extract_timeseries_into_matrix(sqlFile, rows, 'Cooling:Electricity', nil, 0, timestep)
-    extract_timeseries_into_matrix(sqlFile, rows, 'Electricity:Facility', nil, 0, timestep)
-    extract_timeseries_into_matrix(sqlFile, rows, 'Gas:Facility', nil, 0, timestep)
-    extract_timeseries_into_matrix(sqlFile, rows, 'Heating:EnergyTransfer', nil, 0, timestep)
-    extract_timeseries_into_matrix(sqlFile, rows, 'WaterSystems:EnergyTransfer', nil, 0, timestep)
+    extract_timeseries_into_matrix(sql_file, rows, 'Site Outdoor Air Drybulb Temperature', 'Environment', 0, timestep)
+    extract_timeseries_into_matrix(sql_file, rows, 'Site Outdoor Air Relative Humidity', 'Environment', 0, timestep)
+    extract_timeseries_into_matrix(sql_file, rows, 'Heating:Electricity', nil, 0, timestep)
+    extract_timeseries_into_matrix(sql_file, rows, 'Heating:NaturalGas', nil, 0, timestep)
+    extract_timeseries_into_matrix(sql_file, rows, 'Cooling:Electricity', nil, 0, timestep)
+    extract_timeseries_into_matrix(sql_file, rows, 'Electricity:Facility', nil, 0, timestep)
+    extract_timeseries_into_matrix(sql_file, rows, 'Gas:Facility', nil, 0, timestep)
+    extract_timeseries_into_matrix(sql_file, rows, 'Heating:EnergyTransfer', nil, 0, timestep)
+    extract_timeseries_into_matrix(sql_file, rows, 'WaterSystems:EnergyTransfer', nil, 0, timestep)
 
     # get all zones and save the names for later use in aggregation.
     tz_names = []
     model.getThermalZones.each do |tz|
       tz_names << tz.name.get if tz.name.is_initialized
-      extract_timeseries_into_matrix(sqlFile, rows, 'Zone Predicted Sensible Load to Setpoint Heat Transfer Rate', tz_names.last, 0, timestep)
-      extract_timeseries_into_matrix(sqlFile, rows, 'Water Heater Heating Rate', tz_names.last, 0, timestep)
+      extract_timeseries_into_matrix(sql_file, rows, 'Zone Predicted Sensible Load to Setpoint Heat Transfer Rate', tz_names.last, 0, timestep)
+      extract_timeseries_into_matrix(sql_file, rows, 'Water Heater Heating Rate', tz_names.last, 0, timestep)
     end
 
     # sum up a couple of the columns and create a new columns
@@ -358,7 +323,7 @@ class ExportModelicaLoads < OpenStudio::Measure::ReportingMeasure
 
     return true
   ensure
-    sqlFile.close if sqlFile
+    sql_file.close if sql_file
   end
 end
 
