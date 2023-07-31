@@ -16,7 +16,8 @@ module URBANopt
       ##
       class PowerDistribution
         attr_accessor :under_voltage_hours, :over_voltage_hours, :nominal_capacity,
-                      :reactance_resistance_ratio, :nominal_voltage, :max_power_kw, :max_reactive_power_kvar # :nodoc:
+                      :reactance_resistance_ratio, :nominal_voltage, :max_power_kw, :max_reactive_power_kvar,
+                      :tx_incoming_voltage, :tx_outgoing_voltage # :nodoc:
 
         ##
         # PowerDistribution class initialize all power_distribution attributes:
@@ -36,6 +37,8 @@ module URBANopt
           @nominal_voltage = hash[:nominal_voltage] # in V
           @max_power_kw = hash[:max_power_kw]
           @max_reactive_power_kvar = hash[:max_reactive_power_kvar]
+          @tx_incoming_voltage = hash[:tx_incoming_voltage]
+          @tx_outgoing_voltage = hash[:tx_outgoing_voltage]
           # initialize class variables @@validator and @@schema
           @@validator ||= Validator.new
           @@schema ||= @@validator.schema
@@ -53,6 +56,8 @@ module URBANopt
           hash[:nominal_voltage] = nil
           hash[:max_power_kw] = nil
           hash[:max_reactive_power_kvar] = nil
+          hash[:tx_incoming_voltage] = nil
+          hash[:tx_outgoing_voltage] = nil
 
           return hash
         end
@@ -72,6 +77,8 @@ module URBANopt
           result[:nominal_voltage] = @nominal_voltage if @nominal_voltage
           result[:max_power_kw] = @max_power_kw if @max_power_kw
           result[:max_reactive_power_kvar] = @max_reactive_power_kvar if @max_reactive_power_kvar
+          result[:tx_incoming_voltage] = @tx_incoming_voltage if @tx_incoming_voltage
+          result[:tx_outgoing_voltage] = @tx_outgoing_voltage if @tx_outgoing_voltage
 
           # validate power_distribution properties against schema
           if @@validator.validate(@@schema[:definitions][:PowerDistribution][:properties], result).any?
