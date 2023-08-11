@@ -538,7 +538,7 @@
 
           
           <div class="method-source-code" id="merge_distributed_generation-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/distributed_generation.rb, line 452</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/distributed_generation.rb, line 417</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">merge_distributed_generation</span>(<span class="ruby-identifier">existing_dgen</span>, <span class="ruby-identifier">new_dgen</span>)
   <span class="ruby-identifier">existing_dgen</span>.<span class="ruby-identifier">annual_renewable_electricity_pct</span> = <span class="ruby-identifier">add_values</span>(<span class="ruby-identifier">existing_dgen</span>.<span class="ruby-identifier">annual_renewable_electricity_pct</span>, <span class="ruby-identifier">new_dgen</span>.<span class="ruby-identifier">annual_renewable_electricity_pct</span>)
   <span class="ruby-identifier">existing_dgen</span>.<span class="ruby-identifier">lcc_us_dollars</span> = <span class="ruby-identifier">add_values</span>(<span class="ruby-identifier">existing_dgen</span>.<span class="ruby-identifier">lcc_us_dollars</span>, <span class="ruby-identifier">new_dgen</span>.<span class="ruby-identifier">lcc_us_dollars</span>)
@@ -638,14 +638,14 @@
 <dl class="rdoc-list label-list"><dt>parameters:
 <dd></dd></dl>
 <ul><li>
-<p><code>hash</code> - <em>Hash</em> - A hash containting key/value pairs for the distributed generation system attributes listed above.</p>
+<p><code>hash</code> - <em>Hash</em> - A hash containing key/value pairs for the distributed generation system attributes listed above.</p>
 </li></ul>
           
           
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/distributed_generation.rb, line 215</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/distributed_generation.rb, line 180</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">hash</span> = {})
   <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">delete_if</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">nil?</span> }
 
@@ -801,7 +801,7 @@
 
           
           <div class="method-source-code" id="add_tech-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/distributed_generation.rb, line 337</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/distributed_generation.rb, line 302</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">add_tech</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">tech</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39;solar_pv&#39;</span>
     <span class="ruby-ivar">@solar_pv</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">tech</span>
@@ -870,7 +870,7 @@
 
           
           <div class="method-source-code" id="to_hash-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/distributed_generation.rb, line 380</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/distributed_generation.rb, line 345</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_hash</span>
   <span class="ruby-identifier">result</span> = {}
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:reopt_assumptions_file_path</span>] = <span class="ruby-ivar">@reopt_assumptions_file_path</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@reopt_assumptions_file_path</span>

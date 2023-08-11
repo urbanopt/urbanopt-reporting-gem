@@ -172,7 +172,7 @@
 
           
           <div class="method-source-code" id="add_storage-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/storage.rb, line 97</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/storage.rb, line 62</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">add_storage</span>(<span class="ruby-identifier">existing_storage</span>, <span class="ruby-identifier">new_storage</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">existing_storage</span>.<span class="ruby-identifier">size_kw</span>.<span class="ruby-identifier">nil?</span>
     <span class="ruby-identifier">existing_storage</span>.<span class="ruby-identifier">size_kw</span> = <span class="ruby-identifier">new_storage</span>.<span class="ruby-identifier">size_kw</span>
@@ -222,7 +222,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/storage.rb, line 68</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/storage.rb, line 33</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">hash</span> = {})
   <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">delete_if</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">nil?</span> }
 
@@ -273,7 +273,7 @@
 
           
           <div class="method-source-code" id="to_hash-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/storage.rb, line 85</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/storage.rb, line 50</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_hash</span>
   <span class="ruby-identifier">result</span> = {}
 

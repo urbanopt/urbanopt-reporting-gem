@@ -157,7 +157,7 @@
 
           
           <div class="method-source-code" id="from_simulation_dir-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/feature_report.rb, line 139</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/feature_report.rb, line 106</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">from_simulation_dir</span>(<span class="ruby-identifier">simulation_dir</span>)
   <span class="ruby-identifier">result</span> = []
 
@@ -249,7 +249,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/feature_report.rb, line 75</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/feature_report.rb, line 40</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">hash</span> = {})
   <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">delete_if</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">nil?</span> }
   <span class="ruby-identifier">hash</span> = <span class="ruby-identifier">defaults</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">hash</span>)
@@ -260,6 +260,7 @@
   <span class="ruby-ivar">@feature_type</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:feature_type</span>]
   <span class="ruby-ivar">@timesteps_per_hour</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:timesteps_per_hour</span>]
   <span class="ruby-ivar">@simulation_status</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:simulation_status</span>]
+  <span class="ruby-ivar">@qaqc_flags</span> = <span class="ruby-constant">QAQC</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">hash</span>[<span class="ruby-value">:qaqc_flags</span>])
   <span class="ruby-ivar">@timeseries_csv</span> = <span class="ruby-constant">TimeseriesCSV</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">hash</span>[<span class="ruby-value">:timeseries_csv</span>])
   <span class="ruby-ivar">@timeseries_csv</span>.<span class="ruby-identifier">run_dir_name</span>(<span class="ruby-ivar">@directory_name</span>)
   <span class="ruby-ivar">@location</span> = <span class="ruby-constant">Location</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">hash</span>[<span class="ruby-value">:location</span>])
@@ -325,7 +326,7 @@
 
           
           <div class="method-source-code" id="defaults-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/feature_report.rb, line 117</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/feature_report.rb, line 83</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">defaults</span>
   <span class="ruby-identifier">hash</span> = {}
   <span class="ruby-identifier">hash</span>[<span class="ruby-value">:timeseries_csv</span>] = {}
@@ -336,6 +337,7 @@
   <span class="ruby-identifier">hash</span>[<span class="ruby-value">:distributed_generation</span>] = {}
   <span class="ruby-identifier">hash</span>[<span class="ruby-value">:power_distribution</span>] = {}
   <span class="ruby-identifier">hash</span>[<span class="ruby-value">:thermal_storage</span>] = {}
+  <span class="ruby-identifier">hash</span>[<span class="ruby-value">:qaqc_flags</span>] = {}
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">hash</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -369,7 +371,7 @@
 
           
           <div class="method-source-code" id="save-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/feature_report.rb, line 243</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/feature_report.rb, line 212</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">save</span>(<span class="ruby-identifier">file_name</span> = <span class="ruby-string">&#39;default_feature_report&#39;</span>)
   <span class="ruby-comment"># reassign the initialize local variable @file_name to the file name input.</span>
   <span class="ruby-ivar">@file_name</span> = <span class="ruby-identifier">file_name</span>
@@ -444,7 +446,7 @@
 
           
           <div class="method-source-code" id="save_csv_report-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/feature_report.rb, line 336</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/feature_report.rb, line 305</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">save_csv_report</span>(<span class="ruby-identifier">file_name</span> = <span class="ruby-string">&#39;default_feature_report&#39;</span>)
   <span class="ruby-comment"># reassign the initialize local variable @file_name to the file name input.</span>
   <span class="ruby-ivar">@file_name</span> = <span class="ruby-identifier">file_name</span>
@@ -495,7 +497,7 @@
 
           
           <div class="method-source-code" id="save_feature_report-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/feature_report.rb, line 293</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/feature_report.rb, line 262</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">save_feature_report</span>(<span class="ruby-identifier">file_name</span> = <span class="ruby-string">&#39;default_feature_report&#39;</span>)
   <span class="ruby-identifier">save_json_report</span>(<span class="ruby-identifier">file_name</span>)
   <span class="ruby-identifier">save_csv_report</span>(<span class="ruby-identifier">file_name</span>)
@@ -531,7 +533,7 @@
 
           
           <div class="method-source-code" id="save_json_report-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/feature_report.rb, line 303</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/feature_report.rb, line 272</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">save_json_report</span>(<span class="ruby-identifier">file_name</span> = <span class="ruby-string">&#39;default_feature_report&#39;</span>)
   <span class="ruby-comment"># reassign the initialize local variable @file_name to the file name input.</span>
   <span class="ruby-ivar">@file_name</span> = <span class="ruby-identifier">file_name</span>
@@ -591,7 +593,7 @@
 
           
           <div class="method-source-code" id="to_hash-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/feature_report.rb, line 204</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/feature_report.rb, line 171</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_hash</span>
   <span class="ruby-identifier">result</span> = {}
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:id</span>] = <span class="ruby-ivar">@id</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@id</span>
@@ -617,6 +619,8 @@
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:power_distribution</span>] = <span class="ruby-ivar">@power_distribution</span>.<span class="ruby-identifier">to_hash</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@power_distribution</span>
 
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:thermal_storage</span>] = <span class="ruby-ivar">@thermal_storage</span>.<span class="ruby-identifier">to_hash</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@thermal_storage</span>
+
+  <span class="ruby-identifier">result</span>[<span class="ruby-value">:qaqc_flags</span>] = <span class="ruby-ivar">@qaqc_flags</span>.<span class="ruby-identifier">to_hash</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@qaqc_flags</span>
 
   <span class="ruby-comment"># validate feature_report properties against schema</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">@@validator</span>.<span class="ruby-identifier">validate</span>(<span class="ruby-identifier">@@schema</span>[<span class="ruby-value">:definitions</span>][<span class="ruby-value">:FeatureReport</span>][<span class="ruby-value">:properties</span>], <span class="ruby-identifier">result</span>).<span class="ruby-identifier">any?</span>

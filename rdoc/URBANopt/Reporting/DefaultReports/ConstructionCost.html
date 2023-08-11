@@ -153,7 +153,7 @@
 
           
           <div class="method-source-code" id="merge_construction_cost-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/construction_cost.rb, line 125</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/construction_cost.rb, line 90</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">merge_construction_cost</span>(<span class="ruby-identifier">existing_cost</span>, <span class="ruby-identifier">new_cost</span>)
   <span class="ruby-comment"># modify the existing_cost by adding the :total_cost and :item_quantity</span>
   <span class="ruby-identifier">existing_cost</span>.<span class="ruby-identifier">total_cost</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">new_cost</span>.<span class="ruby-identifier">total_cost</span>
@@ -213,7 +213,7 @@
 
           
           <div class="method-source-code" id="merge_construction_costs-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/construction_cost.rb, line 154</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/construction_cost.rb, line 119</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">merge_construction_costs</span>(<span class="ruby-identifier">existing_costs</span>, <span class="ruby-identifier">new_costs</span>)
   <span class="ruby-identifier">item_name_list</span> = []
   <span class="ruby-identifier">item_name_list</span> = <span class="ruby-identifier">existing_costs</span>.<span class="ruby-identifier">collect</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:item_name</span>)
@@ -270,7 +270,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/construction_cost.rb, line 61</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/construction_cost.rb, line 26</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">hash</span> = {})
   <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">delete_if</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">nil?</span> }
   <span class="ruby-identifier">hash</span> = <span class="ruby-identifier">defaults</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">hash</span>)
@@ -323,7 +323,7 @@
 
           
           <div class="method-source-code" id="defaults-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/construction_cost.rb, line 80</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/construction_cost.rb, line 45</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">defaults</span>
   <span class="ruby-identifier">hash</span> = {}
   <span class="ruby-identifier">hash</span>[<span class="ruby-value">:category</span>] = <span class="ruby-keyword">nil</span>
@@ -369,7 +369,7 @@
 
           
           <div class="method-source-code" id="to_hash-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/construction_cost.rb, line 98</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/construction_cost.rb, line 63</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_hash</span>
   <span class="ruby-identifier">result</span> = {}
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:category</span>] = <span class="ruby-ivar">@category</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@category</span>

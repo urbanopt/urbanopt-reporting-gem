@@ -195,7 +195,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/scenario_power_distribution.rb, line 62</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/scenario_power_distribution.rb, line 27</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">hash</span> = {})
   <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">delete_if</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">nil?</span> }
   <span class="ruby-identifier">hash</span> = <span class="ruby-identifier">defaults</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">hash</span>)
@@ -245,7 +245,7 @@
 
           
           <div class="method-source-code" id="add_capacitor-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/scenario_power_distribution.rb, line 137</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/scenario_power_distribution.rb, line 102</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">add_capacitor</span>(<span class="ruby-identifier">hash</span> = {})
   <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">delete_if</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">nil?</span> }
   <span class="ruby-identifier">hash</span> = <span class="ruby-identifier">defaults</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">hash</span>)
@@ -283,7 +283,7 @@
 
           
           <div class="method-source-code" id="add_line-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/scenario_power_distribution.rb, line 122</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/scenario_power_distribution.rb, line 87</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">add_line</span>(<span class="ruby-identifier">hash</span> = {})
   <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">delete_if</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">nil?</span> }
   <span class="ruby-identifier">hash</span> = <span class="ruby-identifier">defaults</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">hash</span>)
@@ -324,7 +324,7 @@
 
           
           <div class="method-source-code" id="add_substation-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/scenario_power_distribution.rb, line 110</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/scenario_power_distribution.rb, line 75</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">add_substation</span>(<span class="ruby-identifier">hash</span> = {})
   <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">delete_if</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">nil?</span> }
   <span class="ruby-identifier">hash</span> = <span class="ruby-identifier">defaults</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">hash</span>)
@@ -362,7 +362,7 @@
 
           
           <div class="method-source-code" id="defaults-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/scenario_power_distribution.rb, line 78</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/scenario_power_distribution.rb, line 43</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">defaults</span>
   <span class="ruby-identifier">hash</span> = {}
   <span class="ruby-identifier">hash</span>[<span class="ruby-value">:substations</span>] = []
@@ -405,7 +405,7 @@
 
           
           <div class="method-source-code" id="to_hash-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/scenario_power_distribution.rb, line 93</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/scenario_power_distribution.rb, line 58</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_hash</span>
   <span class="ruby-identifier">result</span> = {}
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:substations</span>] = <span class="ruby-ivar">@substations</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@substations</span>

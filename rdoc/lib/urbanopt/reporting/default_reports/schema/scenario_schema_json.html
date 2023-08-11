@@ -73,6 +73,8 @@
   
     <li><a href="../../../../../RDOC_MAIN_md.html">RDOC_MAIN</a>
   
+    <li><a href="../../../../../building_loads_csv.html">building_loads.csv</a>
+  
     <li><a href="../../../../../lib/urbanopt/reporting/default_reports/schema/scenario_csv_columns_txt.html">scenario_csv_columns</a>
   
     <li><a href="../../../../../lib/urbanopt/reporting/default_reports/schema/scenario_schema_json.html">scenario_schema.json</a>
@@ -91,1149 +93,1543 @@
 &quot;description&quot;: &quot;Comment describing your JSON Schema&quot;,
 &quot;type&quot;: &quot;object&quot;,
 &quot;properties&quot;: {
-        &quot;scenario_report&quot;: {
-                &quot;$ref&quot;: &quot;#/definitions/ScenarioReport&quot;
-        },
-        &quot;feature_reports&quot;: {
-                &quot;description&quot;: &quot;features of each data point in the scenario&quot;,
-                &quot;type&quot;: &quot;array&quot;,
-                &quot;items&quot;: {
-                        &quot;$ref&quot;: &quot;#/definitions/FeatureReport&quot;
-                }
-        }
+  &quot;scenario_report&quot;: {
+    &quot;$ref&quot;: &quot;#/definitions/ScenarioReport&quot;
+  },
+  &quot;feature_reports&quot;: {
+    &quot;description&quot;: &quot;features of each data point in the scenario&quot;,
+    &quot;type&quot;: &quot;array&quot;,
+    &quot;items&quot;: {
+      &quot;$ref&quot;: &quot;#/definitions/FeatureReport&quot;
+    }
+  }
 },
-&quot;required&quot;: [
-        &quot;scenario_report&quot;
-],
 &quot;additionalProperties&quot;: false,
 &quot;definitions&quot;: {
-        &quot;ScenarioReport&quot;: {
-                &quot;type&quot;: &quot;object&quot;,
-                &quot;properties&quot;: {
-                        &quot;id&quot;: {
-                                &quot;type&quot;: &quot;string&quot;
-                        },
-                        &quot;name&quot;: {
-                                &quot;type&quot;: &quot;string&quot;
-                        },
-                        &quot;directory_name&quot;: {
-                                &quot;type&quot;: &quot;string&quot;
-                        },
-                        &quot;timesteps_per_hour&quot;: {
-                                &quot;$ref&quot;: &quot;#/definitions/TimestepsPerHour&quot;
-                        },
-                        &quot;number_of_not_started_simulations&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;number_of_started_simulations&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;number_of_complete_simulations&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;number_of_failed_simulations&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;location&quot;: {
-                                &quot;$ref&quot;: &quot;#/definitions/Location&quot;
-                        },
-                        &quot;timeseries_csv&quot;: {
-                                &quot;$ref&quot;: &quot;#/definitions/TimeseriesCSV&quot;
-                        },
-                        &quot;program&quot;: {
-                                &quot;$ref&quot;: &quot;#/definitions/Program&quot;
-                        },
-                        &quot;construction_costs&quot;: {
-                                &quot;$ref&quot;: &quot;#/definitions/ConstructionCosts&quot;
-                        },
-                        &quot;reporting_periods&quot;: {
-                                &quot;$ref&quot;: &quot;#/definitions/ReportingPeriods&quot;
-                        },
-                        &quot;distributed_generation&quot;: {
-                                &quot;$ref&quot;: &quot;#/definitions/DistributedGeneration&quot;
-                        },
-                        &quot;thermal_storage&quot;: {
-                                &quot;$ref&quot;: &quot;#/definitions/ThermalStorage&quot;
-                        },
-                        &quot;rnm_results&quot;: {
-                                &quot;$ref&quot;: &quot;#definitions/RnmResults&quot;
-},
-                        &quot;scenario_power_distribution&quot;: {
-                                &quot;$ref&quot;: &quot;#definitions/ScenarioPowerDistribution&quot;
-                        }
-                },
-                &quot;required&quot;: [
-                        &quot;id&quot;,
-                        &quot;name&quot;,
-                        &quot;directory_name&quot;,
-                        &quot;timesteps_per_hour&quot;,
-                        &quot;number_of_not_started_simulations&quot;,
-                        &quot;number_of_started_simulations&quot;,
-                        &quot;number_of_complete_simulations&quot;,
-                        &quot;number_of_failed_simulations&quot;,
-                        &quot;program&quot;
-                ],
-                &quot;additionalProperties&quot;: false
-        },
-        &quot;ScenarioPowerDistribution&quot;: {
-                &quot;type&quot;: &quot;object&quot;,
-                &quot;properties&quot;: {
-                        &quot;substations&quot;: {
-                                &quot;description&quot;: &quot;Array of electrical substations&quot;,
-                                &quot;type&quot;: &quot;array&quot;,
-                                &quot;items&quot;: {
-                                        &quot;type&quot;: &quot;object&quot;,
-                                        &quot;properties&quot;: {
-                                                &quot;nominal_voltage&quot;: {
-                                                        &quot;description&quot;: &quot;Nominal Voltage (V)&quot;,
-                                                        &quot;type&quot;: &quot;number&quot;
-                                                }
-                                        }
-                                }
-                        },
-                        &quot;distribution_lines&quot;: {
-                                &quot;description&quot;: &quot;Array of distribution lines&quot;,
-                                &quot;type&quot;: &quot;array&quot;,
-                                &quot;items&quot;: {
-                                        &quot;type&quot;: &quot;object&quot;,
-                                        &quot;properties&quot;: {
-                                                &quot;length&quot;: {
-                                                        &quot;description&quot;: &quot;Length of the line (m)&quot;,
-                                                        &quot;type&quot;: &quot;number&quot;
-                                                },
-                                                &quot;ampacity&quot;: {
-                                                        &quot;description&quot;: &quot;Maximum ampacity of the line (A)&quot;,
-                                                        &quot;type&quot;: &quot;number&quot;
-                                                },
-                                                &quot;commercial_line_type&quot;: {
-                                                        &quot;description&quot;: &quot;Array of the wire types that make up the line&quot;,
-                                                        &quot;type&quot;: &quot;array&quot;,
-                                                        &quot;items&quot;: {
-                                                                &quot;type&quot;: &quot;string&quot;
-                                                        }
-                                                }
-                                        }
-                                }
-                        }
-                }
-        },
-        &quot;DistributedGeneration&quot;: {
-                &quot;type&quot;: &quot;object&quot;,
-                &quot;properties&quot;: {
-                        &quot;reopt_assumptions_file_path&quot;: {
-                                &quot;description&quot;: &quot;File path of REopt assumptions file used to generate results, if known&quot;,
-                                &quot;type&quot;: &quot;string&quot;
-                        },
-                        &quot;annual_renewable_electricity_pct&quot;: {
-                                &quot;description&quot;: &quot;Percentage of annual renewable electricity generation&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;lcc_us_dollars&quot;: {
-                                &quot;description&quot;: &quot;Optimal lifecycle cost&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;npv_us_dollars&quot;: {
-                                &quot;description&quot;: &quot;Net present value of savings realized by the project&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;year_one_energy_cost_us_dollars&quot;: {
-                                &quot;description&quot;: &quot;Optimal year one utility energy cost&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;year_one_demand_cost_us_dollars&quot;: {
-                                &quot;description&quot;: &quot;Optimal year one utility demand cost&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;year_one_bill_us_dollars&quot;: {
-                                &quot;description&quot;: &quot;Optimal year one utility bill&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;total_energy_cost_us_dollars&quot;: {
-                                &quot;description&quot;: &quot;Total utility energy cost over the lifecycle, after-tax&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;SolarPV&quot;: {
-                                &quot;$ref&quot;: &quot;#/definitions/SolarPV&quot;
-                        },
-                        &quot;Wind&quot;: {
-                                &quot;$ref&quot;: &quot;#/definitions/Wind&quot;
-                        },
-                        &quot;Generator&quot;: {
-                                &quot;$ref&quot;: &quot;#/definitions/Generator&quot;
-                        },
-                        &quot;Storage&quot;: {
-                                &quot;$ref&quot;: &quot;#/definitions/Storage&quot;
-                        }
-                }
-        },
-        &quot;SolarPV&quot;: {
-                &quot;type&quot;: &quot;object&quot;,
-                &quot;properties&quot;: {
-                        &quot;size_kw&quot;: {
-                                &quot;description&quot;: &quot;rated power in kW&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;location&quot;: {
-                                &quot;description&quot;: &quot;Location of PV. Available options are roof, ground or both.&quot;,
-                                &quot;type&quot;: &quot;string&quot;,
-                                &quot;enum&quot;: [
-                                        &quot;roof&quot;,
-                                        &quot;ground&quot;,
-                                        &quot;both&quot;
-                                ]
-                        },
-                        &quot;tilt&quot;: {
-                                &quot;description&quot;: &quot;PV system tilt&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;azimuth&quot;: {
-                                &quot;description&quot;: &quot;PV azimuth angle&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        }
-                }
-        },
-        &quot;Wind&quot;: {
-                &quot;type&quot;: &quot;object&quot;,
-                &quot;properties&quot;: {
-                        &quot;size_kw&quot;: {
-                                &quot;description&quot;: &quot;rated power in kW&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;average_yearly_energy_produced_kwh&quot;: {
-                                &quot;description&quot;: &quot;average yearly energy produced in kWh&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;size_class&quot;: {
-                                &quot;description&quot;: &quot;Turbine size-class. One of [residential, commercial, medium, large]&quot;,
-                                &quot;type&quot;: &quot;string&quot;
-                        }
-                }
-        },
-        &quot;Generator&quot;: {
-                &quot;type&quot;: &quot;object&quot;,
-                &quot;properties&quot;: {
-                        &quot;size_kw&quot;: {
-                                &quot;description&quot;: &quot;rated power in kW&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        }
-                }
-        },
-        &quot;Storage&quot;: {
-                &quot;type&quot;: &quot;object&quot;,
-                &quot;properties&quot;: {
-                        &quot;size_kw&quot;: {
-                                &quot;description&quot;: &quot;rated power in kW&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;size_kwh&quot;: {
-                                &quot;description&quot;: &quot;rated capacity in kWh&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        }
-                }
-        },
-        &quot;RnmResults&quot;: {
-                &quot;type&quot;: &quot;object&quot;,
-                &quot;properties&quot;: {
-                        &quot;demand_generation_planning&quot;: {
-                                &quot;description&quot;: &quot;Demand generation planning&quot;,
-                                &quot;type&quot;: &quot;array&quot;,
-                                &quot;items&quot;: {
-                                        &quot;$ref&quot;: &quot;#/definitions/DemandGenPlanning&quot;
-                                }
-                        },
-                        &quot;electrical_lines_length&quot;: {
-                                &quot;description&quot;: &quot;Electrical lines length&quot;,
-                                &quot;type&quot;: &quot;object&quot;,
-                                &quot;properties&quot;: {
-                                        &quot;low_voltage&quot;: {
-                                                &quot;description&quot;: &quot;Low voltage electrical lines length&quot;,
-                                                &quot;type&quot;: &quot;object&quot;,
-                                                &quot;properties&quot;: {
-                                                        &quot;$ref&quot;: &quot;#/definitions/LineLength&quot;
-                                                }
-                                        },
-                                        &quot;medium_voltage&quot;: {
-                                                &quot;description&quot;: &quot;Medium voltage electrical lines length&quot;,
-                                                &quot;type&quot;: &quot;object&quot;,
-                                                &quot;properties&quot;: {
-                                                        &quot;$ref&quot;: &quot;#/definitions/LineLength&quot;
-                                                }
-                                        }
-                                }
-                        },
-                        &quot;distribution_transformers_capacity_kva&quot;: {
-                                &quot;description&quot;: &quot;Distribution transformers capacity in kVA&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;costs&quot;: {
-                                &quot;description&quot;: &quot;Costs&quot;,
-                                &quot;type&quot;: &quot;object&quot;,
-                                &quot;properties&quot;: {
-                                        &quot;investment&quot;: {
-                                                &quot;description&quot;: &quot;Investment cost&quot;,
-                                                &quot;type&quot;: &quot;object&quot;,
-                                                &quot;properties&quot;: {
-                                                        &quot;$ref&quot;: &quot;#/definitions/RnmCost&quot;
-                                                }
-                                        },
-                                        &quot;yearly_maintenance&quot;: {
-                                                &quot;description&quot;: &quot;Yearly maintenance cost&quot;,
-                                                &quot;type&quot;: &quot;object&quot;,
-                                                &quot;properties&quot;: {
-                                                        &quot;$ref&quot;: &quot;#/definitions/RnmCost&quot;
-                                                }
-                                        }
-                                }
-                        },
-                        &quot;reliability_indexes&quot;: {
-                                &quot;description&quot;: &quot;Reliability Indexes&quot;,
-                                &quot;type&quot;: &quot;object&quot;,
-                                &quot;properties&quot;: {
-                                        &quot;SAIDI&quot;: {
-                                                &quot;description&quot;: &quot;System Average Interruption Duration Index&quot;,
-                                                &quot;type&quot;: &quot;number&quot;
-                                        },
-                                        &quot;SAIFI&quot;: {
-                                                &quot;description&quot;: &quot;System Average Interruption Frequency Index&quot;,
-                                                &quot;type&quot;: &quot;number&quot;
-                                        }
-                                }
-                        }
-                }
-        },
-        &quot;DemandGenPlanning&quot;: {
-                &quot;type&quot;: &quot;object&quot;,
-                &quot;properties&quot;: {
-                        &quot;type&quot;: {
-                                &quot;description&quot;: &quot;Type of demand generation planning&quot;,
-                                &quot;type&quot;: &quot;string&quot;,
-                                &quot;enum&quot;: [
-                                        &quot;Low Voltage (LV) Consumers&quot;,
-                                        &quot;Medium Voltage (MV) Consumers&quot;,
-                                        &quot;Low Voltage (LV) Distributed generators&quot;,
-                                        &quot;Medium Voltage (MV) Distributed generators&quot;
-                                ]
-                        },
-                        &quot;peak_demand_kw&quot;: {
-                                &quot;description&quot;: &quot;Peak demand in kw for this type&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;number_of_nodes_in_network&quot;: {
-                                &quot;description&quot;: &quot;Number of nodes of this type in the network&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        }
-                }
-        },
-        &quot;LineLength&quot;: {
-                &quot;overhead_mi&quot;: {
-                        &quot;description&quot;: &quot;Length of overhead lines (miles)&quot;,
-                        &quot;type&quot;: &quot;number&quot;
-                },
-                &quot;underground_mi&quot;: {
-                        &quot;description&quot;: &quot;Length of underground lines (miles)&quot;,
-                        &quot;type&quot;: &quot;number&quot;
-                }
-        },
-        &quot;RnmCost&quot;: {
-                &quot;low_voltage_network&quot;: {
-                        &quot;description&quot;: &quot;Low Voltage Network Cost ($)&quot;,
-                        &quot;type&quot;: &quot;number&quot;
-                },
-                &quot;distribution_transformers&quot;: {
-                        &quot;description&quot;: &quot;Distribution Transformers Cost ($)&quot;,
-                        &quot;type&quot;: &quot;number&quot;
-                },
-                &quot;medium_voltage_network&quot;: {
-                        &quot;description&quot;: &quot;Medium Voltage Network Cost ($)&quot;,
-                        &quot;type&quot;: &quot;number&quot;
-                },
-                &quot;primary_substations&quot;: {
-                        &quot;description&quot;: &quot;Primary Substations Cost ($)&quot;,
-                        &quot;type&quot;: &quot;number&quot;
-                },
-                &quot;total&quot;: {
-                        &quot;description&quot;: &quot;Total Cost ($)&quot;,
-                        &quot;type&quot;: &quot;number&quot;
-                }
-        },
-        &quot;FeatureReport&quot;: {
-                &quot;type&quot;: &quot;object&quot;,
-                &quot;properties&quot;: {
-                        &quot;id&quot;: {
-                                &quot;description&quot;: &quot;Id refers to the id of a building/feature&quot;,
-                                &quot;type&quot;: &quot;string&quot;
-                        },
-                        &quot;name&quot;: {
-                                &quot;description&quot;: &quot;name refers to the name of the feature (eg. Building 1, tranformer 5)&quot;,
-                                &quot;type&quot;: &quot;string&quot;
-                        },
-                        &quot;directory_name&quot;: {
-                                &quot;type&quot;: &quot;string&quot;
-                        },
-                        &quot;feature_type&quot;: {
-                                &quot;type&quot;: &quot;string&quot;,
-                                &quot;enum&quot;: [
-                                        &quot;Building&quot;,
-                                        &quot;District System&quot;,
-                                        &quot;Transformer&quot;
-                                ]
-                        },
-                        &quot;timesteps_per_hour&quot;: {
-                                &quot;$ref&quot;: &quot;#/definitions/TimestepsPerHour&quot;
-                        },
-                        &quot;simulation_status&quot;: {
-                                &quot;type&quot;: &quot;string&quot;,
-                                &quot;enum&quot;: [
-                                        &quot;Not Started&quot;,
-                                        &quot;Started&quot;,
-                                        &quot;Complete&quot;,
-                                        &quot;Failed&quot;
-                                ]
-                        },
-                        &quot;timeseries_csv&quot;: {
-                                &quot;$ref&quot;: &quot;#/definitions/TimeseriesCSV&quot;
-                        },
-                        &quot;location&quot;: {
-                                &quot;$ref&quot;: &quot;#/definitions/Location&quot;
-                        },
-                        &quot;program&quot;: {
-                                &quot;$ref&quot;: &quot;#/definitions/Program&quot;
-                        },
-                        &quot;design_parameters&quot;: {
-                                &quot;$ref&quot;: &quot;#/definitions/DesignParameters&quot;
-                        },
-                        &quot;construction_costs&quot;: {
-                                &quot;$ref&quot;: &quot;#/definitions/ConstructionCosts&quot;
-                        },
-                        &quot;reporting_periods&quot;: {
-                                &quot;$ref&quot;: &quot;#/definitions/ReportingPeriods&quot;
-                        },
-                        &quot;distributed_generation&quot;: {
-                                &quot;$ref&quot;: &quot;#/definitions/DistributedGeneration&quot;
-                        },
-                        &quot;power_distribution&quot;: {
-                                &quot;$ref&quot;: &quot;#/definitions/PowerDistribution&quot;
-                        },
-                        &quot;thermal_storage&quot;: {
-                                &quot;$ref&quot;: &quot;#/definitions/ThermalStorage&quot;
-                        }
-                },
-                &quot;required&quot;: [
-                        &quot;id&quot;,
-                        &quot;name&quot;,
-                        &quot;directory_name&quot;,
-                        &quot;feature_type&quot;,
-                        &quot;timesteps_per_hour&quot;,
-                        &quot;simulation_status&quot;
-                ],
-                &quot;additionalProperties&quot;: false
-        },
-        &quot;ReportingPeriods&quot;: {
-                &quot;type&quot;: &quot;array&quot;,
-                &quot;items&quot;: {
-                        &quot;$ref&quot;: &quot;#/definitions/ReportingPeriod&quot;
-                }
-        },
-        &quot;ReportingPeriod&quot;: {
-                &quot;description&quot;: &quot;Non-overlapping reporting periods&quot;,
-                &quot;type&quot;: &quot;object&quot;,
-                &quot;properties&quot;: {
-                        &quot;id&quot;: {
-                                &quot;description&quot;: &quot;Id refers to the id of the reporting period. Ids of reporting periods are matched across simulations, so the same period of time gets the same id for all simulations.&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;name&quot;: {
-                                &quot;description&quot;: &quot;name refers to the name of the reporting period(eg. Annual, January)&quot;,
-                                &quot;type&quot;: &quot;string&quot;
-                        },
-                        &quot;multiplier&quot;: {
-                                &quot;description&quot;: &quot;Multiplier used if this reporting period is representative of mulitple periods.  For example one week simulation that represents entire month.&quot;,
-                                &quot;type&quot;: &quot;number&quot;,
-                                &quot;default&quot;: 1
-                        },
-                        &quot;start_date&quot;: {
-                                &quot;$ref&quot;: &quot;#/definitions/Date&quot;
-                        },
-                        &quot;end_date&quot;: {
-                                &quot;$ref&quot;: &quot;#/definitions/Date&quot;
-                        },
-                        &quot;total_site_energy_kwh&quot;: {
-                                &quot;description&quot;: &quot;Total energy used on site, does not include generation (kWh)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;total_source_energy_kwh&quot;: {
-                                &quot;description&quot;: &quot;Total source energy used, does not include generation (kWh)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;site_EUI_kwh_per_m2&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;site_EUI_kBtu_per_ft2&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;source_EUI_kwh_per_m2&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;source_EUI_kBtu_per_ft2&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;net_site_energy_kwh&quot;: {
-                                &quot;description&quot;: &quot;Net site energy (kWh)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;net_source_energy_kwh&quot;: {
-                                &quot;description&quot;: &quot;Net source energy (kWh)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;total_utility_cost_dollar&quot;: {
-                                &quot;description&quot;: &quot;Total utility cost ($)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;net_utility_cost_dollar&quot;: {
-                                &quot;description&quot;: &quot;Net utility cost for reporting period includes generation ($)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;utility_costs_dollar&quot;: {
-                                &quot;type&quot;: &quot;array&quot;,
-                                &quot;items&quot;: {
-                                        &quot;$ref&quot;: &quot;#/definitions/UtilityCost&quot;
-                                }
-                        },
-                        &quot;electricity_kwh&quot;: {
-                                &quot;description&quot;: &quot;Sum of all electricity used, does not include electricity produced (kWh)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;natural_gas_kwh&quot;: {
-                                &quot;description&quot;: &quot;Sum of all natural gas end uses consumption (kWh)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;propane_kwh&quot;: {
-                                &quot;description&quot;: &quot;Sum of all propane end uses consumption (kWh)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;fuel_oil_kwh&quot;: {
-                                &quot;description&quot;: &quot;Sum of all fuel oil #2 end uses consumption (kWh)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;other_fuels_kwh&quot;: {
-                                &quot;description&quot;: &quot;Sum of all other (fuel oil #1, diesel, gasoline, coal, steam) fuel end uses consumption (kWh)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;district_cooling_kwh&quot;: {
-                                &quot;description&quot;: &quot;Sum of all distric cooling end uses consumption (kWh)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;district_heating_kwh&quot;: {
-                                &quot;description&quot;: &quot;Sum of all distric heating end uses consumption (kWh)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;water_qbft&quot;: {
-                                &quot;description&quot;: &quot;Sum of all water end uses consumption (ft^3)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;electricity_produced_kwh&quot;: {
-                                &quot;description&quot;: &quot;Sum of all electricity produced (kWh)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;end_uses&quot;: {
-                                &quot;$ref&quot;: &quot;#/definitions/EndUses&quot;
-                        },
-                        &quot;energy_production_kwh&quot;: {
-                                &quot;description&quot;: &quot;Energy produced for reporting period.  Water reported in m^3, all others in kWh.&quot;,
-                                &quot;type&quot;: &quot;object&quot;,
-                                &quot;properties&quot;: {
-                                        &quot;electricity_produced&quot;: {
-                                                &quot;type&quot;: &quot;object&quot;,
-                                                &quot;properties&quot;: {
-                                                        &quot;photovoltaic&quot;: {
-                                                                &quot;type&quot;: &quot;number&quot;
-                                                        }
-                                                },
-                                                &quot;additionalProperties&quot;: false
-                                        }
-                                },
-                                &quot;additionalProperties&quot;: false
-                        },
-                        &quot;comfort_result&quot;: {
-                                &quot;$ref&quot;: &quot;#/definitions/ComfortResult&quot;
-                        },
-                        &quot;emissions&quot;: {
-                                &quot;type&quot;: &quot;object&quot;,
-                                &quot;properties&quot;: {
-                                        &quot;future_annual_emissions_mt&quot;: {
-                                                &quot;description&quot;: &quot;Future emissions in metric ton (mt) calculated based on an annual emission factor value for the selected future year&quot;,
-                                                &quot;type&quot;: &quot;number&quot;
-                                        },
-                                        &quot;future_hourly_emissions_mt&quot;: {
-                                                &quot;description&quot;: &quot;Future emissions in metric ton (mt) calculated based on hourly emission factor values for the selected future year&quot;,
-                                                &quot;type&quot;: &quot;number&quot;
-                                        },
-                                        &quot;historical_annual_emissions_mt&quot;: {
-                                                &quot;description&quot;: &quot;Historical emissions in metric ton (mt) calculated based on an annual emission factor value for the selected historical year&quot;,
-                                                &quot;type&quot;: &quot;number&quot;
-                                        },
-                                        &quot;historical_hourly_emissions_mt&quot;: {
-                                                &quot;description&quot;: &quot;Historical emissions in metric ton (mt) calculated based on hourly emission factor values for the selected historical year&quot;,
-                                                &quot;type&quot;: &quot;number&quot;
-                                        },
-                                        &quot;future_annual_emissions_intensity_kg_per_ft2&quot;: {
-                                                &quot;description&quot;: &quot;Future emissions intensity in kg/ft2 calculated based on an annual emission factor value for the selected future year&quot;,
-                                                &quot;type&quot;: &quot;number&quot;
-                                        },
-                                        &quot;future_hourly_emissions_intensity_kg_per_ft2&quot;: {
-                                                &quot;description&quot;: &quot;Future emissions intensity in kg/ft2 calculated based on hourly emission factor values for the selected future year&quot;,
-                                                &quot;type&quot;: &quot;number&quot;
-                                        },
-                                        &quot;historical_annual_emissions_intensity_kg_per_ft2&quot;: {
-                                                &quot;description&quot;: &quot;Historical emissions intensity in kg/ft2 calculated based on an annual emission factor value for the selected historical year&quot;,
-                                                &quot;type&quot;: &quot;number&quot;
-                                        },
-                                        &quot;historical_hourly_emissions_intensity_kg_per_ft2&quot;: {
-                                                &quot;description&quot;: &quot;Historical emissions intensity in kg.ft2 calculated based on hourly emission factor values for the selected historical year&quot;,
-                                                &quot;type&quot;: &quot;number&quot;
-                                        }
-                                }
-                        }
-                },
-                &quot;additionalProperties&quot;: false
-        },
-        &quot;Date&quot;: {
-                &quot;type&quot;: &quot;object&quot;,
-                &quot;properties&quot;: {
-                        &quot;month&quot;: {
-                                &quot;type&quot;: &quot;integer&quot;
-                        },
-                        &quot;day_of_month&quot;: {
-                                &quot;type&quot;: &quot;integer&quot;
-                        },
-                        &quot;year&quot;: {
-                                &quot;type&quot;: &quot;integer&quot;
-                        }
-                },
-                &quot;additionalProperties&quot;: false
-        },
-        &quot;EndUses&quot;: {
-                &quot;description&quot;: &quot;End uses for reporting period.  Does not include energy produced. Water reported in m^3, all others in kWh.&quot;,
-                &quot;type&quot;: &quot;object&quot;,
-                &quot;properties&quot;: {
-                        &quot;electricity_kwh&quot;: {
-                                &quot;$ref&quot;: &quot;#/definitions/EndUse&quot;
-                        },
-                        &quot;natural_gas_kwh&quot;: {
-                                &quot;$ref&quot;: &quot;#/definitions/EndUse&quot;
-                        },
-                        &quot;propane_kwh&quot;: {
-                                &quot;$ref&quot;: &quot;#/definitions/EndUse&quot;
-                        },
-                        &quot;fuel_oil_kwh&quot;: {
-                                &quot;$ref&quot;: &quot;#/definitions/EndUse&quot;
-                        },
-                        &quot;other_fuels_kwh&quot;: {
-                                &quot;$ref&quot;: &quot;#/definitions/EndUse&quot;
-                        },
-                        &quot;district_cooling_kwh&quot;: {
-                                &quot;$ref&quot;: &quot;#/definitions/EndUse&quot;
-                        },
-                        &quot;district_heating_kwh&quot;: {
-                                &quot;$ref&quot;: &quot;#/definitions/EndUse&quot;
-                        },
-                        &quot;water_qbft&quot;: {
-                                &quot;$ref&quot;: &quot;#/definitions/EndUse&quot;
-                        }
-                },
-                &quot;additionalProperties&quot;: false
-        },
-        &quot;EndUse&quot;: {
-                &quot;type&quot;: &quot;object&quot;,
-                &quot;properties&quot;: {
-                        &quot;heating&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;cooling&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;interior_lighting&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;exterior_lighting&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;interior_equipment&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;exterior_equipment&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;electric_vehicles&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;fans&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;pumps&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;heat_rejection&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;humidification&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;heat_recovery&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;water_systems&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;refrigeration&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;generators&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        }
-                },
-                &quot;additionalProperties&quot;: false
-        },
-        &quot;ComfortResult&quot;: {
-                &quot;type&quot;: &quot;object&quot;,
-                &quot;properties&quot;: {
-                        &quot;time_setpoint_not_met_during_occupied_cooling&quot;: {
-                                &quot;description&quot;: &quot;(hrs)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;time_setpoint_not_met_during_occupied_heating&quot;: {
-                                &quot;description&quot;: &quot;(hrs)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;time_setpoint_not_met_during_occupied_hours&quot;: {
-                                &quot;description&quot;: &quot;(hrs)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;hours_out_of_comfort_bounds_PMV&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;hours_out_of_comfort_bounds_PPD&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        }
-                },
-                &quot;additionalProperties&quot;: false
-        },
-        &quot;ConstructionCosts&quot;: {
-                &quot;type&quot;: &quot;array&quot;,
-                &quot;items&quot;: {
-                        &quot;$ref&quot;: &quot;#/definitions/ConstructionCost&quot;
-                }
-        },
-        &quot;ConstructionCost&quot;: {
-                &quot;description&quot;: &quot;Program related information, does not change in time&quot;,
-                &quot;type&quot;: &quot;object&quot;,
-                &quot;properties&quot;: {
-                        &quot;category&quot;: {
-                                &quot;type&quot;: &quot;string&quot;,
-                                &quot;enum&quot;: [
-                                        &quot;Construction&quot;,
-                                        &quot;Building&quot;,
-                                        &quot;Space&quot;,
-                                        &quot;ThermalZone&quot;,
-                                        &quot;AirLoop&quot;,
-                                        &quot;PlantLoop&quot;,
-                                        &quot;ZoneHVAC&quot;,
-                                        &quot;Lights&quot;,
-                                        &quot;Luminaire&quot;,
-                                        &quot;Equipment&quot;,
-                                        &quot;HVACComponent&quot;,
-                                        &quot;ZoneHVACComponent&quot;
-                                ]
-                        },
-                        &quot;item_name&quot;: {
-                                &quot;description&quot;: &quot;Name of the item being costed, e.g. the name of the exterior wall construction&quot;,
-                                &quot;type&quot;: &quot;string&quot;
-                        },
-                        &quot;unit_cost&quot;: {
-                                &quot;description&quot;: &quot;Cost per unit of item, e.g. cost per area of construction.  This can be adjusted in post processing.&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;cost_units&quot;: {
-                                &quot;description&quot;: &quot;Unit of cost for this item&quot;,
-                                &quot;type&quot;: &quot;string&quot;,
-                                &quot;enum&quot;: [
-                                        &quot;CostPerEach&quot;,
-                                        &quot;CostPerFt2&quot;,
-                                        &quot;CostPerKW&quot;,
-                                        &quot;CostPerCFM&quot;
-                                ]
-                        },
-                        &quot;item_quantity&quot;: {
-                                &quot;description&quot;: &quot;Amount of the item in units corresponding to cost_units&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;total_cost&quot;: {
-                                &quot;description&quot;: &quot;Total cost is unit_cost multiplied by item_quantity. Can be updated if unit_cost is changed.&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        }
-                },
-                &quot;additionalProperties&quot;: false
-        },
-        &quot;UtilityCost&quot;: {
-                &quot;type&quot;: &quot;object&quot;,
-                &quot;properties&quot;: {
-                        &quot;fuel_type&quot;: {
-                                &quot;type&quot;: &quot;string&quot;,
-                                &quot;enum&quot;: [
-                                        &quot;Electricity&quot;,
-                                        &quot;Natural Gas&quot;,
-                                        &quot;Propane&quot;,
-                                        &quot;Fuel Oil&quot;,
-                                        &quot;District Cooling&quot;,
-                                        &quot;District Heating&quot;,
-                                        &quot;Other Fuels&quot;,
-                                        &quot;Water&quot;
-                                ]
-                        },
-                        &quot;total_cost&quot;: {
-                                &quot;description&quot;: &quot;($)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;usage_cost&quot;: {
-                                &quot;description&quot;: &quot;($)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;demand_cost&quot;: {
-                                &quot;description&quot;: &quot;($)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        }
-                },
-                &quot;additionalProperties&quot;: false
-        },
-        &quot;Location&quot;: {
-                &quot;type&quot;: &quot;object&quot;,
-                &quot;properties&quot;: {
-                        &quot;latitude_deg&quot;: {
-                                &quot;description&quot;: &quot;latitude for the centroid of the feature (deg)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;longitude_deg&quot;: {
-                                &quot;description&quot;: &quot;longitude for the centroid of the feature (deg)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;surface_elevation_ft&quot;: {
-                                &quot;description&quot;: &quot;The surface elevation (above NAVD88 datum) (ft).&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;weather_filename&quot;: {
-                                &quot;description&quot;: &quot;Name of EPW weather file.&quot;,
-                                &quot;type&quot;: &quot;string&quot;
-                        }
-                },
-                &quot;additionalProperties&quot;: false
-        },
-        &quot;TimestepsPerHour&quot;: {
-                &quot;type&quot;: &quot;integer&quot;,
-                &quot;minimum&quot;: 1,
-                &quot;maximum&quot;: 60
-        },
-        &quot;Program&quot;: {
-                &quot;type&quot;: &quot;object&quot;,
-                &quot;properties&quot;: {
-                        &quot;site_area_sqft&quot;: {
-                                &quot;description&quot;: &quot;Area of the entire site or lot (ft^2)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;floor_area_sqft&quot;: {
-                                &quot;description&quot;: &quot;Building gross floor area (ft^2)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;conditioned_area_sqft&quot;: {
-                                &quot;description&quot;: &quot;Building conditioned floor area (ft^2)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;unconditioned_area_sqft&quot;: {
-                                &quot;description&quot;: &quot;Building unconditioned floor area (ft^2)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;footprint_area_sqft&quot;: {
-                                &quot;description&quot;: &quot;Building floorprint area (ft^2)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;maximum_roof_height_ft&quot;: {
-                                &quot;description&quot;: &quot;Maximum height of the roof relative to surface elevation (ft)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;maximum_number_of_stories&quot;: {
-                                &quot;description&quot;: &quot;The maximum number of building stories, sum of number of above and below ground stories.&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;maximum_number_of_stories_above_ground&quot;: {
-                                &quot;description&quot;: &quot;The maximum number of building stories above ground&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;parking_area_sqft&quot;: {
-                                &quot;description&quot;: &quot;Parking gross area (ft^2)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;number_of_parking_spaces&quot;: {
-                                &quot;description&quot;: &quot;Number of parking spaces&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;number_of_parking_spaces_charging&quot;: {
-                                &quot;description&quot;: &quot;Number of parking spaces with electric vehicle charging&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;parking_footprint_area_sqft&quot;: {
-                                &quot;description&quot;: &quot;Parking floorprint area (ft^2)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;maximum_parking_height_ft&quot;: {
-                                &quot;description&quot;: &quot;Maximum height of the parking structure relative to surface elevation (ft)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;maximum_number_of_parking_stories&quot;: {
-                                &quot;description&quot;: &quot;The maximum number of parking stories, sum of number of above and below ground stories.&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;maximum_number_of_parking_stories_above_ground&quot;: {
-                                &quot;description&quot;: &quot;The maximum number of parking stories above ground&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;number_of_residential_units&quot;: {
-                                &quot;description&quot;: &quot;Total number of residential units.&quot;,
-                                &quot;type&quot;: &quot;integer&quot;
-                        },
-                        &quot;building_types&quot;: {
-                                &quot;type&quot;: &quot;array&quot;,
-                                &quot;items&quot;: {
-                                        &quot;$ref&quot;: &quot;#/definitions/BuildingType&quot;
-                                }
-                        },
-                        &quot;window_area_sqft&quot;: {
-                                &quot;description&quot;: &quot;Exterior windows gross area (ft^2)&quot;,
-                                &quot;type&quot;: &quot;object&quot;,
-                                &quot;properties&quot;: {
-                                        &quot;north_window_area_sqft&quot;: {
-                                                &quot;type&quot;: &quot;number&quot;
-                                        },
-                                        &quot;south_window_area_sqft&quot;: {
-                                                &quot;type&quot;: &quot;number&quot;
-                                        },
-                                        &quot;east_window_area_sqft&quot;: {
-                                                &quot;type&quot;: &quot;number&quot;
-                                        },
-                                        &quot;west_window_area_sqft&quot;: {
-                                                &quot;type&quot;: &quot;number&quot;
-                                        },
-                                        &quot;total_window_area_sqft&quot;: {
-                                                &quot;type&quot;: &quot;number&quot;
-                                        }
-                                },
-                                &quot;required&quot;: [
-                                        &quot;total_window_area_sqft&quot;
-                                ],
-                                &quot;additionalProperties&quot;: false
-                        },
-                        &quot;wall_area_sqft&quot;: {
-                                &quot;description&quot;: &quot;exterior walls gross area (ft^2)&quot;,
-                                &quot;type&quot;: &quot;object&quot;,
-                                &quot;properties&quot;: {
-                                        &quot;north_wall_area_sqft&quot;: {
-                                                &quot;type&quot;: &quot;number&quot;
-                                        },
-                                        &quot;south_wall_area_sqft&quot;: {
-                                                &quot;type&quot;: &quot;number&quot;
-                                        },
-                                        &quot;east_wall_area_sqft&quot;: {
-                                                &quot;type&quot;: &quot;number&quot;
-                                        },
-                                        &quot;west_wall_area_sqft&quot;: {
-                                                &quot;type&quot;: &quot;number&quot;
-                                        },
-                                        &quot;total_wall_area_sqft&quot;: {
-                                                &quot;type&quot;: &quot;number&quot;
-                                        }
-                                },
-                                &quot;required&quot;: [
-                                        &quot;north_wall_area_sqft&quot;,
-                                        &quot;south_wall_area_sqft&quot;,
-                                        &quot;east_wall_area_sqft&quot;,
-                                        &quot;west_wall_area_sqft&quot;,
-                                        &quot;total_wall_area_sqft&quot;
-                                ],
-                                &quot;additionalProperties&quot;: false
-                        },
-                        &quot;roof_area_sqft&quot;: {
-                                &quot;type&quot;: &quot;object&quot;,
-                                &quot;properties&quot;: {
-                                        &quot;equipment_roof_area_sqft&quot;: {
-                                                &quot;type&quot;: &quot;number&quot;
-                                        },
-                                        &quot;photovoltaic_roof_area_sqft&quot;: {
-                                                &quot;type&quot;: &quot;number&quot;
-                                        },
-                                        &quot;available_roof_area_sqft&quot;: {
-                                                &quot;description&quot;: &quot;gross roof area (ft^2)&quot;,
-                                                &quot;type&quot;: &quot;number&quot;
-                                        },
-                                        &quot;total_roof_area_sqft&quot;: {
-                                                &quot;description&quot;: &quot;Exterior roofs gross area (ft^2)&quot;,
-                                                &quot;type&quot;: &quot;number&quot;
-                                        }
-                                },
-                                &quot;required&quot;: [
-                                        &quot;total_roof_area_sqft&quot;
-                                ],
-                                &quot;additionalProperties&quot;: false
-                        },
-                        &quot;orientation_deg&quot;: {
-                                &quot;description&quot;: &quot;Rotation of longest axis from East-West,about up axis (deg)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;aspect_ratio&quot;: {
-                                &quot;description&quot;: &quot;Ratio of longest to shortest axis&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;total_construction_cost_dollar&quot;: {
-                                &quot;description&quot;: &quot;total construction cost calculated from the defined cost per floor area ($)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        }
-                },
-                &quot;required&quot;: [
-                        &quot;floor_area_sqft&quot;,
-                        &quot;conditioned_area_sqft&quot;,
-                        &quot;unconditioned_area_sqft&quot;,
-                        &quot;footprint_area_sqft&quot;,
-                        &quot;maximum_roof_height_ft&quot;,
-                        &quot;number_of_residential_units&quot;,
-                        &quot;building_types&quot;,
-                        &quot;window_area_sqft&quot;,
-                        &quot;wall_area_sqft&quot;,
-                        &quot;roof_area_sqft&quot;
-                ],
-                &quot;additionalProperties&quot;: false
-        },
-        &quot;BuildingType&quot;: {
-                &quot;type&quot;: &quot;object&quot;,
-                &quot;properties&quot;: {
-                        &quot;building_type&quot;: {
-                                &quot;description&quot;: &quot;Primary building space type&quot;,
-                                &quot;type&quot;: &quot;string&quot;,
-                                &quot;enum&quot;: [
-                                        &quot;Single-Family&quot;,
-                                        &quot;Multifamily (2 to 4 units)&quot;,
-                                        &quot;Multifamily (5 or more units)&quot;,
-                                        &quot;Mobile Home&quot;,
-                                        &quot;Vacant&quot;,
-                                        &quot;Office&quot;,
-                                        &quot;Laboratory&quot;,
-                                        &quot;Nonrefrigerated warehouse&quot;,
-                                        &quot;Food sales&quot;,
-                                        &quot;Public order and safety&quot;,
-                                        &quot;Outpatient health care&quot;,
-                                        &quot;Refrigerated warehouse&quot;,
-                                        &quot;Religious worship&quot;,
-                                        &quot;Public assembly&quot;,
-                                        &quot;Education&quot;,
-                                        &quot;Food service&quot;,
-                                        &quot;Inpatient health care&quot;,
-                                        &quot;Nursing&quot;,
-                                        &quot;Lodging&quot;,
-                                        &quot;Strip shopping mall&quot;,
-                                        &quot;Enclosed mall&quot;,
-                                        &quot;Retail other than mall&quot;,
-                                        &quot;Service&quot;
-                                ]
-                        },
-                        &quot;maximum_occupancy&quot;: {
-                                &quot;description&quot;: &quot;Maximum number of occupants &quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;floor_area&quot;: {
-                                &quot;description&quot;: &quot;Building gross floor area of this type (ft^2)&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        }
-                },
-                &quot;required&quot;: [
-                        &quot;building_type&quot;,
-                        &quot;maximum_occupancy&quot;,
-                        &quot;floor_area&quot;
-                ],
-                &quot;additionalProperties&quot;: false
-        },
-        &quot;DesignParameters&quot;: {
-                &quot;type&quot;: &quot;object&quot;,
-                &quot;properties&quot;: {
-                        &quot;district_cooling_chilled_water_rate&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;district_cooling_mass_flow_rate&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;district_cooling_inlet_temperature&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;district_cooling_outlet_temperature&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;district_heating_hot_water_rate&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;district_heating_mass_flow_rate&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;district_heating_inlet_temperature&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;district_heating_outlet_temperature&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        }
-                },
-                &quot;additionalProperties&quot;: false
-        },
-        &quot;TimeseriesCSV&quot;: {
-                &quot;type&quot;: &quot;object&quot;,
-                &quot;properties&quot;: {
-                        &quot;path&quot;: {
-                                &quot;type&quot;: &quot;string&quot;
-                        },
-                        &quot;first_report_datetime&quot;: {
-                                &quot;type&quot;: &quot;string&quot;
-                        },
-                        &quot;column_names&quot;: {
-                                &quot;type&quot;: &quot;array&quot;,
-                                &quot;items&quot;: {
-                                        &quot;type&quot;: &quot;string&quot;
-                                }
-                        }
-                },
-                &quot;required&quot;: [
-                        &quot;path&quot;,
-                        &quot;first_report_datetime&quot;,
-                        &quot;column_names&quot;
-                ],
-                &quot;additionalProperties&quot;: false
-        },
-        &quot;PowerDistribution&quot;: {
-                &quot;type&quot;: &quot;object&quot;,
-                &quot;properties&quot;: {
-                        &quot;over_voltage_hours&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;under_voltage_hours&quot;: {
-                                &quot;type&quot;: &quot;number&quot;
-                        }
-                }
-        },
-        &quot;ThermalStorage&quot;: {
-                &quot;type&quot;: &quot;object&quot;,
-                &quot;properties&quot;: {
-                        &quot;its_size&quot;: {
-                                &quot;description&quot;: &quot;Total central plant TES capacity in kWh&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        },
-                        &quot;ptes_size&quot;: {
-                                &quot;description&quot;: &quot;Total distributed/packaged TES capacity in kWh&quot;,
-                                &quot;type&quot;: &quot;number&quot;
-                        }
-                }
+  &quot;ScenarioReport&quot;: {
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+      &quot;id&quot;: {
+        &quot;type&quot;: &quot;string&quot;
+      },
+      &quot;name&quot;: {
+        &quot;type&quot;: &quot;string&quot;
+      },
+      &quot;directory_name&quot;: {
+        &quot;type&quot;: &quot;string&quot;
+      },
+      &quot;timesteps_per_hour&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/TimestepsPerHour&quot;
+      },
+      &quot;number_of_not_started_simulations&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;number_of_started_simulations&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;number_of_complete_simulations&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;number_of_failed_simulations&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;location&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/Location&quot;
+      },
+      &quot;timeseries_csv&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/TimeseriesCSV&quot;
+      },
+      &quot;program&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/Program&quot;
+      },
+      &quot;construction_costs&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/ConstructionCosts&quot;
+      },
+      &quot;reporting_periods&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/ReportingPeriods&quot;
+      },
+      &quot;distributed_generation&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/DistributedGeneration&quot;
+      },
+      &quot;thermal_storage&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/ThermalStorage&quot;
+      },
+      &quot;rnm_results&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/RnmResults&quot;
+      },
+      &quot;scenario_power_distribution&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/ScenarioPowerDistribution&quot;
+      },
+      &quot;scenario_power_distribution_cost&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/ScenarioPowerDistributionCost&quot;
+      },
+      &quot;qaqc_flags&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/qaqc_flags&quot;
+      }
+    },
+    &quot;required&quot;: [
+      &quot;id&quot;,
+      &quot;name&quot;,
+      &quot;directory_name&quot;,
+      &quot;timesteps_per_hour&quot;,
+      &quot;number_of_not_started_simulations&quot;,
+      &quot;number_of_started_simulations&quot;,
+      &quot;number_of_complete_simulations&quot;,
+      &quot;number_of_failed_simulations&quot;,
+      &quot;program&quot;
+    ],
+    &quot;additionalProperties&quot;: false
+  },
+  &quot;ScenarioPowerDistribution&quot;: {
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+      &quot;substations&quot;: {
+        &quot;description&quot;: &quot;Array of electrical substations&quot;,
+        &quot;type&quot;: &quot;array&quot;,
+        &quot;items&quot;: {
+          &quot;type&quot;: &quot;object&quot;,
+          &quot;properties&quot;: {
+            &quot;nominal_voltage&quot;: {
+              &quot;description&quot;: &quot;Nominal Voltage (V)&quot;,
+              &quot;type&quot;: &quot;number&quot;
+            }
+          }
         }
+      },
+      &quot;distribution_lines&quot;: {
+        &quot;description&quot;: &quot;Array of distribution lines&quot;,
+        &quot;type&quot;: &quot;array&quot;,
+        &quot;items&quot;: {
+          &quot;type&quot;: &quot;object&quot;,
+          &quot;properties&quot;: {
+            &quot;length&quot;: {
+              &quot;description&quot;: &quot;Length of the line (m)&quot;,
+              &quot;type&quot;: &quot;number&quot;
+            },
+            &quot;ampacity&quot;: {
+              &quot;description&quot;: &quot;Maximum ampacity of the line (A)&quot;,
+              &quot;type&quot;: &quot;number&quot;
+            },
+            &quot;commercial_line_type&quot;: {
+              &quot;description&quot;: &quot;Array of the wire types that make up the line&quot;,
+              &quot;type&quot;: &quot;array&quot;,
+              &quot;items&quot;: {
+                &quot;type&quot;: &quot;string&quot;
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  &quot;ScenarioPowerDistributionCost&quot;: {
+    &quot;title&quot;: &quot;UpgradeParamsBaseModel&quot;,
+    &quot;description&quot;: &quot;Contains results from all jobs in the simulation.&quot;,
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+      &quot;results&quot;: {
+        &quot;title&quot;: &quot;results&quot;,
+        &quot;description&quot;: &quot;Results summary for each job&quot;,
+        &quot;type&quot;: &quot;array&quot;,
+        &quot;items&quot;: {}
+      },
+      &quot;outputs&quot;: {
+        &quot;title&quot;: &quot;outputs&quot;,
+        &quot;description&quot;: &quot;Outputs for each job in the simulation.&quot;,
+        &quot;allOf&quot;: [
+          {
+            &quot;$ref&quot;: &quot;#/definitions/ScenarioPowerDistributionCost/definitions/UpgradeSimulationOutputModel&quot;
+          }
+        ]
+      },
+      &quot;violation_summary&quot;: {
+        &quot;title&quot;: &quot;upgrade_summary&quot;,
+        &quot;description&quot;: &quot;Contains thermal or voltage upgrade results for each job&quot;,
+        &quot;type&quot;: &quot;array&quot;,
+        &quot;items&quot;: {
+          &quot;$ref&quot;: &quot;#/definitions/ScenarioPowerDistributionCost/definitions/UpgradeViolationResultModel&quot;
+        }
+      },
+      &quot;costs_per_equipment&quot;: {
+        &quot;title&quot;: &quot;costs_per_equipment&quot;,
+        &quot;description&quot;: &quot;Contains upgrade cost information for each job by equipment type&quot;,
+        &quot;type&quot;: &quot;array&quot;,
+        &quot;items&quot;: {
+          &quot;$ref&quot;: &quot;#/definitions/ScenarioPowerDistributionCost/definitions/TotalUpgradeCostsResultModel&quot;
+        }
+      },
+      &quot;equipment&quot;: {
+        &quot;title&quot;: &quot;equipment&quot;,
+        &quot;description&quot;: &quot;Contains equipment information for each job&quot;,
+        &quot;type&quot;: &quot;array&quot;,
+        &quot;items&quot;: {}
+      }
+    },
+    &quot;additionalProperties&quot;: false,
+    &quot;definitions&quot;: {
+      &quot;UpgradeJobOutputModel&quot;: {
+        &quot;title&quot;: &quot;UpgradeParamsBaseModel&quot;,
+        &quot;description&quot;: &quot;Contains outputs from one job.&quot;,
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {
+          &quot;upgraded_opendss_model_file&quot;: {
+            &quot;title&quot;: &quot;upgraded_opendss_model_file&quot;,
+            &quot;description&quot;: &quot;Path to file that will load the upgraded network.&quot;,
+            &quot;type&quot;: &quot;string&quot;
+          },
+          &quot;feeder_stats&quot;: {
+            &quot;title&quot;: &quot;feeder_stats&quot;,
+            &quot;description&quot;: &quot;Path to file containing feeder metadata and equipment details before and after upgrades.&quot;,
+            &quot;type&quot;: &quot;string&quot;
+          },
+          &quot;return_code&quot;: {
+            &quot;title&quot;: &quot;return_code&quot;,
+            &quot;description&quot;: &quot;Return code from process. Zero is success, non-zero is a failure.&quot;,
+            &quot;type&quot;: &quot;integer&quot;
+          }
+        },
+        &quot;required&quot;: [
+          &quot;upgraded_opendss_model_file&quot;,
+          &quot;feeder_stats&quot;,
+          &quot;return_code&quot;
+        ],
+        &quot;additionalProperties&quot;: false
+      },
+      &quot;UpgradeSimulationOutputModel&quot;: {
+        &quot;title&quot;: &quot;UpgradeParamsBaseModel&quot;,
+        &quot;description&quot;: &quot;Contains outputs from all jobs in the simulation.&quot;,
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {
+          &quot;log_file&quot;: {
+            &quot;title&quot;: &quot;log_file&quot;,
+            &quot;description&quot;: &quot;Path to log file for the simulation.&quot;,
+            &quot;type&quot;: &quot;string&quot;
+          },
+          &quot;jobs&quot;: {
+            &quot;title&quot;: &quot;jobs&quot;,
+            &quot;description&quot;: &quot;Outputs for each job in the simulation.&quot;,
+            &quot;type&quot;: &quot;array&quot;,
+            &quot;items&quot;: {
+              &quot;$ref&quot;: &quot;#/definitions/ScenarioPowerDistributionCost/definitions/UpgradeJobOutputModel&quot;
+            }
+          }
+        },
+        &quot;required&quot;: [
+          &quot;log_file&quot;,
+          &quot;jobs&quot;
+        ],
+        &quot;additionalProperties&quot;: false
+      },
+      &quot;UpgradeViolationResultModel&quot;: {
+        &quot;title&quot;: &quot;UpgradeParamsBaseModel&quot;,
+        &quot;description&quot;: &quot;Defines result parameters for thermal upgrades.&quot;,
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {
+          &quot;name&quot;: {
+            &quot;title&quot;: &quot;name&quot;,
+            &quot;description&quot;: &quot;Job name that produced the result&quot;,
+            &quot;type&quot;: &quot;string&quot;
+          },
+          &quot;scenario&quot;: {
+            &quot;title&quot;: &quot;scenario&quot;,
+            &quot;description&quot;: &quot;Simulation scenario describing the controls being used&quot;,
+            &quot;default&quot;: &quot;control_mode&quot;,
+            &quot;type&quot;: &quot;string&quot;
+          },
+          &quot;stage&quot;: {
+            &quot;title&quot;: &quot;stage&quot;,
+            &quot;description&quot;: &quot;Stage of upgrades: initial (before upgrades) or final (after upgrades)&quot;,
+            &quot;type&quot;: &quot;string&quot;
+          },
+          &quot;upgrade_type&quot;: {
+            &quot;title&quot;: &quot;upgrade_type&quot;,
+            &quot;description&quot;: &quot;Type of upgrade: thermal or voltage&quot;,
+            &quot;type&quot;: &quot;string&quot;
+          },
+          &quot;simulation_time_s&quot;: {
+            &quot;title&quot;: &quot;simulation_time_s&quot;,
+            &quot;description&quot;: &quot;Simulation time to perform upgrades (seconds)&quot;,
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;thermal_violations_present&quot;: {
+            &quot;title&quot;: &quot;thermal_violations_present&quot;,
+            &quot;description&quot;: &quot;Flag indicating whether thermal violations are present&quot;,
+            &quot;type&quot;: &quot;boolean&quot;
+          },
+          &quot;voltage_violations_present&quot;: {
+            &quot;title&quot;: &quot;voltage_violations_present&quot;,
+            &quot;description&quot;: &quot;Flag indicating whether voltage violations are present&quot;,
+            &quot;type&quot;: &quot;boolean&quot;
+          },
+          &quot;max_bus_voltage&quot;: {
+            &quot;title&quot;: &quot;max_bus_voltage&quot;,
+            &quot;description&quot;: &quot;Maximum voltage recorded on any bus&quot;,
+            &quot;units&quot;: &quot;pu&quot;,
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;min_bus_voltage&quot;: {
+            &quot;title&quot;: &quot;min_bus_voltage&quot;,
+            &quot;description&quot;: &quot;Minimum voltage recorded on any bus&quot;,
+            &quot;units&quot;: &quot;pu&quot;,
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;num_voltage_violation_buses&quot;: {
+            &quot;title&quot;: &quot;num_voltage_violation_buses&quot;,
+            &quot;description&quot;: &quot;Number of buses with voltage violations&quot;,
+            &quot;type&quot;: &quot;integer&quot;
+          },
+          &quot;num_overvoltage_violation_buses&quot;: {
+            &quot;title&quot;: &quot;num_overvoltage_violation_buses&quot;,
+            &quot;description&quot;: &quot;Number of buses with voltage above voltage_upper_limit&quot;,
+            &quot;type&quot;: &quot;integer&quot;
+          },
+          &quot;voltage_upper_limit&quot;: {
+            &quot;title&quot;: &quot;voltage_upper_limit&quot;,
+            &quot;description&quot;: &quot;Voltage upper limit, the threshold considered for determining overvoltages&quot;,
+            &quot;units&quot;: &quot;pu&quot;,
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;num_undervoltage_violation_buses&quot;: {
+            &quot;title&quot;: &quot;num_undervoltage_violation_buses&quot;,
+            &quot;description&quot;: &quot;Number of buses with voltage below voltage_lower_limit&quot;,
+            &quot;type&quot;: &quot;integer&quot;
+          },
+          &quot;voltage_lower_limit&quot;: {
+            &quot;title&quot;: &quot;voltage_lower_limit&quot;,
+            &quot;description&quot;: &quot;Voltage lower limit, the threshold considered for determining undervoltages&quot;,
+            &quot;units&quot;: &quot;pu&quot;,
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;max_line_loading&quot;: {
+            &quot;title&quot;: &quot;max_line_loading&quot;,
+            &quot;description&quot;: &quot;Maximum line loading&quot;,
+            &quot;units&quot;: &quot;pu&quot;,
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;max_transformer_loading&quot;: {
+            &quot;title&quot;: &quot;max_transformer_loading&quot;,
+            &quot;description&quot;: &quot;Maximum transformer loading&quot;,
+            &quot;units&quot;: &quot;pu&quot;,
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;num_line_violations&quot;: {
+            &quot;title&quot;: &quot;num_line_violations&quot;,
+            &quot;description&quot;: &quot;Number of lines with loading above line upper limit&quot;,
+            &quot;type&quot;: &quot;integer&quot;
+          },
+          &quot;line_upper_limit&quot;: {
+            &quot;title&quot;: &quot;line_upper_limit&quot;,
+            &quot;description&quot;: &quot;Line upper limit, the threshold considered for determining line overloading&quot;,
+            &quot;units&quot;: &quot;pu&quot;,
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;num_transformer_violations&quot;: {
+            &quot;title&quot;: &quot;num_transformer_violations&quot;,
+            &quot;description&quot;: &quot;Number of transformers with loading above transformer upper limit&quot;,
+            &quot;type&quot;: &quot;integer&quot;
+          },
+          &quot;transformer_upper_limit&quot;: {
+            &quot;title&quot;: &quot;transformer_upper_limit&quot;,
+            &quot;description&quot;: &quot;Transformer upper limit, the threshold considered for determining transformer overloading&quot;,
+            &quot;units&quot;: &quot;pu&quot;,
+            &quot;type&quot;: &quot;number&quot;
+          }
+        },
+        &quot;required&quot;: [
+          &quot;name&quot;,
+          &quot;stage&quot;,
+          &quot;upgrade_type&quot;,
+          &quot;simulation_time_s&quot;,
+          &quot;thermal_violations_present&quot;,
+          &quot;voltage_violations_present&quot;,
+          &quot;max_bus_voltage&quot;,
+          &quot;min_bus_voltage&quot;,
+          &quot;num_voltage_violation_buses&quot;,
+          &quot;num_overvoltage_violation_buses&quot;,
+          &quot;voltage_upper_limit&quot;,
+          &quot;num_undervoltage_violation_buses&quot;,
+          &quot;voltage_lower_limit&quot;,
+          &quot;max_line_loading&quot;,
+          &quot;max_transformer_loading&quot;,
+          &quot;num_line_violations&quot;,
+          &quot;line_upper_limit&quot;,
+          &quot;num_transformer_violations&quot;,
+          &quot;transformer_upper_limit&quot;
+        ],
+        &quot;additionalProperties&quot;: false
+      },
+      &quot;TotalUpgradeCostsResultModel&quot;: {
+        &quot;title&quot;: &quot;UpgradeParamsBaseModel&quot;,
+        &quot;description&quot;: &quot;Provides total output costs for upgrading a type of equipment.&quot;,
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {
+          &quot;name&quot;: {
+            &quot;title&quot;: &quot;name&quot;,
+            &quot;description&quot;: &quot;Job name&quot;,
+            &quot;type&quot;: &quot;string&quot;
+          },
+          &quot;type&quot;: {
+            &quot;title&quot;: &quot;type&quot;,
+            &quot;description&quot;: &quot;Equipment type&quot;,
+            &quot;type&quot;: &quot;string&quot;
+          },
+          &quot;count&quot;: {
+            &quot;title&quot;: &quot;count&quot;,
+            &quot;description&quot;: &quot;Count of upgraded equipment&quot;,
+            &quot;type&quot;: &quot;integer&quot;
+          },
+          &quot;total_cost_usd&quot;: {
+            &quot;title&quot;: &quot;total_cost_usd&quot;,
+            &quot;description&quot;: &quot;Total cost in US dollars&quot;,
+            &quot;units&quot;: &quot;dollars&quot;,
+            &quot;type&quot;: &quot;number&quot;
+          }
+        },
+        &quot;required&quot;: [
+          &quot;name&quot;,
+          &quot;type&quot;,
+          &quot;count&quot;,
+          &quot;total_cost_usd&quot;
+        ],
+        &quot;additionalProperties&quot;: false
+      }
+    }
+  },
+  &quot;DistributedGeneration&quot;: {
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+      &quot;reopt_assumptions_file_path&quot;: {
+        &quot;description&quot;: &quot;File path of REopt assumptions file used to generate results, if known&quot;,
+        &quot;type&quot;: &quot;string&quot;
+      },
+      &quot;annual_renewable_electricity_pct&quot;: {
+        &quot;description&quot;: &quot;Percentage of annual renewable electricity generation&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;lcc_us_dollars&quot;: {
+        &quot;description&quot;: &quot;Optimal lifecycle cost&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;npv_us_dollars&quot;: {
+        &quot;description&quot;: &quot;Net present value of savings realized by the project&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;year_one_energy_cost_us_dollars&quot;: {
+        &quot;description&quot;: &quot;Optimal year one utility energy cost&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;year_one_demand_cost_us_dollars&quot;: {
+        &quot;description&quot;: &quot;Optimal year one utility demand cost&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;year_one_bill_us_dollars&quot;: {
+        &quot;description&quot;: &quot;Optimal year one utility bill&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;total_energy_cost_us_dollars&quot;: {
+        &quot;description&quot;: &quot;Total utility energy cost over the lifecycle, after-tax&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;SolarPV&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/SolarPV&quot;
+      },
+      &quot;Wind&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/Wind&quot;
+      },
+      &quot;Generator&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/Generator&quot;
+      },
+      &quot;Storage&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/Storage&quot;
+      }
+    }
+  },
+  &quot;SolarPV&quot;: {
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+      &quot;size_kw&quot;: {
+        &quot;description&quot;: &quot;rated power in kW&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;location&quot;: {
+        &quot;description&quot;: &quot;Location of PV. Available options are roof, ground or both.&quot;,
+        &quot;type&quot;: &quot;string&quot;,
+        &quot;enum&quot;: [
+          &quot;roof&quot;,
+          &quot;ground&quot;,
+          &quot;both&quot;
+        ]
+      },
+      &quot;tilt&quot;: {
+        &quot;description&quot;: &quot;PV system tilt&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;azimuth&quot;: {
+        &quot;description&quot;: &quot;PV azimuth angle&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      }
+    }
+  },
+  &quot;Wind&quot;: {
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+      &quot;size_kw&quot;: {
+        &quot;description&quot;: &quot;rated power in kW&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;average_yearly_energy_produced_kwh&quot;: {
+        &quot;description&quot;: &quot;average yearly energy produced in kWh&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;size_class&quot;: {
+        &quot;description&quot;: &quot;Turbine size-class. One of [residential, commercial, medium, large]&quot;,
+        &quot;type&quot;: &quot;string&quot;
+      }
+    }
+  },
+  &quot;Generator&quot;: {
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+      &quot;size_kw&quot;: {
+        &quot;description&quot;: &quot;rated power in kW&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      }
+    }
+  },
+  &quot;Storage&quot;: {
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+      &quot;size_kw&quot;: {
+        &quot;description&quot;: &quot;rated power in kW&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;size_kwh&quot;: {
+        &quot;description&quot;: &quot;rated capacity in kWh&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      }
+    }
+  },
+  &quot;RnmResults&quot;: {
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+      &quot;demand_generation_planning&quot;: {
+        &quot;description&quot;: &quot;Demand generation planning&quot;,
+        &quot;type&quot;: &quot;array&quot;,
+        &quot;items&quot;: {
+          &quot;$ref&quot;: &quot;#/definitions/DemandGenPlanning&quot;
+        }
+      },
+      &quot;electrical_lines_length&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/LineLength&quot;
+      },
+      &quot;distribution_transformers_capacity_kva&quot;: {
+        &quot;description&quot;: &quot;Distribution transformers capacity in kVA&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;costs&quot;: {
+        &quot;description&quot;: &quot;Costs&quot;,
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {
+          &quot;investment&quot;: {
+            &quot;$ref&quot;: &quot;#/definitions/RnmCost&quot;
+          },
+          &quot;yearly_maintenance&quot;: {
+            &quot;$ref&quot;: &quot;#/definitions/RnmCost&quot;
+          }
+        }
+      },
+      &quot;reliability_indexes&quot;: {
+        &quot;description&quot;: &quot;Reliability Indexes&quot;,
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {
+          &quot;SAIDI&quot;: {
+            &quot;description&quot;: &quot;System Average Interruption Duration Index&quot;,
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;SAIFI&quot;: {
+            &quot;description&quot;: &quot;System Average Interruption Frequency Index&quot;,
+            &quot;type&quot;: &quot;number&quot;
+          }
+        }
+      }
+    }
+  },
+  &quot;DemandGenPlanning&quot;: {
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+      &quot;type&quot;: {
+        &quot;description&quot;: &quot;Type of demand generation planning&quot;,
+        &quot;type&quot;: &quot;string&quot;,
+        &quot;enum&quot;: [
+          &quot;Low Voltage (LV) Consumers&quot;,
+          &quot;Medium Voltage (MV) Consumers&quot;,
+          &quot;Low Voltage (LV) Distributed generators&quot;,
+          &quot;Medium Voltage (MV) Distributed generators&quot;
+        ]
+      },
+      &quot;peak_demand_kw&quot;: {
+        &quot;description&quot;: &quot;Peak demand in kw for this type&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;number_of_nodes_in_network&quot;: {
+        &quot;description&quot;: &quot;Number of nodes of this type in the network&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      }
+    }
+  },
+  &quot;LineLength&quot;: {
+    &quot;overhead_mi&quot;: {
+      &quot;description&quot;: &quot;Length of overhead lines (miles)&quot;,
+      &quot;type&quot;: &quot;number&quot;
+    },
+    &quot;underground_mi&quot;: {
+      &quot;description&quot;: &quot;Length of underground lines (miles)&quot;,
+      &quot;type&quot;: &quot;number&quot;
+    },
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+      &quot;overhead_mi&quot;: {
+        &quot;description&quot;: &quot;Length of overhead lines (miles)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;underground_mi&quot;: {
+        &quot;description&quot;: &quot;Length of underground lines (miles)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      }
+    }
+  },
+  &quot;RnmCost&quot;: {
+    &quot;low_voltage_network&quot;: {
+      &quot;description&quot;: &quot;Low Voltage Network Cost ($)&quot;,
+      &quot;type&quot;: &quot;number&quot;
+    },
+    &quot;distribution_transformers&quot;: {
+      &quot;description&quot;: &quot;Distribution Transformers Cost ($)&quot;,
+      &quot;type&quot;: &quot;number&quot;
+    },
+    &quot;medium_voltage_network&quot;: {
+      &quot;description&quot;: &quot;Medium Voltage Network Cost ($)&quot;,
+      &quot;type&quot;: &quot;number&quot;
+    },
+    &quot;primary_substations&quot;: {
+      &quot;description&quot;: &quot;Primary Substations Cost ($)&quot;,
+      &quot;type&quot;: &quot;number&quot;
+    },
+    &quot;total&quot;: {
+      &quot;description&quot;: &quot;Total Cost ($)&quot;,
+      &quot;type&quot;: &quot;number&quot;
+    },
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+      &quot;low_voltage_network&quot;: {
+        &quot;description&quot;: &quot;Low Voltage Network Cost ($)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;distribution_transformers&quot;: {
+        &quot;description&quot;: &quot;Distribution Transformers Cost ($)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;medium_voltage_network&quot;: {
+        &quot;description&quot;: &quot;Medium Voltage Network Cost ($)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;primary_substations&quot;: {
+        &quot;description&quot;: &quot;Primary Substations Cost ($)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;total&quot;: {
+        &quot;description&quot;: &quot;TOtal Cost ($)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      }
+    }
+  },
+  &quot;qaqc_flags&quot;: {
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+      &quot;eui_reasonableness&quot;: {
+        &quot;description&quot;: &quot;Whether the EUI is within ASHRAE 90.1-2013 bounds for that building type&quot;,
+        &quot;type&quot;: [
+          &quot;integer&quot;,
+          &quot;null&quot;
+        ]
+      },
+      &quot;end_use_by_category&quot;: {
+        &quot;description&quot;: &quot;Whether building energy use is within ASHRAE 90.1-2013 bounds for that building type&quot;,
+        &quot;type&quot;: [
+          &quot;integer&quot;,
+          &quot;null&quot;
+        ]
+      },
+      &quot;mechanical_system_part_load_efficiency&quot;: {
+        &quot;description&quot;: &quot;Whether 40% &amp; 80% heating and cooling efficiency is within ASHRAE 90.1-2013 bounds for that building type&quot;,
+        &quot;type&quot;: [
+          &quot;integer&quot;,
+          &quot;null&quot;
+        ]
+      },
+      &quot;simultaneous_heating_and_cooling&quot;: {
+        &quot;description&quot;: &quot;Whether heating and cooling are occuring during the same hour when cooling load exists&quot;,
+        &quot;type&quot;: [
+          &quot;integer&quot;,
+          &quot;null&quot;
+        ]
+      },
+      &quot;internal_loads&quot;: {
+        &quot;description&quot;: &quot;Whether lighting, plug, and equipment use is within ASHRAE 90.1-2013 bounds for that building type&quot;,
+        &quot;type&quot;: [
+          &quot;integer&quot;,
+          &quot;null&quot;
+        ]
+      },
+      &quot;schedules&quot;: {
+        &quot;description&quot;: &quot;Whether lighting, ventilation, occupant, plug, and equipment schedules are within ASHRAE 90.1-2013 bounds for that building type&quot;,
+        &quot;type&quot;: [
+          &quot;integer&quot;,
+          &quot;null&quot;
+        ]
+      },
+      &quot;envelope_r_value&quot;: {
+        &quot;description&quot;: &quot;Whether building envelope is within ASHRAE 90.1-2013 bounds for that building type&quot;,
+        &quot;type&quot;: [
+          &quot;integer&quot;,
+          &quot;null&quot;
+        ]
+      },
+      &quot;domestic_hot_water&quot;: {
+        &quot;description&quot;: &quot;Whether DHW energy use is within 2011 ASHRAE handbook bounds for that building type&quot;,
+        &quot;type&quot;: [
+          &quot;integer&quot;,
+          &quot;null&quot;
+        ]
+      },
+      &quot;mechanical_system_efficiency&quot;: {
+        &quot;description&quot;: &quot;Whether heating and cooling efficiency is within ASHRAE 90.1-2013 bounds for that building type&quot;,
+        &quot;type&quot;: [
+          &quot;integer&quot;,
+          &quot;null&quot;
+        ]
+      },
+      &quot;supply_and_zone_air_temperature&quot;: {
+        &quot;description&quot;: &quot;Whether fan effectiveness is within ASHRAE 90.1-2013 bounds for that building type&quot;,
+        &quot;type&quot;: [
+          &quot;integer&quot;,
+          &quot;null&quot;
+        ]
+      },
+      &quot;total_qaqc_flags&quot;: {
+        &quot;description&quot;: &quot;How many QAQC flags have been raised for this feature or scenario&quot;,
+        &quot;type&quot;: [
+          &quot;integer&quot;,
+          &quot;null&quot;
+        ]
+      }
+    }
+  },
+  &quot;FeatureReport&quot;: {
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+      &quot;id&quot;: {
+        &quot;description&quot;: &quot;Id refers to the id of a building/feature&quot;,
+        &quot;type&quot;: &quot;string&quot;
+      },
+      &quot;name&quot;: {
+        &quot;description&quot;: &quot;name refers to the name of the feature (eg. Building 1, tranformer 5)&quot;,
+        &quot;type&quot;: &quot;string&quot;
+      },
+      &quot;directory_name&quot;: {
+        &quot;type&quot;: &quot;string&quot;
+      },
+      &quot;feature_type&quot;: {
+        &quot;type&quot;: &quot;string&quot;,
+        &quot;enum&quot;: [
+          &quot;Building&quot;,
+          &quot;District System&quot;,
+          &quot;Transformer&quot;
+        ]
+      },
+      &quot;timesteps_per_hour&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/TimestepsPerHour&quot;
+      },
+      &quot;simulation_status&quot;: {
+        &quot;type&quot;: &quot;string&quot;,
+        &quot;enum&quot;: [
+          &quot;Not Started&quot;,
+          &quot;Started&quot;,
+          &quot;Complete&quot;,
+          &quot;Failed&quot;
+        ]
+      },
+      &quot;timeseries_csv&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/TimeseriesCSV&quot;
+      },
+      &quot;location&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/Location&quot;
+      },
+      &quot;program&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/Program&quot;
+      },
+      &quot;design_parameters&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/DesignParameters&quot;
+      },
+      &quot;construction_costs&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/ConstructionCosts&quot;
+      },
+      &quot;reporting_periods&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/ReportingPeriods&quot;
+      },
+      &quot;distributed_generation&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/DistributedGeneration&quot;
+      },
+      &quot;power_distribution&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/PowerDistribution&quot;
+      },
+      &quot;thermal_storage&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/ThermalStorage&quot;
+      },
+      &quot;qaqc_flags&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/qaqc_flags&quot;
+      }
+    },
+    &quot;required&quot;: [
+      &quot;id&quot;,
+      &quot;name&quot;,
+      &quot;directory_name&quot;,
+      &quot;feature_type&quot;,
+      &quot;timesteps_per_hour&quot;,
+      &quot;simulation_status&quot;
+    ],
+    &quot;additionalProperties&quot;: false
+  },
+  &quot;ReportingPeriods&quot;: {
+    &quot;type&quot;: &quot;array&quot;,
+    &quot;items&quot;: {
+      &quot;$ref&quot;: &quot;#/definitions/ReportingPeriod&quot;
+    }
+  },
+  &quot;ReportingPeriod&quot;: {
+    &quot;description&quot;: &quot;Non-overlapping reporting periods&quot;,
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+      &quot;id&quot;: {
+        &quot;description&quot;: &quot;Id refers to the id of the reporting period. Ids of reporting periods are matched across simulations, so the same period of time gets the same id for all simulations.&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;name&quot;: {
+        &quot;description&quot;: &quot;name refers to the name of the reporting period(eg. Annual, January)&quot;,
+        &quot;type&quot;: &quot;string&quot;
+      },
+      &quot;multiplier&quot;: {
+        &quot;description&quot;: &quot;Multiplier used if this reporting period is representative of mulitple periods.  For example one week simulation that represents entire month.&quot;,
+        &quot;type&quot;: &quot;number&quot;,
+        &quot;default&quot;: 1
+      },
+      &quot;start_date&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/Date&quot;
+      },
+      &quot;end_date&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/Date&quot;
+      },
+      &quot;total_site_energy_kwh&quot;: {
+        &quot;description&quot;: &quot;Total energy used on site, does not include generation (kWh)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;total_source_energy_kwh&quot;: {
+        &quot;description&quot;: &quot;Total source energy used, does not include generation (kWh)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;site_EUI_kwh_per_m2&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;site_EUI_kBtu_per_ft2&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;source_EUI_kwh_per_m2&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;source_EUI_kBtu_per_ft2&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;net_site_energy_kwh&quot;: {
+        &quot;description&quot;: &quot;Net site energy (kWh)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;net_source_energy_kwh&quot;: {
+        &quot;description&quot;: &quot;Net source energy (kWh)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;total_utility_cost_dollar&quot;: {
+        &quot;description&quot;: &quot;Total utility cost ($)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;net_utility_cost_dollar&quot;: {
+        &quot;description&quot;: &quot;Net utility cost for reporting period includes generation ($)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;utility_costs_dollar&quot;: {
+        &quot;type&quot;: &quot;array&quot;,
+        &quot;items&quot;: {
+          &quot;$ref&quot;: &quot;#/definitions/UtilityCost&quot;
+        }
+      },
+      &quot;electricity_kwh&quot;: {
+        &quot;description&quot;: &quot;Sum of all electricity used, does not include electricity produced (kWh)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;natural_gas_kwh&quot;: {
+        &quot;description&quot;: &quot;Sum of all natural gas end uses consumption (kWh)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;propane_kwh&quot;: {
+        &quot;description&quot;: &quot;Sum of all propane end uses consumption (kWh)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;fuel_oil_kwh&quot;: {
+        &quot;description&quot;: &quot;Sum of all fuel oil #2 end uses consumption (kWh)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;other_fuels_kwh&quot;: {
+        &quot;description&quot;: &quot;Sum of all other (fuel oil #1, diesel, gasoline, coal, steam) fuel end uses consumption (kWh)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;district_cooling_kwh&quot;: {
+        &quot;description&quot;: &quot;Sum of all distric cooling end uses consumption (kWh)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;district_heating_kwh&quot;: {
+        &quot;description&quot;: &quot;Sum of all distric heating end uses consumption (kWh)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;water_qbft&quot;: {
+        &quot;description&quot;: &quot;Sum of all water end uses consumption (ft^3)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;electricity_produced_kwh&quot;: {
+        &quot;description&quot;: &quot;Sum of all electricity produced (kWh)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;end_uses&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/EndUses&quot;
+      },
+      &quot;energy_production_kwh&quot;: {
+        &quot;description&quot;: &quot;Energy produced for reporting period.  Water reported in m^3, all others in kWh.&quot;,
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {
+          &quot;electricity_produced&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;properties&quot;: {
+              &quot;photovoltaic&quot;: {
+                &quot;type&quot;: &quot;number&quot;
+              }
+            },
+            &quot;additionalProperties&quot;: false
+          }
+        },
+        &quot;additionalProperties&quot;: false
+      },
+      &quot;comfort_result&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/ComfortResult&quot;
+      },
+      &quot;emissions&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {
+          &quot;future_annual_electricity_emissions_mt&quot;: {
+            &quot;description&quot;: &quot;Future emissions in metric ton (mt) calculated based on an annual emission factor value for the selected future year&quot;,
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;future_hourly_electricity_emissions_mt&quot;: {
+            &quot;description&quot;: &quot;Future emissions in metric ton (mt) calculated based on hourly emission factor values for the selected future year&quot;,
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;historical_annual_electricity_emissions_mt&quot;: {
+            &quot;description&quot;: &quot;Historical emissions in metric ton (mt) calculated based on an annual emission factor value for the selected historical year&quot;,
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;historical_hourly_electricity_emissions_mt&quot;: {
+            &quot;description&quot;: &quot;Historical emissions in metric ton (mt) calculated based on hourly emission factor values for the selected historical year&quot;,
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;future_annual_electricity_emissions_intensity_kg_per_ft2&quot;: {
+            &quot;description&quot;: &quot;Future emissions intensity in kg/ft2 calculated based on an annual emission factor value for the selected future year&quot;,
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;future_hourly_electricity_emissions_intensity_kg_per_ft2&quot;: {
+            &quot;description&quot;: &quot;Future emissions intensity in kg/ft2 calculated based on hourly emission factor values for the selected future year&quot;,
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;historical_annual_electricity_emissions_intensity_kg_per_ft2&quot;: {
+            &quot;description&quot;: &quot;Historical emissions intensity in kg/ft2 calculated based on an annual emission factor value for the selected historical year&quot;,
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;historical_hourly_electricity_emissions_intensity_kg_per_ft2&quot;: {
+            &quot;description&quot;: &quot;Historical emissions intensity in kg/ft2 calculated based on hourly emission factor values for the selected historical year&quot;,
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;natural_gas_emissions_mt&quot;: {
+            &quot;description&quot;: &quot;Natural Gas emissions in mt calculated based on EPA eGRID data and calculated using 20-year GWP horizon based on ASHRAE 189.1&quot;,
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;natural_gas_emissions_intensity_kg_per_ft2&quot;: {
+            &quot;description&quot;: &quot;Natural Gas emissions intensity in kg/ft2 calculated based on EPA eGRID data and calculated using 20-year GWP horizon based on ASHRAE 189.1&quot;,
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;propane_emissions_mt&quot;: {
+            &quot;description&quot;: &quot;Propane emissions in mt calculated based on EPA eGRID data and calculated using 20-year GWP horizon based on ASHRAE 189.1&quot;,
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;propane_emissions_intensity_kg_per_ft2&quot;: {
+            &quot;description&quot;: &quot;Propane emissions intensity in kg/ft2 calculated based on EPA eGRID data and calculated using 20-year GWP horizon based on ASHRAE 189.1&quot;,
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;fueloil_no2_emissions_mt&quot;: {
+            &quot;description&quot;: &quot;FuelOilNo2 emissions in mt calculated based on EPA eGRID data and calculated using 20-year GWP horizon based on ASHRAE 189.1&quot;,
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;fueloil_no2_emissions_intensity_kg_per_ft2&quot;: {
+            &quot;description&quot;: &quot;FuelOilNo2 emissions intensity in kg/ft2 calculated based on EPA eGRID data and calculated using 20-year GWP horizon based on ASHRAE 189.1&quot;,
+            &quot;type&quot;: &quot;number&quot;
+          }
+        }
+      }
+    },
+    &quot;additionalProperties&quot;: false
+  },
+  &quot;Date&quot;: {
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+      &quot;month&quot;: {
+        &quot;type&quot;: &quot;integer&quot;
+      },
+      &quot;day_of_month&quot;: {
+        &quot;type&quot;: &quot;integer&quot;
+      },
+      &quot;year&quot;: {
+        &quot;type&quot;: &quot;integer&quot;
+      }
+    },
+    &quot;additionalProperties&quot;: false
+  },
+  &quot;EndUses&quot;: {
+    &quot;description&quot;: &quot;End uses for reporting period.  Does not include energy produced. Water reported in m^3, all others in kWh.&quot;,
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+      &quot;electricity_kwh&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/EndUse&quot;
+      },
+      &quot;natural_gas_kwh&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/EndUse&quot;
+      },
+      &quot;propane_kwh&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/EndUse&quot;
+      },
+      &quot;fuel_oil_kwh&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/EndUse&quot;
+      },
+      &quot;other_fuels_kwh&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/EndUse&quot;
+      },
+      &quot;district_cooling_kwh&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/EndUse&quot;
+      },
+      &quot;district_heating_kwh&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/EndUse&quot;
+      },
+      &quot;water_qbft&quot;: {
+        &quot;$ref&quot;: &quot;#/definitions/EndUse&quot;
+      }
+    },
+    &quot;additionalProperties&quot;: false
+  },
+  &quot;EndUse&quot;: {
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+      &quot;heating&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;cooling&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;interior_lighting&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;exterior_lighting&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;interior_equipment&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;exterior_equipment&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;electric_vehicles&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;fans&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;pumps&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;heat_rejection&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;humidification&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;heat_recovery&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;water_systems&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;refrigeration&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;generators&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      }
+    },
+    &quot;additionalProperties&quot;: false
+  },
+  &quot;ComfortResult&quot;: {
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+      &quot;time_setpoint_not_met_during_occupied_cooling&quot;: {
+        &quot;description&quot;: &quot;(hrs)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;time_setpoint_not_met_during_occupied_heating&quot;: {
+        &quot;description&quot;: &quot;(hrs)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;time_setpoint_not_met_during_occupied_hours&quot;: {
+        &quot;description&quot;: &quot;(hrs)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;hours_out_of_comfort_bounds_PMV&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;hours_out_of_comfort_bounds_PPD&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      }
+    },
+    &quot;additionalProperties&quot;: false
+  },
+  &quot;ConstructionCosts&quot;: {
+    &quot;type&quot;: &quot;array&quot;,
+    &quot;items&quot;: {
+      &quot;$ref&quot;: &quot;#/definitions/ConstructionCost&quot;
+    }
+  },
+  &quot;ConstructionCost&quot;: {
+    &quot;description&quot;: &quot;Program related information, does not change in time&quot;,
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+      &quot;category&quot;: {
+        &quot;type&quot;: &quot;string&quot;,
+        &quot;enum&quot;: [
+          &quot;Construction&quot;,
+          &quot;Building&quot;,
+          &quot;Space&quot;,
+          &quot;ThermalZone&quot;,
+          &quot;AirLoop&quot;,
+          &quot;PlantLoop&quot;,
+          &quot;ZoneHVAC&quot;,
+          &quot;Lights&quot;,
+          &quot;Luminaire&quot;,
+          &quot;Equipment&quot;,
+          &quot;HVACComponent&quot;,
+          &quot;ZoneHVACComponent&quot;
+        ]
+      },
+      &quot;item_name&quot;: {
+        &quot;description&quot;: &quot;Name of the item being costed, e.g. the name of the exterior wall construction&quot;,
+        &quot;type&quot;: &quot;string&quot;
+      },
+      &quot;unit_cost&quot;: {
+        &quot;description&quot;: &quot;Cost per unit of item, e.g. cost per area of construction.  This can be adjusted in post processing.&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;cost_units&quot;: {
+        &quot;description&quot;: &quot;Unit of cost for this item&quot;,
+        &quot;type&quot;: &quot;string&quot;,
+        &quot;enum&quot;: [
+          &quot;CostPerEach&quot;,
+          &quot;CostPerFt2&quot;,
+          &quot;CostPerKW&quot;,
+          &quot;CostPerCFM&quot;
+        ]
+      },
+      &quot;item_quantity&quot;: {
+        &quot;description&quot;: &quot;Amount of the item in units corresponding to cost_units&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;total_cost&quot;: {
+        &quot;description&quot;: &quot;Total cost is unit_cost multiplied by item_quantity. Can be updated if unit_cost is changed.&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      }
+    },
+    &quot;additionalProperties&quot;: false
+  },
+  &quot;UtilityCost&quot;: {
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+      &quot;fuel_type&quot;: {
+        &quot;type&quot;: &quot;string&quot;,
+        &quot;enum&quot;: [
+          &quot;Electricity&quot;,
+          &quot;Natural Gas&quot;,
+          &quot;Propane&quot;,
+          &quot;Fuel Oil&quot;,
+          &quot;District Cooling&quot;,
+          &quot;District Heating&quot;,
+          &quot;Other Fuels&quot;,
+          &quot;Water&quot;
+        ]
+      },
+      &quot;total_cost&quot;: {
+        &quot;description&quot;: &quot;($)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;usage_cost&quot;: {
+        &quot;description&quot;: &quot;($)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;demand_cost&quot;: {
+        &quot;description&quot;: &quot;($)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      }
+    },
+    &quot;additionalProperties&quot;: false
+  },
+  &quot;Location&quot;: {
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+      &quot;latitude_deg&quot;: {
+        &quot;description&quot;: &quot;latitude for the centroid of the feature (deg)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;longitude_deg&quot;: {
+        &quot;description&quot;: &quot;longitude for the centroid of the feature (deg)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;surface_elevation_ft&quot;: {
+        &quot;description&quot;: &quot;The surface elevation (above NAVD88 datum) (ft).&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;weather_filename&quot;: {
+        &quot;description&quot;: &quot;Name of EPW weather file.&quot;,
+        &quot;type&quot;: &quot;string&quot;
+      }
+    },
+    &quot;additionalProperties&quot;: false
+  },
+  &quot;TimestepsPerHour&quot;: {
+    &quot;type&quot;: &quot;integer&quot;,
+    &quot;minimum&quot;: 1,
+    &quot;maximum&quot;: 60
+  },
+  &quot;Program&quot;: {
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+      &quot;site_area_sqft&quot;: {
+        &quot;description&quot;: &quot;Area of the entire site or lot (ft^2)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;floor_area_sqft&quot;: {
+        &quot;description&quot;: &quot;Building gross floor area (ft^2)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;conditioned_area_sqft&quot;: {
+        &quot;description&quot;: &quot;Building conditioned floor area (ft^2)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;unconditioned_area_sqft&quot;: {
+        &quot;description&quot;: &quot;Building unconditioned floor area (ft^2)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;footprint_area_sqft&quot;: {
+        &quot;description&quot;: &quot;Building floorprint area (ft^2)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;maximum_roof_height_ft&quot;: {
+        &quot;description&quot;: &quot;Maximum height of the roof relative to surface elevation (ft)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;maximum_number_of_stories&quot;: {
+        &quot;description&quot;: &quot;The maximum number of building stories, sum of number of above and below ground stories.&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;maximum_number_of_stories_above_ground&quot;: {
+        &quot;description&quot;: &quot;The maximum number of building stories above ground&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;parking_area_sqft&quot;: {
+        &quot;description&quot;: &quot;Parking gross area (ft^2)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;number_of_parking_spaces&quot;: {
+        &quot;description&quot;: &quot;Number of parking spaces&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;number_of_parking_spaces_charging&quot;: {
+        &quot;description&quot;: &quot;Number of parking spaces with electric vehicle charging&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;parking_footprint_area_sqft&quot;: {
+        &quot;description&quot;: &quot;Parking floorprint area (ft^2)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;maximum_parking_height_ft&quot;: {
+        &quot;description&quot;: &quot;Maximum height of the parking structure relative to surface elevation (ft)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;maximum_number_of_parking_stories&quot;: {
+        &quot;description&quot;: &quot;The maximum number of parking stories, sum of number of above and below ground stories.&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;maximum_number_of_parking_stories_above_ground&quot;: {
+        &quot;description&quot;: &quot;The maximum number of parking stories above ground&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;number_of_residential_units&quot;: {
+        &quot;description&quot;: &quot;Total number of residential units.&quot;,
+        &quot;type&quot;: &quot;integer&quot;
+      },
+      &quot;building_types&quot;: {
+        &quot;type&quot;: &quot;array&quot;,
+        &quot;items&quot;: {
+          &quot;$ref&quot;: &quot;#/definitions/BuildingType&quot;
+        }
+      },
+      &quot;window_area_sqft&quot;: {
+        &quot;description&quot;: &quot;Exterior windows gross area (ft^2)&quot;,
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {
+          &quot;north_window_area_sqft&quot;: {
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;south_window_area_sqft&quot;: {
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;east_window_area_sqft&quot;: {
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;west_window_area_sqft&quot;: {
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;total_window_area_sqft&quot;: {
+            &quot;type&quot;: &quot;number&quot;
+          }
+        },
+        &quot;required&quot;: [
+          &quot;total_window_area_sqft&quot;
+        ],
+        &quot;additionalProperties&quot;: false
+      },
+      &quot;wall_area_sqft&quot;: {
+        &quot;description&quot;: &quot;exterior walls gross area (ft^2)&quot;,
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {
+          &quot;north_wall_area_sqft&quot;: {
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;south_wall_area_sqft&quot;: {
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;east_wall_area_sqft&quot;: {
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;west_wall_area_sqft&quot;: {
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;total_wall_area_sqft&quot;: {
+            &quot;type&quot;: &quot;number&quot;
+          }
+        },
+        &quot;required&quot;: [
+          &quot;north_wall_area_sqft&quot;,
+          &quot;south_wall_area_sqft&quot;,
+          &quot;east_wall_area_sqft&quot;,
+          &quot;west_wall_area_sqft&quot;,
+          &quot;total_wall_area_sqft&quot;
+        ],
+        &quot;additionalProperties&quot;: false
+      },
+      &quot;roof_area_sqft&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {
+          &quot;equipment_roof_area_sqft&quot;: {
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;photovoltaic_roof_area_sqft&quot;: {
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;available_roof_area_sqft&quot;: {
+            &quot;description&quot;: &quot;gross roof area (ft^2)&quot;,
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;total_roof_area_sqft&quot;: {
+            &quot;description&quot;: &quot;Exterior roofs gross area (ft^2)&quot;,
+            &quot;type&quot;: &quot;number&quot;
+          }
+        },
+        &quot;required&quot;: [
+          &quot;total_roof_area_sqft&quot;
+        ],
+        &quot;additionalProperties&quot;: false
+      },
+      &quot;orientation_deg&quot;: {
+        &quot;description&quot;: &quot;Rotation of longest axis from East-West,about up axis (deg)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;aspect_ratio&quot;: {
+        &quot;description&quot;: &quot;Ratio of longest to shortest axis&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;total_construction_cost_dollar&quot;: {
+        &quot;description&quot;: &quot;total construction cost calculated from the defined cost per floor area ($)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      }
+    },
+    &quot;required&quot;: [
+      &quot;floor_area_sqft&quot;,
+      &quot;conditioned_area_sqft&quot;,
+      &quot;unconditioned_area_sqft&quot;,
+      &quot;footprint_area_sqft&quot;,
+      &quot;maximum_roof_height_ft&quot;,
+      &quot;number_of_residential_units&quot;,
+      &quot;building_types&quot;,
+      &quot;window_area_sqft&quot;,
+      &quot;wall_area_sqft&quot;,
+      &quot;roof_area_sqft&quot;
+    ],
+    &quot;additionalProperties&quot;: false
+  },
+  &quot;BuildingType&quot;: {
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+      &quot;building_type&quot;: {
+        &quot;description&quot;: &quot;Primary building space type&quot;,
+        &quot;type&quot;: &quot;string&quot;,
+        &quot;enum&quot;: [
+          &quot;Single-Family&quot;,
+          &quot;Multifamily (2 to 4 units)&quot;,
+          &quot;Multifamily (5 or more units)&quot;,
+          &quot;Mobile Home&quot;,
+          &quot;Vacant&quot;,
+          &quot;Office&quot;,
+          &quot;Laboratory&quot;,
+          &quot;Nonrefrigerated warehouse&quot;,
+          &quot;Food sales&quot;,
+          &quot;Public order and safety&quot;,
+          &quot;Outpatient health care&quot;,
+          &quot;Refrigerated warehouse&quot;,
+          &quot;Religious worship&quot;,
+          &quot;Public assembly&quot;,
+          &quot;Education&quot;,
+          &quot;Food service&quot;,
+          &quot;Inpatient health care&quot;,
+          &quot;Nursing&quot;,
+          &quot;Lodging&quot;,
+          &quot;Strip shopping mall&quot;,
+          &quot;Enclosed mall&quot;,
+          &quot;Retail other than mall&quot;,
+          &quot;Service&quot;
+        ]
+      },
+      &quot;maximum_occupancy&quot;: {
+        &quot;description&quot;: &quot;Maximum number of occupants &quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;floor_area&quot;: {
+        &quot;description&quot;: &quot;Building gross floor area of this type (ft^2)&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      }
+    },
+    &quot;required&quot;: [
+      &quot;building_type&quot;,
+      &quot;maximum_occupancy&quot;,
+      &quot;floor_area&quot;
+    ],
+    &quot;additionalProperties&quot;: false
+  },
+  &quot;DesignParameters&quot;: {
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+      &quot;district_cooling_chilled_water_rate&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;district_cooling_mass_flow_rate&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;district_cooling_inlet_temperature&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;district_cooling_outlet_temperature&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;district_heating_hot_water_rate&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;district_heating_mass_flow_rate&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;district_heating_inlet_temperature&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;district_heating_outlet_temperature&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      }
+    },
+    &quot;additionalProperties&quot;: false
+  },
+  &quot;TimeseriesCSV&quot;: {
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+      &quot;path&quot;: {
+        &quot;type&quot;: &quot;string&quot;
+      },
+      &quot;first_report_datetime&quot;: {
+        &quot;type&quot;: &quot;string&quot;
+      },
+      &quot;column_names&quot;: {
+        &quot;type&quot;: &quot;array&quot;,
+        &quot;items&quot;: {
+          &quot;type&quot;: &quot;string&quot;
+        }
+      }
+    },
+    &quot;required&quot;: [
+      &quot;path&quot;,
+      &quot;first_report_datetime&quot;,
+      &quot;column_names&quot;
+    ],
+    &quot;additionalProperties&quot;: false
+  },
+  &quot;PowerDistribution&quot;: {
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+      &quot;over_voltage_hours&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;under_voltage_hours&quot;: {
+        &quot;type&quot;: &quot;number&quot;
+      }
+    }
+  },
+  &quot;ThermalStorage&quot;: {
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+      &quot;its_size&quot;: {
+        &quot;description&quot;: &quot;Total central plant TES capacity in kWh&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      },
+      &quot;ptes_size&quot;: {
+        &quot;description&quot;: &quot;Total distributed/packaged TES capacity in kWh&quot;,
+        &quot;type&quot;: &quot;number&quot;
+      }
+    }
+  }
 }</pre>
 
 <p>}</p>

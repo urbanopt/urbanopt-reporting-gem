@@ -146,7 +146,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/end_use.rb, line 62</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/end_use.rb, line 27</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">hash</span> = {})
   <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">delete_if</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">nil?</span> }
   <span class="ruby-identifier">hash</span> = <span class="ruby-identifier">defaults</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">hash</span>)
@@ -214,7 +214,7 @@
 
           
           <div class="method-source-code" id="add_values-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/end_use.rb, line 153</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/end_use.rb, line 118</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">add_values</span>(<span class="ruby-identifier">existing_value</span>, <span class="ruby-identifier">new_value</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">existing_value</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">new_value</span>
     <span class="ruby-identifier">existing_value</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">new_value</span>
@@ -252,7 +252,7 @@
 
           
           <div class="method-source-code" id="defaults-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/end_use.rb, line 90</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/end_use.rb, line 55</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">defaults</span>
   <span class="ruby-identifier">hash</span> = {}
 
@@ -307,7 +307,7 @@
 
           
           <div class="method-source-code" id="merge_end_use-21-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/end_use.rb, line 168</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/end_use.rb, line 133</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">merge_end_use!</span>(<span class="ruby-identifier">other</span>)
   <span class="ruby-ivar">@heating</span> = <span class="ruby-identifier">add_values</span>(<span class="ruby-ivar">@heating</span>, <span class="ruby-identifier">other</span>.<span class="ruby-identifier">heating</span>)
   <span class="ruby-ivar">@cooling</span> = <span class="ruby-identifier">add_values</span>(<span class="ruby-ivar">@cooling</span>, <span class="ruby-identifier">other</span>.<span class="ruby-identifier">cooling</span>)
@@ -361,7 +361,7 @@
 
           
           <div class="method-source-code" id="to_hash-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/end_use.rb, line 118</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/end_use.rb, line 83</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_hash</span>
   <span class="ruby-identifier">result</span> = {}
 

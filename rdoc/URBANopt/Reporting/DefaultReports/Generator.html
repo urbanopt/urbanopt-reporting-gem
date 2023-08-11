@@ -159,7 +159,7 @@
 
           
           <div class="method-source-code" id="add_generator-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/generator.rb, line 89</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/generator.rb, line 54</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">add_generator</span>(<span class="ruby-identifier">existing_generator</span>, <span class="ruby-identifier">new_generator</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">existing_generator</span>.<span class="ruby-identifier">size_kw</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">new_generator</span>.<span class="ruby-identifier">size_kw</span>.<span class="ruby-identifier">nil?</span>
     <span class="ruby-identifier">existing_generator</span>.<span class="ruby-identifier">size_kw</span> = <span class="ruby-keyword">nil</span>
@@ -203,7 +203,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/generator.rb, line 63</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/generator.rb, line 28</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">hash</span> = {})
   <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">delete_if</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">nil?</span> }
 
@@ -253,7 +253,7 @@
 
           
           <div class="method-source-code" id="to_hash-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/generator.rb, line 79</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/generator.rb, line 44</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_hash</span>
   <span class="ruby-identifier">result</span> = {}
 

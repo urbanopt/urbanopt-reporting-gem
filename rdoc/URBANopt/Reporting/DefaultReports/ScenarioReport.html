@@ -140,7 +140,7 @@
 
         <div class="method-description">
           
-          <p><a href="ScenarioReport.html"><code>ScenarioReport</code></a> class intializes the scenario report attributes: <code>:id</code> , <code>:name</code> , <code>:directory_name</code>, <code>:timesteps_per_hour</code> , <code>:number_of_not_started_simulations</code> , <code>:number_of_started_simulations</code> , <code>:number_of_complete_simulations</code> , <code>:number_of_failed_simulations</code> , <code>:timeseries_csv</code> , <code>:location</code> , <code>:program</code> , <code>:construction_costs</code> , <code>:reporting_periods</code> , <code>:feature_reports</code></p>
+          <p><a href="ScenarioReport.html"><code>ScenarioReport</code></a> class intializes the scenario report attributes: <code>:id</code> , <code>:name</code> , <code>:directory_name</code>, <code>:timesteps_per_hour</code> , <code>:number_of_not_started_simulations</code> , <code>:number_of_started_simulations</code> , <code>:number_of_complete_simulations</code> , <code>:number_of_failed_simulations</code> , <code>:timeseries_csv</code> , <code>:location</code> , <code>:program</code> , <code>:construction_costs</code> , <code>:reporting_periods</code> , <code>:feature_reports</code>, <code>:distributed_generation</code>, <code>:scenario_power_distribution</code>, <code>:qaqc_flags</code></p>
 
 <p>Each <a href="ScenarioReport.html"><code>ScenarioReport</code></a> object corresponds to a single Scenario.</p>
 <dl class="rdoc-list label-list"><dt>parameters:
@@ -152,7 +152,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/scenario_report.rb, line 79</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/scenario_report.rb, line 47</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">hash</span> = {})
   <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">delete_if</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">nil?</span> }
   <span class="ruby-identifier">hash</span> = <span class="ruby-identifier">defaults</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">hash</span>)
@@ -170,6 +170,8 @@
   <span class="ruby-ivar">@program</span> = <span class="ruby-constant">Program</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">hash</span>[<span class="ruby-value">:program</span>])
   <span class="ruby-ivar">@distributed_generation</span> = <span class="ruby-constant">DistributedGeneration</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">hash</span>[<span class="ruby-value">:distributed_generation</span>] <span class="ruby-operator">||</span> {})
   <span class="ruby-ivar">@scenario_power_distribution</span> = <span class="ruby-constant">ScenarioPowerDistribution</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">hash</span>[<span class="ruby-value">:scenario_power_distribution</span>] <span class="ruby-operator">||</span> {})
+  <span class="ruby-ivar">@scenario_power_distribution_cost</span> = <span class="ruby-constant">ScenarioPowerDistributionCost</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">hash</span>[<span class="ruby-value">:scenario_power_distribution_cost</span>] <span class="ruby-operator">||</span> {})
+  <span class="ruby-ivar">@qaqc_flags</span> = <span class="ruby-constant">QAQC</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">hash</span>[<span class="ruby-value">:qaqc_flags</span>])
 
   <span class="ruby-ivar">@construction_costs</span> = []
   <span class="ruby-identifier">hash</span>[<span class="ruby-value">:construction_costs</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">cc</span><span class="ruby-operator">|</span>
@@ -237,6 +239,8 @@
 </li><li>
 <p>merge program information</p>
 </li><li>
+<p>merge qaqc_flags information</p>
+</li><li>
 <p>merge construction_cost information</p>
 </li><li>
 <p>merge reporting_periods information</p>
@@ -254,7 +258,7 @@
 
           
           <div class="method-source-code" id="add_feature_report-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/scenario_report.rb, line 272</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/scenario_report.rb, line 252</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">add_feature_report</span>(<span class="ruby-identifier">feature_report</span>)
   <span class="ruby-comment"># check if the timesteps_per_hour are identical</span>
   <span class="ruby-keyword">if</span> <span class="ruby-ivar">@timesteps_per_hour</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@timesteps_per_hour</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39;&#39;</span>
@@ -310,7 +314,11 @@
   <span class="ruby-comment"># merge reporting_periods information</span>
   <span class="ruby-ivar">@reporting_periods</span> = <span class="ruby-constant">ReportingPeriod</span>.<span class="ruby-identifier">merge_reporting_periods</span>(<span class="ruby-ivar">@reporting_periods</span>, <span class="ruby-identifier">feature_report</span>.<span class="ruby-identifier">reporting_periods</span>)
 
+  <span class="ruby-comment"># merge distributed_generation information</span>
   <span class="ruby-ivar">@distributed_generation</span> = <span class="ruby-constant">DistributedGeneration</span>.<span class="ruby-identifier">merge_distributed_generation</span>(<span class="ruby-ivar">@distributed_generation</span>, <span class="ruby-identifier">feature_report</span>.<span class="ruby-identifier">distributed_generation</span>)
+
+  <span class="ruby-comment"># merge qaqc_flags information</span>
+  <span class="ruby-ivar">@qaqc_flags</span>.<span class="ruby-identifier">add_qaqc_flags</span>(<span class="ruby-identifier">feature_report</span>.<span class="ruby-identifier">qaqc_flags</span>)
 
   <span class="ruby-comment"># add feature_report</span>
   <span class="ruby-ivar">@feature_reports</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">feature_report</span>
@@ -347,7 +355,7 @@
 
           
           <div class="method-source-code" id="csv_path-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/scenario_report.rb, line 155</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/scenario_report.rb, line 126</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">csv_path</span>
   <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@directory_name</span>, <span class="ruby-node">&quot;#{@file_name}.csv&quot;</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -380,7 +388,7 @@
 
           
           <div class="method-source-code" id="defaults-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/scenario_report.rb, line 126</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/scenario_report.rb, line 96</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">defaults</span>
   <span class="ruby-identifier">hash</span> = {}
   <span class="ruby-identifier">hash</span>[<span class="ruby-value">:id</span>] = <span class="ruby-keyword">nil</span>.<span class="ruby-identifier">to_s</span>
@@ -394,6 +402,7 @@
   <span class="ruby-identifier">hash</span>[<span class="ruby-value">:timeseries_csv</span>] = <span class="ruby-constant">TimeseriesCSV</span>.<span class="ruby-identifier">new</span>.<span class="ruby-identifier">to_hash</span>
   <span class="ruby-identifier">hash</span>[<span class="ruby-value">:location</span>] = <span class="ruby-constant">Location</span>.<span class="ruby-identifier">new</span>.<span class="ruby-identifier">defaults</span>
   <span class="ruby-identifier">hash</span>[<span class="ruby-value">:program</span>] = <span class="ruby-constant">Program</span>.<span class="ruby-identifier">new</span>.<span class="ruby-identifier">to_hash</span>
+  <span class="ruby-identifier">hash</span>[<span class="ruby-value">:qaqc_flags</span>] = <span class="ruby-constant">QAQC</span>.<span class="ruby-identifier">new</span>.<span class="ruby-identifier">to_hash</span>
   <span class="ruby-identifier">hash</span>[<span class="ruby-value">:construction_costs</span>] = []
   <span class="ruby-identifier">hash</span>[<span class="ruby-value">:reporting_periods</span>] = []
   <span class="ruby-identifier">hash</span>[<span class="ruby-value">:feature_reports</span>] = []
@@ -428,7 +437,7 @@
 
           
           <div class="method-source-code" id="json_path-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/scenario_report.rb, line 148</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/scenario_report.rb, line 119</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">json_path</span>
   <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@directory_name</span>, <span class="ruby-node">&quot;#{@file_name}.json&quot;</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -446,7 +455,7 @@
         
         <div class="method-heading">
           <span class="method-name">save</span><span
-            class="method-args">(file_name = &#39;default_scenario_report&#39;, save_feature_reports = true)</span>
+            class="method-args">(file_name = &#39;default_scenario_report&#39;, save_feature_reports = true, save_csv_reports = true)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -463,19 +472,21 @@
 
           
           <div class="method-source-code" id="save-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/scenario_report.rb, line 164</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">save</span>(<span class="ruby-identifier">file_name</span> = <span class="ruby-string">&#39;default_scenario_report&#39;</span>, <span class="ruby-identifier">save_feature_reports</span> = <span class="ruby-keyword">true</span>)
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/scenario_report.rb, line 135</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">save</span>(<span class="ruby-identifier">file_name</span> = <span class="ruby-string">&#39;default_scenario_report&#39;</span>, <span class="ruby-identifier">save_feature_reports</span> = <span class="ruby-keyword">true</span>, <span class="ruby-identifier">save_csv_reports</span> = <span class="ruby-keyword">true</span>)
   <span class="ruby-comment"># reassign the initialize local variable @file_name to the file name input.</span>
   <span class="ruby-ivar">@file_name</span> = <span class="ruby-identifier">file_name</span>
 
-  <span class="ruby-comment"># save the scenario reports csv and json data</span>
-  <span class="ruby-identifier">old_timeseries_path</span> = <span class="ruby-keyword">nil</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@timeseries_csv</span>.<span class="ruby-identifier">path</span>.<span class="ruby-identifier">nil?</span>
-    <span class="ruby-identifier">old_timeseries_path</span> = <span class="ruby-ivar">@timeseries_csv</span>.<span class="ruby-identifier">path</span>
-  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">save_csv_reports</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">true</span>
+    <span class="ruby-comment"># save the scenario reports csv and json data</span>
+    <span class="ruby-identifier">old_timeseries_path</span> = <span class="ruby-keyword">nil</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@timeseries_csv</span>.<span class="ruby-identifier">path</span>.<span class="ruby-identifier">nil?</span>
+      <span class="ruby-identifier">old_timeseries_path</span> = <span class="ruby-ivar">@timeseries_csv</span>.<span class="ruby-identifier">path</span>
+    <span class="ruby-keyword">end</span>
 
-  <span class="ruby-ivar">@timeseries_csv</span>.<span class="ruby-identifier">path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@directory_name</span>, <span class="ruby-node">&quot;#{file_name}.csv&quot;</span>)
-  <span class="ruby-ivar">@timeseries_csv</span>.<span class="ruby-identifier">save_data</span>
+    <span class="ruby-ivar">@timeseries_csv</span>.<span class="ruby-identifier">path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@directory_name</span>, <span class="ruby-node">&quot;#{file_name}.csv&quot;</span>)
+    <span class="ruby-ivar">@timeseries_csv</span>.<span class="ruby-identifier">save_data</span>
+  <span class="ruby-keyword">end</span>
 
   <span class="ruby-identifier">hash</span> = {}
   <span class="ruby-identifier">hash</span>[<span class="ruby-value">:scenario_report</span>] = <span class="ruby-identifier">to_hash</span>
@@ -496,10 +507,12 @@
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
 
-  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">old_timeseries_path</span>.<span class="ruby-identifier">nil?</span>
-    <span class="ruby-ivar">@timeseries_csv</span>.<span class="ruby-identifier">path</span> = <span class="ruby-identifier">old_timeseries_path</span>
-  <span class="ruby-keyword">else</span>
-    <span class="ruby-ivar">@timeseries_csv</span>.<span class="ruby-identifier">path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@directory_name</span>, <span class="ruby-node">&quot;#{file_name}.csv&quot;</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">save_csv_reports</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">true</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">old_timeseries_path</span>.<span class="ruby-identifier">nil?</span>
+      <span class="ruby-ivar">@timeseries_csv</span>.<span class="ruby-identifier">path</span> = <span class="ruby-identifier">old_timeseries_path</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-ivar">@timeseries_csv</span>.<span class="ruby-identifier">path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@directory_name</span>, <span class="ruby-node">&quot;#{file_name}.csv&quot;</span>)
+    <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
 
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">save_feature_reports</span>
@@ -548,7 +561,7 @@
 
           
           <div class="method-source-code" id="to_hash-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/scenario_report.rb, line 221</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/reporting/default_reports/scenario_report.rb, line 196</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_hash</span>
   <span class="ruby-identifier">result</span> = {}
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:id</span>] = <span class="ruby-ivar">@id</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@id</span>
@@ -564,6 +577,8 @@
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:program</span>] = <span class="ruby-ivar">@program</span>.<span class="ruby-identifier">to_hash</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@program</span>
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:distributed_generation</span>] = <span class="ruby-ivar">@distributed_generation</span>.<span class="ruby-identifier">to_hash</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@distributed_generation</span>
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:scenario_power_distribution</span>] = <span class="ruby-ivar">@scenario_power_distribution</span>.<span class="ruby-identifier">to_hash</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@scenario_power_distribution</span>
+  <span class="ruby-identifier">result</span>[<span class="ruby-value">:scenario_power_distribution_cost</span>] = <span class="ruby-ivar">@scenario_power_distribution_cost</span>.<span class="ruby-identifier">to_hash</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@scenario_power_distribution_cost</span>
+  <span class="ruby-identifier">result</span>[<span class="ruby-value">:qaqc_flags</span>] = <span class="ruby-ivar">@qaqc_flags</span>.<span class="ruby-identifier">to_hash</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@qaqc_flags</span>
 
   <span class="ruby-identifier">result</span>[<span class="ruby-value">:construction_costs</span>] = []
   <span class="ruby-ivar">@construction_costs</span>&amp;.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">cc</span><span class="ruby-operator">|</span> <span class="ruby-identifier">result</span>[<span class="ruby-value">:construction_costs</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">cc</span>.<span class="ruby-identifier">to_hash</span> }
@@ -580,7 +595,9 @@
   <span class="ruby-keyword">end</span>
 
   <span class="ruby-comment"># have to use the module method because we have not yet initialized the class one</span>
-  <span class="ruby-identifier">@@logger</span>.<span class="ruby-identifier">info</span>(<span class="ruby-node">&quot;Scenario name: #{@name}&quot;</span>)
+  <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@name</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39;&#39;</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@name</span>.<span class="ruby-identifier">nil?</span>
+    <span class="ruby-identifier">@@logger</span>.<span class="ruby-identifier">info</span>(<span class="ruby-node">&quot;Scenario name: #{@name}&quot;</span>)
+  <span class="ruby-keyword">end</span>
 
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">result</span>
 <span class="ruby-keyword">end</span></pre>
