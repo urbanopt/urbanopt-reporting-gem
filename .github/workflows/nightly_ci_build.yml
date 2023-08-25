@@ -1,4 +1,4 @@
-name: nightly_ci_build
+name: Reporting-gem CI
 
 on:
   # push:
