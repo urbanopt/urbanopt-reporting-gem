@@ -1,13 +1,13 @@
 name: Reporting-gem CI
 
 on:
-  # push:
-  schedule:
+  push:
+  # schedule:
     # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule
     # 5 am UTC (11pm MDT the day before) every weekday night in MDT
-    - cron: '22 5 * * 2-6'
-  pull_request:
-    types: [review_requested]
+  #   - cron: '22 5 * * 2-6'
+  # pull_request:
+  #   types: [review_requested]
 
 env:
   # This env var should enforce develop branch of all dependencies
@@ -26,16 +26,12 @@ jobs:
           ruby --version
           bundle update
       - name: List OpenStudio measures
-        continue-on-error: true
         run: bundle exec rake openstudio:list_measures
       - name: Update OpenStudio measures
-        continue-on-error: true
         run: bundle exec rake openstudio:update_measures
       - name: Test OpenStudio measures
-        continue-on-error: true
         run: bundle exec rake openstudio:test_with_openstudio
       - name: Run Rspec
-        continue-on-error: true
         # Continue to upload step even if a test fails, so we can troubleshoot
         run: bundle exec rspec
       - name: Upload artifacts
