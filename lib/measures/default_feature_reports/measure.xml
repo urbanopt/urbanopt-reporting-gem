@@ -39,7 +39,7 @@
     <argument>
       <name>feature_location</name>
       <display_name>URBANopt Feature Location</display_name>
-      <descrption>Writes default_feature_reports.json and default_feature_reports.csv files used by URBANopt Scenario Default Post Processor</descrption>
+      <description>Writes default_feature_reports.json and default_feature_reports.csv files used by URBANopt Scenario Default Post Processor</description>
       <type>String</type>
       <units></units>
       <required>true</required>
