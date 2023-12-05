@@ -97,7 +97,7 @@ class ExportModelicaLoads < OpenStudio::Measure::ReportingMeasure
       quick_proc[-1] = quick_proc[-1].delete(')')
       column += quick_proc
 
-      log "Took #{Time.now - start} to iterate"
+      # log "Took #{Time.now - start} to iterate"
     end
 
     log 'Appending column to data'
@@ -284,17 +284,13 @@ class ExportModelicaLoads < OpenStudio::Measure::ReportingMeasure
 
     File.open('./modelica.mos', 'w') do |f|
       f << "#1\n"
-      f << "#Heating and Cooling Model loads from OpenStudio Prototype Buildings\n"
-      f << "#  Building Type: {{BUILDINGTYPE}}\n"
-      f << "#  Climate Zone: {{CLIMATEZONE}}\n"
-      f << "#  Vintage: {{VINTAGE}}\n"
-      f << "#  Simulation ID (for debugging): {{SIMID}}\n"
-      f << "#  URL: https://github.com/urbanopt/openstudio-prototype-loads\n"
+      f << "#Exported loads from OpenStudio Reporting Measure\n"
+      f << "#  Measure location: https://github.com/urbanopt/urbanopt-reporting-gem/tree/develop/lib/measures/export_modelica_loads\n"
       f << "\n"
       f << "#First column: Seconds in the year (loads are hourly)\n"
       f << "#Second column: cooling loads in Watts (as negative numbers).\n"
       f << "#Third column: space heating loads in Watts\n"
-      f << "#Fourth column: water heating in Watts\n"
+      f << "#Fourth column: water heating loads in Watts\n"
       f << "\n"
       f << "#Peak space cooling load = #{peak_cooling} Watts\n"
       f << "#Peak space heating load = #{peak_heating} Watts\n"
