@@ -241,7 +241,7 @@ class ExportModelicaLoads < OpenStudio::Measure::ReportingMeasure
     create_new_variable_sum(rows, 'TotalSensibleLoad', 'ZonePredictedSensibleLoadtoSetpointHeatTransferRate')
     create_new_variable_sum(rows, 'TotalCoolingSensibleLoad', 'ZonePredictedSensibleLoadtoSetpointHeatTransferRate', negative_only: true)
     create_new_variable_sum(rows, 'TotalHeatingSensibleLoad', 'ZonePredictedSensibleLoadtoSetpointHeatTransferRate', positive_only: true)
-    # create_new_variable_sum(rows, 'TotalWaterHeating', 'WaterHeaterHeatingRate')
+    create_new_variable_sum(rows, 'TotalWaterHeating', 'Water Heater Total Demand Heat Transfer Rate')
 
     # convert this to CSV object
     File.open('./building_loads.csv', 'w') do |f|
