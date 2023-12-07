@@ -264,7 +264,7 @@ class ExportModelicaLoads < OpenStudio::Measure::ReportingMeasure
         seconds_index = row.index('SecondsFromStart')
         total_cooling_sensible_index = row.index('TotalCoolingSensibleLoad')
         total_heating_sensible_index = row.index('TotalHeatingSensibleLoad')
-        total_water_heating_index = row.index('Water Heater Total Demand Heat Transfer Rate')
+        total_water_heating_index = row.index('TotalWaterHeating')
       else
         new_data = [
           row[seconds_index],
