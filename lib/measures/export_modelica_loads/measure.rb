@@ -56,7 +56,7 @@ class ExportModelicaLoads < OpenStudio::Measure::ReportingMeasure
     result << OpenStudio::IdfObject.load('Output:Meter,WaterSystems:EnergyTransfer,timestep;').get # Joules
     # these variables are used for the modelica export.
     result << OpenStudio::IdfObject.load('Output:Variable,*,Zone Predicted Sensible Load to Setpoint Heat Transfer Rate,timestep;').get # watts according to e+
-    result << OpenStudio::IdfObject.load('Output:Variable,*,Water Heater Total Demand Heat Transfer Rate,timestep;').get # Watts
+    result << OpenStudio::IdfObject.load('Output:Variable,,Water Heater Total Demand Heat Transfer Rate,timestep;').get # Watts
 
     return result
   end
@@ -227,21 +227,21 @@ class ExportModelicaLoads < OpenStudio::Measure::ReportingMeasure
     extract_timeseries_into_matrix(sql_file, rows, 'Electricity:Facility', nil, 0, timestep)
     extract_timeseries_into_matrix(sql_file, rows, 'Gas:Facility', nil, 0, timestep)
     extract_timeseries_into_matrix(sql_file, rows, 'Heating:EnergyTransfer', nil, 0, timestep)
-    extract_timeseries_into_matrix(sql_file, rows, 'WaterSystems:EnergyTransfer', nil, 0, timestep)
+    extract_timeseries_into_matrix(sql_file, rows, 'Water Heater Total Demand Heat Transfer Rate', nil, 0, timestep)
 
     # get all zones and save the names for later use in aggregation.
     tz_names = []
     model.getThermalZones.each do |tz|
       tz_names << tz.name.get if tz.name.is_initialized
       extract_timeseries_into_matrix(sql_file, rows, 'Zone Predicted Sensible Load to Setpoint Heat Transfer Rate', tz_names.last, 0, timestep)
-      extract_timeseries_into_matrix(sql_file, rows, 'Water Heater Heating Rate', tz_names.last, 0, timestep)
+      # extract_timeseries_into_matrix(sql_file, rows, 'Water Heater Heating Rate', tz_names.last, 0, timestep)
     end
 
     # sum up a couple of the columns and create a new columns
     create_new_variable_sum(rows, 'TotalSensibleLoad', 'ZonePredictedSensibleLoadtoSetpointHeatTransferRate')
     create_new_variable_sum(rows, 'TotalCoolingSensibleLoad', 'ZonePredictedSensibleLoadtoSetpointHeatTransferRate', negative_only: true)
     create_new_variable_sum(rows, 'TotalHeatingSensibleLoad', 'ZonePredictedSensibleLoadtoSetpointHeatTransferRate', positive_only: true)
-    create_new_variable_sum(rows, 'TotalWaterHeating', 'WaterHeaterHeatingRate')
+    # create_new_variable_sum(rows, 'TotalWaterHeating', 'WaterHeaterHeatingRate')
 
     # convert this to CSV object
     File.open('./building_loads.csv', 'w') do |f|
@@ -264,7 +264,7 @@ class ExportModelicaLoads < OpenStudio::Measure::ReportingMeasure
         seconds_index = row.index('SecondsFromStart')
         total_cooling_sensible_index = row.index('TotalCoolingSensibleLoad')
         total_heating_sensible_index = row.index('TotalHeatingSensibleLoad')
-        total_water_heating_index = row.index('TotalWaterHeating')
+        total_water_heating_index = row.index('Water Heater Total Demand Heat Transfer Rate')
       else
         new_data = [
           row[seconds_index],
