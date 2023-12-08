@@ -1,20 +1,20 @@
 name: Reporting-gem CI
 
 on:
-  # push:
-  schedule:
+  push:
+  # schedule:
     # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule
     # 5 am UTC (11pm MDT the day before) every weekday night in MDT
-    - cron: '22 5 * * 2-6'
-  pull_request:
-    types: [review_requested]
+  #   - cron: '22 5 * * 2-6'
+  # pull_request:
+  #   types: [review_requested]
 
 env:
   # This env var should enforce develop branch of all dependencies
   FAVOR_LOCAL_GEMS: true
   GEM_DEVELOPER_KEY: ${{ secrets.GEM_DEVELOPER_KEY }}
   # Enforce language so openstudio doesn't get confused
-  LANG: "en_US.UTF-8"
+  # LANG: "C.UTF-8"
 
 jobs:
   weeknight-tests:
@@ -23,6 +23,10 @@ jobs:
       image: docker://nrel/openstudio:3.7.0
     steps:
       - uses: actions/checkout@v4
+      - name: set git config options
+        shell: bash
+        run: |
+          git config --global --add safe.directory '*'
       - name: Update gems
         run: |
           ruby --version
