@@ -14,7 +14,7 @@ env:
   FAVOR_LOCAL_GEMS: true
   GEM_DEVELOPER_KEY: ${{ secrets.GEM_DEVELOPER_KEY }}
   # Enforce language so openstudio doesn't get confused
-  # LANG: "C.UTF-8"
+  LANG: "C.UTF-8"
 
 jobs:
   weeknight-tests:
