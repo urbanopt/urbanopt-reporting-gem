@@ -13,6 +13,8 @@ env:
   # This env var should enforce develop branch of all dependencies
   FAVOR_LOCAL_GEMS: true
   GEM_DEVELOPER_KEY: ${{ secrets.GEM_DEVELOPER_KEY }}
+  # Enforce language so openstudio doesn't get confused
+  LANG: "en_US.UTF-8"
 
 jobs:
   weeknight-tests:
@@ -32,7 +34,6 @@ jobs:
       - name: Test OpenStudio measures
         run: bundle exec rake openstudio:test_with_openstudio
       - name: Run Rspec
-        # Continue to upload step even if a test fails, so we can troubleshoot
         run: bundle exec rspec
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
@@ -43,7 +44,7 @@ jobs:
           path: |
             spec/**
             # coverage/
-          retention-days: 7 # save for 1 week before deleting
+          retention-days: 7 # If we haven't dealt with an error in a week, fuhgeddaboutit
       - name: Coveralls
         # coveralls action docs: https://github.com/marketplace/actions/coveralls-github-action
         uses: coverallsapp/github-action@v2
