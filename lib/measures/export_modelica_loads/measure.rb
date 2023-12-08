@@ -56,7 +56,7 @@ class ExportModelicaLoads < OpenStudio::Measure::ReportingMeasure
     result << OpenStudio::IdfObject.load('Output:Meter,WaterSystems:EnergyTransfer,timestep;').get # Joules
     # these variables are used for the modelica export.
     result << OpenStudio::IdfObject.load('Output:Variable,*,Zone Predicted Sensible Load to Setpoint Heat Transfer Rate,timestep;').get # watts according to e+
-    result << OpenStudio::IdfObject.load('Output:Variable,*,Water Heater Total Demand Heat Transfer Rate,timestep;').get # Watts
+    result << OpenStudio::IdfObject.load('Output:Variable,,Water Heater Total Demand Heat Transfer Rate,timestep;').get # Watts
 
     return result
   end
@@ -97,7 +97,7 @@ class ExportModelicaLoads < OpenStudio::Measure::ReportingMeasure
       quick_proc[-1] = quick_proc[-1].delete(')')
       column += quick_proc
 
-      log "Took #{Time.now - start} to iterate"
+      # log "Took #{Time.now - start} to iterate"
     end
 
     log 'Appending column to data'
@@ -227,21 +227,21 @@ class ExportModelicaLoads < OpenStudio::Measure::ReportingMeasure
     extract_timeseries_into_matrix(sql_file, rows, 'Electricity:Facility', nil, 0, timestep)
     extract_timeseries_into_matrix(sql_file, rows, 'Gas:Facility', nil, 0, timestep)
     extract_timeseries_into_matrix(sql_file, rows, 'Heating:EnergyTransfer', nil, 0, timestep)
-    extract_timeseries_into_matrix(sql_file, rows, 'WaterSystems:EnergyTransfer', nil, 0, timestep)
+    extract_timeseries_into_matrix(sql_file, rows, 'Water Heater Total Demand Heat Transfer Rate', nil, 0, timestep)
 
     # get all zones and save the names for later use in aggregation.
     tz_names = []
     model.getThermalZones.each do |tz|
       tz_names << tz.name.get if tz.name.is_initialized
       extract_timeseries_into_matrix(sql_file, rows, 'Zone Predicted Sensible Load to Setpoint Heat Transfer Rate', tz_names.last, 0, timestep)
-      extract_timeseries_into_matrix(sql_file, rows, 'Water Heater Heating Rate', tz_names.last, 0, timestep)
+      # extract_timeseries_into_matrix(sql_file, rows, 'Water Heater Heating Rate', tz_names.last, 0, timestep)
     end
 
     # sum up a couple of the columns and create a new columns
     create_new_variable_sum(rows, 'TotalSensibleLoad', 'ZonePredictedSensibleLoadtoSetpointHeatTransferRate')
     create_new_variable_sum(rows, 'TotalCoolingSensibleLoad', 'ZonePredictedSensibleLoadtoSetpointHeatTransferRate', negative_only: true)
     create_new_variable_sum(rows, 'TotalHeatingSensibleLoad', 'ZonePredictedSensibleLoadtoSetpointHeatTransferRate', positive_only: true)
-    create_new_variable_sum(rows, 'TotalWaterHeating', 'WaterHeaterHeatingRate')
+    create_new_variable_sum(rows, 'TotalWaterHeating', 'WaterHeaterTotalDemandHeatTransferRate')
 
     # convert this to CSV object
     File.open('./building_loads.csv', 'w') do |f|
@@ -284,17 +284,13 @@ class ExportModelicaLoads < OpenStudio::Measure::ReportingMeasure
 
     File.open('./modelica.mos', 'w') do |f|
       f << "#1\n"
-      f << "#Heating and Cooling Model loads from OpenStudio Prototype Buildings\n"
-      f << "#  Building Type: {{BUILDINGTYPE}}\n"
-      f << "#  Climate Zone: {{CLIMATEZONE}}\n"
-      f << "#  Vintage: {{VINTAGE}}\n"
-      f << "#  Simulation ID (for debugging): {{SIMID}}\n"
-      f << "#  URL: https://github.com/urbanopt/openstudio-prototype-loads\n"
+      f << "#Exported loads from OpenStudio Reporting Measure\n"
+      f << "#  Measure location: https://github.com/urbanopt/urbanopt-reporting-gem/tree/develop/lib/measures/export_modelica_loads\n"
       f << "\n"
       f << "#First column: Seconds in the year (loads are hourly)\n"
       f << "#Second column: cooling loads in Watts (as negative numbers).\n"
       f << "#Third column: space heating loads in Watts\n"
-      f << "#Fourth column: water heating in Watts\n"
+      f << "#Fourth column: water heating loads in Watts\n"
       f << "\n"
       f << "#Peak space cooling load = #{peak_cooling} Watts\n"
       f << "#Peak space heating load = #{peak_heating} Watts\n"
