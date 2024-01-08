@@ -1,5 +1,15 @@
 # URBANopt Reporting Gem
 
+## Version 0.9.0
+Date Range: 6/30/23 - 01/09/24
+
+* Support OpenStudio 3.7 by @vtnate in https://github.com/urbanopt/urbanopt-reporting-gem/pull/142
+* add tx incoming and outgoing voltages to power distribution reporting by @vtnate in https://github.com/urbanopt/urbanopt-reporting-gem/pull/138
+* fix schema typos and errors by @vtnate in https://github.com/urbanopt/urbanopt-reporting-gem/pull/140
+* remove Jenkinsfile by @vtnate in https://github.com/urbanopt/urbanopt-reporting-gem/pull/139
+* trigger CI on PR review_request by @vtnate in https://github.com/urbanopt/urbanopt-reporting-gem/pull/141
+* Update export modelica loads by @vtnate in https://github.com/urbanopt/urbanopt-reporting-gem/pull/143
+
 ## Version 0.8.0
 Date Range: 12/12/22 - 6/30/23
 
