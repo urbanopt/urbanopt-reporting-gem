@@ -1,5 +1,8 @@
 # URBANopt Reporting Gem
 
+## Version 0.9.1
+* downgrade json-schema to 2.7 by @vtnate in https://github.com/urbanopt/urbanopt-reporting-gem/pull/145
+
 ## Version 0.9.0
 Date Range: 6/30/23 - 01/09/24
 
