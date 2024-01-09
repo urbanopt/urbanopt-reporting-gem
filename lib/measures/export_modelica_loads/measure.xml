@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>export_modelica_loads</name>
   <uid>7051db01-2e55-4223-b5b5-fee615b68dd0</uid>
-  <version_id>5ecb1fdb-fab0-4da7-a2f4-e67e9b3f94a0</version_id>
-  <version_modified>2023-07-06T16:04:16Z</version_modified>
+  <version_id>e682f518-4785-4917-802e-600023816cc3</version_id>
+  <version_modified>2024-01-08T22:54:10Z</version_modified>
   <xml_checksum>2C8A3EEF</xml_checksum>
   <class_name>ExportModelicaLoads</class_name>
   <display_name>Export Modelica Loads</display_name>
@@ -33,7 +33,7 @@
       <filename>LICENSE.md</filename>
       <filetype>md</filetype>
       <usage_type>license</usage_type>
-      <checksum>016C4035</checksum>
+      <checksum>7247B202</checksum>
     </file>
     <file>
       <filename>README.md</filename>
@@ -62,7 +62,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>6CE65AC0</checksum>
+      <checksum>B130AAF4</checksum>
     </file>
     <file>
       <filename>report.html.in</filename>
