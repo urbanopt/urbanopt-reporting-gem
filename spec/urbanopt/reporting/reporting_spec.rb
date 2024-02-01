@@ -134,9 +134,8 @@ RSpec.describe URBANopt::Reporting do
 
   context 'with distributed generation' do
 
-    let(:distributed_generation) { URBANopt::Reporting::DefaultReports::DistributedGeneration.new }
-
     it 'can intialize distributed generation' do
+      distributed_generation = URBANopt::Reporting::DefaultReports::DistributedGeneration.new
       expect(distributed_generation.annual_renewable_electricity_pct).to be_nil
       expect(distributed_generation.lcc_us_dollars).to be_nil
       expect(distributed_generation.lcc_bau_us_dollars).to be_nil
@@ -180,47 +179,18 @@ RSpec.describe URBANopt::Reporting do
       existing_dgen = []
       new_dgen = []
 
-      # TODO: continue changing from Construction to DistributedGeneration in inputs and outpus
-      new_costs << URBANopt::Reporting::DefaultReports::DistributedGeneration.new(category: 'Construction', item_name: 'wall', unit_cost: 1,
-                                                                            cost_units: 'CostPerEach', item_quantity: 1, total_cost: 1)
-      new_costs << URBANopt::Reporting::DefaultReports::DistributedGeneration.new(category: 'Construction', item_name: 'roof', unit_cost: 1,
-                                                                            cost_units: 'CostPerEach', item_quantity: 1, total_cost: 1)
+      existing_dgen << URBANopt::Reporting::DefaultReports::DistributedGeneration.new(annual_renewable_electricity_pct: 0, year_one_energy_cost_us_dollars: 100_000)
+      new_dgen << URBANopt::Reporting::DefaultReports::DistributedGeneration.new(annual_renewable_electricity_pct: 50, year_one_energy_cost_us_dollars: 50_000)
 
-      existing_costs << URBANopt::Reporting::DefaultReports::DistributedGeneration.new(category: 'Construction', item_name: 'wall', unit_cost: 1,
-                                                                                  cost_units: 'CostPerEach', item_quantity: 1, total_cost: 1)
-      existing_costs << URBANopt::Reporting::DefaultReports::DistributedGeneration.new(category: 'HVACComponent', item_name: 'hvac', unit_cost: 1,
-                                                                                  cost_units: 'CostPerEach', item_quantity: 1, total_cost: 1)
-
-      # puts "existing_costs = #{existing_costs}"
-      # puts "new_costs = #{new_costs}"
+      puts "existing dgen = #{existing_dgen}"
+      puts ""
+      puts "new dgen = #{new_dgen}"
 
       distributed_generation = URBANopt::Reporting::DefaultReports::DistributedGeneration.merge_distributed_generation(existing_dgen, new_dgen)
 
-      if distributed_generation[0].item_name == 'wall'
-        expect(distributed_generation[0].category).to eq('Construction')
-        expect(distributed_generation[0].unit_cost).to eq(1)
-        expect(distributed_generation[0].cost_units).to eq('CostPerEach')
-        expect(distributed_generation[0].item_quantity).to eq(2)
-        expect(distributed_generation[0].total_cost).to eq(2)
-      end
+      expect(distributed_generation[0].annual_renewable_electricity_pct).to eq(50)
 
-      if distributed_generation[1].item_name == 'hvac'
-        expect(distributed_generation[1].category).to eq('HVACComponent')
-        expect(distributed_generation[1].unit_cost).to eq(1)
-        expect(distributed_generation[1].cost_units).to eq('CostPerEach')
-        expect(distributed_generation[1].item_quantity).to eq(1)
-        expect(distributed_generation[1].total_cost).to eq(1)
-      end
-
-      if distributed_generation[2].item_name == 'roof'
-        expect(distributed_generation[2].category).to eq('Construction')
-        expect(distributed_generation[2].unit_cost).to eq(1)
-        expect(distributed_generation[2].cost_units).to eq('CostPerEach')
-        expect(distributed_generation[2].item_quantity).to eq(1)
-        expect(distributed_generation[2].total_cost).to eq(1)
-      end
-
-      # puts "final cost = #{existing_costs}"
+      puts "final cost = #{distributed_generation}"
     end
   end
 
