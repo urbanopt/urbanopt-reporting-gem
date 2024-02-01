@@ -134,8 +134,9 @@ RSpec.describe URBANopt::Reporting do
 
   context 'with distributed generation' do
 
+    let(:distributed_generation) { URBANopt::Reporting::DefaultReports::DistributedGeneration.new }
+
     it 'can intialize distributed generation' do
-      let(:distributed_generation) { URBANopt::Reporting::DefaultReports::DistributedGeneration.new }
       expect(distributed_generation.annual_renewable_electricity_pct).to be_nil
       expect(distributed_generation.lcc_us_dollars).to be_nil
       expect(distributed_generation.lcc_bau_us_dollars).to be_nil
@@ -172,7 +173,7 @@ RSpec.describe URBANopt::Reporting do
     end
 
     it 'can handle only a single value when adding' do
-      expect(URBANopt::Reporting::DefaultReports::DistributedGeneration.add_values(4)).to eq(4)
+      expect(URBANopt::Reporting::DefaultReports::DistributedGeneration.add_values(nil, 4)).to eq(4)
     end
 
     it 'can merge distributed generation systems together' do
