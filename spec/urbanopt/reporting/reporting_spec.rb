@@ -161,6 +161,13 @@ RSpec.describe URBANopt::Reporting do
     end
   end
 
+  it 'can add generator sizes' do
+    generator = URBANopt::Reporting::DefaultReports::Generator.new(size_kw:5)
+    new_generator = URBANopt::Reporting::DefaultReports::Generator.new(size_kw:8)
+    total_generator = URBANopt::Reporting::DefaultReports::Generator.add_generator(generator, new_generator)
+    expect(total_generator.size_kw).to eq(13)
+  end
+
   it 'can merge end uses' do
     existing_end_uses = URBANopt::Reporting::DefaultReports::EndUses.new(electricity_kwh: { heating: 1, cooling: 1 }, natural_gas_kwh: { fans: 1, pumps: 1 })
     new_end_uses = URBANopt::Reporting::DefaultReports::EndUses.new(electricity_kwh: { heating: 1, cooling: 1, electric_vehicles: 1 }, natural_gas_kwh: { fans: 1, pumps: 1 })
@@ -242,12 +249,20 @@ RSpec.describe URBANopt::Reporting do
     solar_pv = URBANopt::Reporting::DefaultReports::SolarPV.new({ size_kw: 100, id: 1, location: 'roof' })
     expect(solar_pv.size_kw).to eq 100
     expect(solar_pv.location).to eq 'roof'
+    second_pv_array = URBANopt::Reporting::DefaultReports::SolarPV.new({ size_kw: 101, id: 1, location: 'ground' })
+    expect(URBANopt::Reporting::DefaultReports::SolarPV.add_pv(solar_pv, second_pv_array).size_kw).to eq 201
   end
 
   it 'can report power distribution cost results' do
     distribution_cost = URBANopt::Reporting::DefaultReports::ScenarioPowerDistributionCost.new({ "results": [ {"name": "baseline_scenario","num_violations": 0,"total_cost_usd": 546950.36419523}], "violation_summary": [ { "name": "baseline_scenario"}]})
     expect(distribution_cost.results[0][:name]).to eq 'baseline_scenario'
     expect(distribution_cost.violation_summary[0][:name]).to eq 'baseline_scenario'
+  end
+
+  it 'can report location results' do
+    location = URBANopt::Reporting::DefaultReports::Location.new({ latitude_deg: 13, longitude_deg: -61.24, })
+    expect(location.latitude_deg).to eq 13
+    expect(location.longitude_deg).to eq -61.24
   end
 
 end
