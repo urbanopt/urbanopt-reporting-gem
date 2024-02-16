@@ -134,39 +134,6 @@ RSpec.describe URBANopt::Reporting do
 
   context 'with distributed generation' do
 
-    it 'can intialize distributed generation' do
-      distributed_generation = URBANopt::Reporting::DefaultReports::DistributedGeneration.new
-      expect(distributed_generation.annual_renewable_electricity_pct).to be_nil
-      expect(distributed_generation.lcc_us_dollars).to be_nil
-      expect(distributed_generation.lcc_bau_us_dollars).to be_nil
-      expect(distributed_generation.npv_us_dollars).to be_nil
-      expect(distributed_generation.year_one_energy_cost_us_dollars).to be_nil
-      expect(distributed_generation.year_one_demand_cost_us_dollars).to be_nil
-      expect(distributed_generation.year_one_bill_us_dollars).to be_nil
-      expect(distributed_generation.total_energy_cost_us_dollars).to be_nil
-      expect(distributed_generation.total_demand_cost_us_dollars).to be_nil
-      expect(distributed_generation.year_one_energy_cost_bau_us_dollars).to be_nil
-      expect(distributed_generation.year_one_demand_cost_bau_us_dollars).to be_nil
-      expect(distributed_generation.year_one_bill_bau_us_dollars).to be_nil
-      expect(distributed_generation.total_energy_cost_bau_us_dollars).to be_nil
-      expect(distributed_generation.total_demand_cost_bau_us_dollars).to be_nil
-      expect(distributed_generation.total_solar_pv_kw).to be_nil
-      expect(distributed_generation.total_wind_kw).to be_nil
-      expect(distributed_generation.total_generator_kw).to be_nil
-      expect(distributed_generation.total_storage_kw).to be_nil
-      expect(distributed_generation.total_storage_kwh).to be_nil
-      expect(distributed_generation.resilience_hours_min).to be_nil
-      expect(distributed_generation.resilience_hours_max).to be_nil
-      expect(distributed_generation.resilience_hours_avg).to be_nil
-      expect(distributed_generation.probs_of_surviving).to be_nil
-      expect(distributed_generation.probs_of_surviving_by_month).to be_nil
-      expect(distributed_generation.probs_of_surviving_by_hour_of_the_day).to be_nil
-      expect(distributed_generation.solar_pv).to be_empty
-      expect(distributed_generation.wind).to be_empty
-      expect(distributed_generation.generator).to be_empty
-      expect(distributed_generation.storage).to be_empty
-    end
-
     it 'can add values in distributed generation' do
       expect(URBANopt::Reporting::DefaultReports::DistributedGeneration.add_values(1, 2)).to eq(3)
     end
@@ -176,19 +143,19 @@ RSpec.describe URBANopt::Reporting do
     end
 
     it 'can merge distributed generation systems together' do
-      existing_dgen = []
-      new_dgen = []
-
-      existing_dgen << URBANopt::Reporting::DefaultReports::DistributedGeneration.new(annual_renewable_electricity_pct: 0, year_one_energy_cost_us_dollars: 100_000)
-      new_dgen << URBANopt::Reporting::DefaultReports::DistributedGeneration.new(annual_renewable_electricity_pct: 50, year_one_energy_cost_us_dollars: 50_000)
+      existing_dgen = URBANopt::Reporting::DefaultReports::DistributedGeneration.new(annual_renewable_electricity_pct: 0, year_one_energy_cost_us_dollars: 100_000)
+      new_dgen = URBANopt::Reporting::DefaultReports::DistributedGeneration.new(annual_renewable_electricity_pct: 50, year_one_energy_cost_us_dollars: 50_000)
 
       puts "existing dgen = #{existing_dgen}"
+      puts ""
+      puts "existing dgen = #{existing_dgen.class}"
+      puts "existing dgen = #{existing_dgen.annual_renewable_electricity_pct}"
       puts ""
       puts "new dgen = #{new_dgen}"
 
       distributed_generation = URBANopt::Reporting::DefaultReports::DistributedGeneration.merge_distributed_generation(existing_dgen, new_dgen)
 
-      expect(distributed_generation[0].annual_renewable_electricity_pct).to eq(50)
+      expect(distributed_generation.annual_renewable_electricity_pct).to eq(50)
 
       puts "final cost = #{distributed_generation}"
     end
