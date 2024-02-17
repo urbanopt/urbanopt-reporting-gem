@@ -100,9 +100,6 @@ RSpec.describe URBANopt::Reporting do
     existing_costs << URBANopt::Reporting::DefaultReports::ConstructionCost.new(category: 'HVACComponent', item_name: 'hvac', unit_cost: 1,
                                                                                 cost_units: 'CostPerEach', item_quantity: 1, total_cost: 1)
 
-    # puts "existing_costs = #{existing_costs}"
-    # puts "new_costs = #{new_costs}"
-
     construction_cost = URBANopt::Reporting::DefaultReports::ConstructionCost.merge_construction_costs(existing_costs, new_costs)
 
     if construction_cost[0].item_name == 'wall'
@@ -128,8 +125,6 @@ RSpec.describe URBANopt::Reporting do
       expect(construction_cost[2].item_quantity).to eq(1)
       expect(construction_cost[2].total_cost).to eq(1)
     end
-
-    # puts "final cost = #{existing_costs}"
   end
 
   context 'with distributed generation' do
@@ -146,18 +141,9 @@ RSpec.describe URBANopt::Reporting do
       existing_dgen = URBANopt::Reporting::DefaultReports::DistributedGeneration.new(annual_renewable_electricity_pct: 0, year_one_energy_cost_us_dollars: 100_000)
       new_dgen = URBANopt::Reporting::DefaultReports::DistributedGeneration.new(annual_renewable_electricity_pct: 50, year_one_energy_cost_us_dollars: 50_000)
 
-      puts "existing dgen = #{existing_dgen}"
-      puts ""
-      puts "existing dgen = #{existing_dgen.class}"
-      puts "existing dgen = #{existing_dgen.annual_renewable_electricity_pct}"
-      puts ""
-      puts "new dgen = #{new_dgen}"
-
       distributed_generation = URBANopt::Reporting::DefaultReports::DistributedGeneration.merge_distributed_generation(existing_dgen, new_dgen)
 
       expect(distributed_generation.annual_renewable_electricity_pct).to eq(50)
-
-      puts "final cost = #{distributed_generation}"
     end
   end
 
@@ -205,9 +191,6 @@ RSpec.describe URBANopt::Reporting do
                                                                             end_date: { month: 1, day_of_month: 31, year: 2019 }, total_site_energy_kwh: 1, total_source_energy_kwh: 1,
                                                                             end_uses: { electricity_kwh: { heating: 1, cooling: 1, fans: 1, pumps: 1 } }, utility_costs_dollar: [{ fuel_type: 'Electricity', total_cost: 1, usage_cost: 1, demand_cost: 1 }])
 
-    # puts "\nexisting periods: #{existing_periods}"
-    # puts "\nnew periods: #{new_periods}"
-
     reporting_period = URBANopt::Reporting::DefaultReports::ReportingPeriod.merge_reporting_periods(existing_periods, new_periods)
 
     expect(reporting_period[0].id).to eq(5)
@@ -241,8 +224,6 @@ RSpec.describe URBANopt::Reporting do
     expect(reporting_period[1].end_uses.electricity_kwh.cooling).to eq(2)
     expect(reporting_period[1].end_uses.electricity_kwh.fans).to eq(2)
     expect(reporting_period[1].end_uses.electricity_kwh.pumps).to eq(2)
-
-    # puts "\nfinal periods: #{existing_periods}"
   end
 
   it 'can report solarPV results' do
