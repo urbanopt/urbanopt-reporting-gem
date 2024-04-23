@@ -20,7 +20,7 @@ module URBANopt
         ##
         # _Float_ - Lifecycle costs for the complete distributed generation system in US Dollars
         #
-        attr_accessor :lcc_us_dollars
+        attr_accessor :lcc
 
         ##
         # _Float_ - Lifecycle costs for the complete distributed generation system in US Dollars
