@@ -25,62 +25,62 @@ module URBANopt
         ##
         # _Float_ - Lifecycle costs for the complete distributed generation system in US Dollars
         #
-        attr_accessor :lcc_bau_us_dollars
+        attr_accessor :lcc_bau
 
         ##
         # _Float_ - Net present value of the complete distributed generation system in US Dollars
         #
-        attr_accessor :npv_us_dollars
+        attr_accessor :npv
 
         ##
         # _Float_ - Total amount paid for utility energy in US Dollars in the first year of operation
         #
-        attr_accessor :year_one_energy_cost_us_dollars
+        attr_accessor :year_one_energy_cost_before_tax
 
         ##
         # _Float_ - Total amount paid in utility demand charges in US Dollars in the first year of operation
         #
-        attr_accessor :year_one_demand_cost_us_dollars
+        attr_accessor :year_one_demand_cost_before_tax
 
         ##
         # _Float_ - Total amount paid to the utility in US Dollars in the first year of operation
         #
-        attr_accessor :year_one_bill_us_dollars
+        attr_accessor :year_one_bill_before_tax
 
         ##
         # _Float_ - Total energy costs in US Dollars over the life of the system after tax
         #
-        attr_accessor :total_energy_cost_us_dollars
+        attr_accessor :lifecycle_energy_cost_after_tax
 
         ##
         # _Float_ - Total demand costs in US Dollars over the life of the system after tax
         #
-        attr_accessor :total_demand_cost_us_dollars
+        attr_accessor :lifecycle_demand_cost_after_tax
 
         ##
-        # _Float_ -  Year one energy cost in the business as usual scenario (i.e no new system) after tax, us dollars
+        # _Float_ -  Year one energy cost in the business as usual scenario (i.e no new system) before tax, us dollars
         #
-        attr_accessor :year_one_energy_cost_bau_us_dollars
+        attr_accessor :year_one_energy_cost_before_tax_bau
 
         ##
         # _Float_ -  Year one demand cost in the business as usual scenario (i.e no new system), us dollars
         #
-        attr_accessor :year_one_demand_cost_bau_us_dollars
+        attr_accessor :year_one_demand_cost_before_tax_bau
 
         ##
         # _Float_ -  Year one demand energy bill in the business as usual scenario (i.e no new system), us dollars
         #
-        attr_accessor :year_one_bill_bau_us_dollars
+        attr_accessor :year_one_bill_before_tax_bau
 
         ##
         # _Float_ -  Total lifetime demand costs in the business as usual scenario (i.e no new system) after tax, us dollars
         #
-        attr_accessor :total_demand_cost_bau_us_dollars
+        attr_accessor :lifecycle_demand_cost_after_tax_bau
 
         ##
         # _Float_ -  Total lifetime energy costs in the business as usual scenario (i.e no new system) after tax, us dollars
         #
-        attr_accessor :total_energy_cost_bau_us_dollars
+        attr_accessor :lifecycle_energy_cost_after_tax_bau
 
         ##
         # _Array_ - List of _SolarPV_ systems
@@ -170,8 +170,8 @@ module URBANopt
         # Initialize distributed generation system design and financial metrics.
         #
         # * Technologies include +:solar_pv+, +:wind+, +:generator+, and +:storage+.
-        # * Financial metrics include +:lcc_us_dollars+, +:npv_us_dollars+, +:year_one_energy_cost_us_dollars+, +:year_one_demand_cost_us_dollars+,
-        # +:year_one_bill_us_dollars+, and +:total_energy_cost_us_dollars+
+        # * Financial metrics include +:lcc+, +:npv+, +:year_one_energy_cost_before_tax+, +:year_one_demand_cost_before_tax+,
+        # +:year_one_bill_before_tax+, and +:lifecycle_energy_cost_after_tax+
         ##
         # [parameters:]
         #
@@ -181,19 +181,19 @@ module URBANopt
           hash.delete_if { |k, v| v.nil? }
 
           @annual_renewable_electricity_pct = hash[:annual_renewable_electricity_pct]
-          @lcc_us_dollars = hash[:lcc_us_dollars]
-          @lcc_bau_us_dollars = hash[:lcc_bau_us_dollars]
-          @npv_us_dollars = hash[:npv_us_dollars]
-          @year_one_energy_cost_us_dollars = hash[:year_one_energy_cost_us_dollars]
-          @year_one_energy_cost_bau_us_dollars = hash[:year_one_energy_cost_bau_us_dollars]
-          @year_one_demand_cost_us_dollars = hash[:year_one_demand_cost_us_dollars]
-          @year_one_demand_cost_bau_us_dollars = hash[:year_one_demand_cost_bau_us_dollars]
-          @year_one_bill_us_dollars = hash[:year_one_bill_us_dollars]
-          @year_one_bill_bau_us_dollars = hash[:year_one_bill_bau_us_dollars]
-          @total_energy_cost_us_dollars = hash[:total_energy_cost_us_dollars]
-          @total_energy_cost_bau_us_dollars = hash[:total_energy_cost_bau_us_dollars]
-          @total_demand_cost_us_dollars = hash[:total_demand_cost_us_dollars]
-          @total_demand_cost_bau_us_dollars = hash[:total_demand_cost_bau_us_dollars]
+          @lcc = hash[:lcc]
+          @lcc_bau = hash[:lcc_bau]
+          @npv = hash[:npv]
+          @year_one_energy_cost_before_tax = hash[:year_one_energy_cost_before_tax]
+          @year_one_energy_cost_before_tax_bau = hash[:year_one_energy_cost_before_tax_bau]
+          @year_one_demand_cost_before_tax = hash[:year_one_demand_cost_before_tax]
+          @year_one_demand_cost_before_tax_bau = hash[:year_one_demand_cost_before_tax_bau]
+          @year_one_bill_before_tax = hash[:year_one_bill_before_tax]
+          @year_one_bill_before_tax_bau = hash[:year_one_bill_before_tax_bau]
+          @lifecycle_energy_cost_after_tax = hash[:lifecycle_energy_cost_after_tax]
+          @lifecycle_energy_cost_after_tax_bau = hash[:lifecycle_energy_cost_after_tax_bau]
+          @lifecycle_demand_cost_after_tax = hash[:lifecycle_demand_cost_after_tax]
+          @lifecycle_demand_cost_after_tax_bau = hash[:lifecycle_demand_cost_after_tax_bau]
 
           @resilience_hours_min = hash[:resilience_hours_min]
           @resilience_hours_max = hash[:resilience_hours_max]
@@ -346,21 +346,21 @@ module URBANopt
           result = {}
           result[:reopt_assumptions_file_path] = @reopt_assumptions_file_path if @reopt_assumptions_file_path
           result[:annual_renewable_electricity_pct] = @annual_renewable_electricity_pct if @annual_renewable_electricity_pct
-          result[:lcc_us_dollars] = @lcc_us_dollars if @lcc_us_dollars
-          result[:lcc_bau_us_dollars] = @lcc_bau_us_dollars if @lcc_bau_us_dollars
-          result[:npv_us_dollars] = @npv_us_dollars if @npv_us_dollars
+          result[:lcc] = @lcc if @lcc
+          result[:lcc_bau] = @lcc_bau if @lcc_bau
+          result[:npv] = @npv if @npv
 
-          result[:year_one_energy_cost_us_dollars] = @year_one_energy_cost_us_dollars if @year_one_energy_cost_us_dollars
-          result[:year_one_demand_cost_us_dollars] = @year_one_demand_cost_us_dollars if @year_one_demand_cost_us_dollars
-          result[:year_one_bill_us_dollars] = @year_one_bill_us_dollars if @year_one_bill_us_dollars
-          result[:total_demand_cost_us_dollars] = @total_demand_cost_us_dollars if @total_demand_cost_us_dollars
-          result[:total_energy_cost_us_dollars] = @total_energy_cost_us_dollars if @total_energy_cost_us_dollars
+          result[:year_one_energy_cost_before_tax] = @year_one_energy_cost_before_tax if @year_one_energy_cost_before_tax
+          result[:year_one_demand_cost_before_tax] = @year_one_demand_cost_before_tax if @year_one_demand_cost_before_tax
+          result[:year_one_bill_before_tax] = @year_one_bill_before_tax if @year_one_bill_before_tax
+          result[:lifecycle_demand_cost_after_tax] = @lifecycle_demand_cost_after_tax if @lifecycle_demand_cost_after_tax
+          result[:lifecycle_energy_cost_after_tax] = @lifecycle_energy_cost_after_tax if @lifecycle_energy_cost_after_tax
 
-          result[:year_one_energy_cost_bau_us_dollars] = @year_one_energy_cost_bau_us_dollars if @year_one_energy_cost_bau_us_dollars
-          result[:year_one_demand_cost_bau_us_dollars] = @year_one_demand_cost_bau_us_dollars if @year_one_demand_cost_bau_us_dollars
-          result[:year_one_bill_bau_us_dollars] = @year_one_bill_bau_us_dollars if @year_one_bill_bau_us_dollars
-          result[:total_energy_cost_bau_us_dollars] = @total_energy_cost_bau_us_dollars if @total_energy_cost_bau_us_dollars
-          result[:total_demand_cost_bau_us_dollars] = @total_demand_cost_bau_us_dollars if @total_demand_cost_bau_us_dollars
+          result[:year_one_energy_cost_before_tax_bau] = @year_one_energy_cost_before_tax_bau if @year_one_energy_cost_before_tax_bau
+          result[:year_one_demand_cost_before_tax_bau] = @year_one_demand_cost_before_tax_bau if @year_one_demand_cost_before_tax_bau
+          result[:year_one_bill_before_tax_bau] = @year_one_bill_before_tax_bau if @year_one_bill_before_tax_bau
+          result[:lifecycle_energy_cost_after_tax_bau] = @lifecycle_energy_cost_after_tax_bau if @lifecycle_energy_cost_after_tax_bau
+          result[:lifecycle_demand_cost_after_tax_bau] = @lifecycle_demand_cost_after_tax_bau if @lifecycle_demand_cost_after_tax_bau
 
           result[:total_solar_pv_kw] = @total_solar_pv_kw if @total_solar_pv_kw
           result[:total_wind_kw] = @total_wind_kw if @total_wind_kw
@@ -416,21 +416,21 @@ module URBANopt
         ##
         def self.merge_distributed_generation(existing_dgen, new_dgen)
           existing_dgen.annual_renewable_electricity_pct = add_values(existing_dgen.annual_renewable_electricity_pct, new_dgen.annual_renewable_electricity_pct)
-          existing_dgen.lcc_us_dollars = add_values(existing_dgen.lcc_us_dollars, new_dgen.lcc_us_dollars)
-          existing_dgen.lcc_bau_us_dollars = add_values(existing_dgen.lcc_bau_us_dollars, new_dgen.lcc_bau_us_dollars)
-          existing_dgen.npv_us_dollars = add_values(existing_dgen.npv_us_dollars, new_dgen.npv_us_dollars)
+          existing_dgen.lcc = add_values(existing_dgen.lcc, new_dgen.lcc)
+          existing_dgen.lcc_bau = add_values(existing_dgen.lcc_bau, new_dgen.lcc_bau)
+          existing_dgen.npv = add_values(existing_dgen.npv, new_dgen.npv)
 
-          existing_dgen.year_one_energy_cost_us_dollars = add_values(existing_dgen.year_one_energy_cost_us_dollars, new_dgen.year_one_energy_cost_us_dollars)
-          existing_dgen.year_one_demand_cost_us_dollars = add_values(existing_dgen.year_one_demand_cost_us_dollars, new_dgen.year_one_demand_cost_us_dollars)
-          existing_dgen.year_one_bill_us_dollars = add_values(existing_dgen.year_one_bill_us_dollars, new_dgen.year_one_bill_us_dollars)
-          existing_dgen.total_energy_cost_us_dollars = add_values(existing_dgen.total_energy_cost_us_dollars, new_dgen.total_energy_cost_us_dollars)
-          existing_dgen.total_demand_cost_us_dollars = add_values(existing_dgen.total_demand_cost_us_dollars, new_dgen.total_demand_cost_us_dollars)
+          existing_dgen.year_one_energy_cost_before_tax = add_values(existing_dgen.year_one_energy_cost_before_tax, new_dgen.year_one_energy_cost_before_tax)
+          existing_dgen.year_one_demand_cost_before_tax = add_values(existing_dgen.year_one_demand_cost_before_tax, new_dgen.year_one_demand_cost_before_tax)
+          existing_dgen.year_one_bill_before_tax = add_values(existing_dgen.year_one_bill_before_tax, new_dgen.year_one_bill_before_tax)
+          existing_dgen.lifecycle_energy_cost_after_tax = add_values(existing_dgen.lifecycle_energy_cost_after_tax, new_dgen.lifecycle_energy_cost_after_tax)
+          existing_dgen.lifecycle_demand_cost_after_tax = add_values(existing_dgen.lifecycle_demand_cost_after_tax, new_dgen.lifecycle_demand_cost_after_tax)
 
-          existing_dgen.year_one_energy_cost_bau_us_dollars = add_values(existing_dgen.year_one_energy_cost_bau_us_dollars, new_dgen.year_one_energy_cost_bau_us_dollars)
-          existing_dgen.year_one_demand_cost_bau_us_dollars = add_values(existing_dgen.year_one_demand_cost_bau_us_dollars, new_dgen.year_one_demand_cost_bau_us_dollars)
-          existing_dgen.year_one_bill_bau_us_dollars = add_values(existing_dgen.year_one_bill_bau_us_dollars, new_dgen.year_one_bill_bau_us_dollars)
-          existing_dgen.total_energy_cost_bau_us_dollars = add_values(existing_dgen.total_energy_cost_bau_us_dollars, new_dgen.total_energy_cost_bau_us_dollars)
-          existing_dgen.total_demand_cost_bau_us_dollars = add_values(existing_dgen.total_demand_cost_bau_us_dollars, new_dgen.total_demand_cost_bau_us_dollars)
+          existing_dgen.year_one_energy_cost_before_tax_bau = add_values(existing_dgen.year_one_energy_cost_before_tax_bau, new_dgen.year_one_energy_cost_before_tax_bau)
+          existing_dgen.year_one_demand_cost_before_tax_bau = add_values(existing_dgen.year_one_demand_cost_before_tax_bau, new_dgen.year_one_demand_cost_before_tax_bau)
+          existing_dgen.year_one_bill_before_tax_bau = add_values(existing_dgen.year_one_bill_before_tax_bau, new_dgen.year_one_bill_before_tax_bau)
+          existing_dgen.lifecycle_energy_cost_after_tax_bau = add_values(existing_dgen.lifecycle_energy_cost_after_tax_bau, new_dgen.lifecycle_energy_cost_after_tax_bau)
+          existing_dgen.lifecycle_demand_cost_after_tax_bau = add_values(existing_dgen.lifecycle_demand_cost_after_tax_bau, new_dgen.lifecycle_demand_cost_after_tax_bau)
 
           existing_dgen.resilience_hours_min = add_values(existing_dgen.resilience_hours_min, new_dgen.resilience_hours_min)
           existing_dgen.resilience_hours_max = add_values(existing_dgen.resilience_hours_max, new_dgen.resilience_hours_max)
