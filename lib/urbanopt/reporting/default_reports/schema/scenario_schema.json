@@ -412,7 +412,7 @@
           "description": "File path of REopt assumptions file used to generate results, if known",
           "type": "string"
         },
-        "annual_renewable_electricity_pct": {
+        "renewable_electricity_fraction": {
           "description": "Fraction of annual renewable electricity generation",
           "type": "number"
         },

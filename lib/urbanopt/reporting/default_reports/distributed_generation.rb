@@ -162,9 +162,9 @@ module URBANopt
         attr_accessor :reopt_assumptions_file_path
 
         ##
-        # _Float_ - Annual percentage of electricity supplied by renewable sources
+        # _Float_ - Annual fraction of electricity supplied by renewable sources
         #
-        attr_accessor :annual_renewable_electricity_pct
+        attr_accessor :renewable_electricity_fraction
 
         ##
         # Initialize distributed generation system design and financial metrics.
@@ -180,7 +180,7 @@ module URBANopt
         def initialize(hash = {})
           hash.delete_if { |k, v| v.nil? }
 
-          @annual_renewable_electricity_pct = hash[:annual_renewable_electricity_pct]
+          @renewable_electricity_fraction = hash[:renewable_electricity_fraction]
           @lcc = hash[:lcc]
           @lcc_bau = hash[:lcc_bau]
           @npv = hash[:npv]
@@ -345,7 +345,7 @@ module URBANopt
         def to_hash
           result = {}
           result[:reopt_assumptions_file_path] = @reopt_assumptions_file_path if @reopt_assumptions_file_path
-          result[:annual_renewable_electricity_pct] = @annual_renewable_electricity_pct if @annual_renewable_electricity_pct
+          result[:renewable_electricity_fraction] = @renewable_electricity_fraction if @renewable_electricity_fraction
           result[:lcc] = @lcc if @lcc
           result[:lcc_bau] = @lcc_bau if @lcc_bau
           result[:npv] = @npv if @npv
@@ -415,7 +415,7 @@ module URBANopt
         # Merge a distributed generation system with a new system
         ##
         def self.merge_distributed_generation(existing_dgen, new_dgen)
-          existing_dgen.annual_renewable_electricity_pct = add_values(existing_dgen.annual_renewable_electricity_pct, new_dgen.annual_renewable_electricity_pct)
+          existing_dgen.renewable_electricity_fraction = add_values(existing_dgen.renewable_electricity_fraction, new_dgen.renewable_electricity_fraction)
           existing_dgen.lcc = add_values(existing_dgen.lcc, new_dgen.lcc)
           existing_dgen.lcc_bau = add_values(existing_dgen.lcc_bau, new_dgen.lcc_bau)
           existing_dgen.npv = add_values(existing_dgen.npv, new_dgen.npv)
