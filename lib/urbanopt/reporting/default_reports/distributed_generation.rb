@@ -470,7 +470,7 @@ module URBANopt
 
           new_dgen.generator.each do |generator|
             existing_dgen.generator.push generator
-            if existing_dgen.total_wind_kw.nil?
+            if existing_dgen.total_generator_kw.nil?
               existing_dgen.total_generator_kw = generator.size_kw
             else
               existing_dgen.total_generator_kw += generator.size_kw
