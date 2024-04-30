@@ -100,9 +100,6 @@ RSpec.describe URBANopt::Reporting do
     existing_costs << URBANopt::Reporting::DefaultReports::ConstructionCost.new(category: 'HVACComponent', item_name: 'hvac', unit_cost: 1,
                                                                                 cost_units: 'CostPerEach', item_quantity: 1, total_cost: 1)
 
-    # puts "existing_costs = #{existing_costs}"
-    # puts "new_costs = #{new_costs}"
-
     construction_cost = URBANopt::Reporting::DefaultReports::ConstructionCost.merge_construction_costs(existing_costs, new_costs)
 
     if construction_cost[0].item_name == 'wall'
@@ -128,8 +125,33 @@ RSpec.describe URBANopt::Reporting do
       expect(construction_cost[2].item_quantity).to eq(1)
       expect(construction_cost[2].total_cost).to eq(1)
     end
+  end
 
-    # puts "final cost = #{existing_costs}"
+  context 'with distributed generation' do
+
+    it 'can add values in distributed generation' do
+      expect(URBANopt::Reporting::DefaultReports::DistributedGeneration.add_values(1, 2)).to eq(3)
+    end
+
+    it 'can handle only a single value when adding' do
+      expect(URBANopt::Reporting::DefaultReports::DistributedGeneration.add_values(nil, 4)).to eq(4)
+    end
+
+    it 'can merge distributed generation systems together' do
+      existing_dgen = URBANopt::Reporting::DefaultReports::DistributedGeneration.new(annual_renewable_electricity_pct: 0, year_one_energy_cost_us_dollars: 100_000)
+      new_dgen = URBANopt::Reporting::DefaultReports::DistributedGeneration.new(annual_renewable_electricity_pct: 50, year_one_energy_cost_us_dollars: 50_000)
+
+      distributed_generation = URBANopt::Reporting::DefaultReports::DistributedGeneration.merge_distributed_generation(existing_dgen, new_dgen)
+
+      expect(distributed_generation.annual_renewable_electricity_pct).to eq(50)
+    end
+  end
+
+  it 'can add generator sizes' do
+    generator = URBANopt::Reporting::DefaultReports::Generator.new(size_kw:5)
+    new_generator = URBANopt::Reporting::DefaultReports::Generator.new(size_kw:8)
+    total_generator = URBANopt::Reporting::DefaultReports::Generator.add_generator(generator, new_generator)
+    expect(total_generator.size_kw).to eq(13)
   end
 
   it 'can merge end uses' do
@@ -169,9 +191,6 @@ RSpec.describe URBANopt::Reporting do
                                                                             end_date: { month: 1, day_of_month: 31, year: 2019 }, total_site_energy_kwh: 1, total_source_energy_kwh: 1,
                                                                             end_uses: { electricity_kwh: { heating: 1, cooling: 1, fans: 1, pumps: 1 } }, utility_costs_dollar: [{ fuel_type: 'Electricity', total_cost: 1, usage_cost: 1, demand_cost: 1 }])
 
-    # puts "\nexisting periods: #{existing_periods}"
-    # puts "\nnew periods: #{new_periods}"
-
     reporting_period = URBANopt::Reporting::DefaultReports::ReportingPeriod.merge_reporting_periods(existing_periods, new_periods)
 
     expect(reporting_period[0].id).to eq(5)
@@ -205,20 +224,26 @@ RSpec.describe URBANopt::Reporting do
     expect(reporting_period[1].end_uses.electricity_kwh.cooling).to eq(2)
     expect(reporting_period[1].end_uses.electricity_kwh.fans).to eq(2)
     expect(reporting_period[1].end_uses.electricity_kwh.pumps).to eq(2)
-
-    # puts "\nfinal periods: #{existing_periods}"
   end
 
   it 'can report solarPV results' do
     solar_pv = URBANopt::Reporting::DefaultReports::SolarPV.new({ size_kw: 100, id: 1, location: 'roof' })
     expect(solar_pv.size_kw).to eq 100
     expect(solar_pv.location).to eq 'roof'
+    second_pv_array = URBANopt::Reporting::DefaultReports::SolarPV.new({ size_kw: 101, id: 1, location: 'ground' })
+    expect(URBANopt::Reporting::DefaultReports::SolarPV.add_pv(solar_pv, second_pv_array).size_kw).to eq 201
   end
 
   it 'can report power distribution cost results' do
     distribution_cost = URBANopt::Reporting::DefaultReports::ScenarioPowerDistributionCost.new({ "results": [ {"name": "baseline_scenario","num_violations": 0,"total_cost_usd": 546950.36419523}], "violation_summary": [ { "name": "baseline_scenario"}]})
     expect(distribution_cost.results[0][:name]).to eq 'baseline_scenario'
     expect(distribution_cost.violation_summary[0][:name]).to eq 'baseline_scenario'
+  end
+
+  it 'can report location results' do
+    location = URBANopt::Reporting::DefaultReports::Location.new({ latitude_deg: 13, longitude_deg: -61.24, })
+    expect(location.latitude_deg).to eq 13
+    expect(location.longitude_deg).to eq -61.24
   end
 
 end
