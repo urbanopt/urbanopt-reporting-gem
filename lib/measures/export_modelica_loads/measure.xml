@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <measure>
-  <schema_version>3.1</schema_version>
+  <schema_version>3.0</schema_version>
   <name>export_modelica_loads</name>
   <uid>7051db01-2e55-4223-b5b5-fee615b68dd0</uid>
   <version_id>e682f518-4785-4917-802e-600023816cc3</version_id>
