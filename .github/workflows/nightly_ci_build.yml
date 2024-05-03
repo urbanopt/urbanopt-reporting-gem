@@ -2,6 +2,7 @@ name: Reporting-gem CI
 
 on:
   # push:
+  workflow_dispatch:
   schedule:
     # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule
     # 5 am UTC (11pm MDT the day before) every weekday night in MDT
