@@ -137,12 +137,12 @@ RSpec.describe URBANopt::Reporting do
     end
 
     it 'can merge distributed generation systems together' do
-      existing_dgen = URBANopt::Reporting::DefaultReports::DistributedGeneration.new(annual_renewable_electricity_pct: 0, year_one_energy_cost_us_dollars: 100_000)
-      new_dgen = URBANopt::Reporting::DefaultReports::DistributedGeneration.new(annual_renewable_electricity_pct: 50, year_one_energy_cost_us_dollars: 50_000)
+      existing_dgen = URBANopt::Reporting::DefaultReports::DistributedGeneration.new(renewable_electricity_fraction: 0, year_one_energy_cost_us_dollars: 100_000)
+      new_dgen = URBANopt::Reporting::DefaultReports::DistributedGeneration.new(renewable_electricity_fraction: 50, year_one_energy_cost_us_dollars: 50_000)
 
       distributed_generation = URBANopt::Reporting::DefaultReports::DistributedGeneration.merge_distributed_generation(existing_dgen, new_dgen)
 
-      expect(distributed_generation.annual_renewable_electricity_pct).to eq(50)
+      expect(distributed_generation.renewable_electricity_fraction).to eq(50)
     end
   end
 
