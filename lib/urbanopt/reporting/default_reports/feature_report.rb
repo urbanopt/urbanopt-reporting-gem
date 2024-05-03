@@ -55,7 +55,7 @@ module URBANopt
           # design_parameters to add later
           @construction_costs = []
           hash[:construction_costs].each do |cc|
-            @constructiion_costs << ConstructionCost.new(cc)
+            @construction_costs << ConstructionCost.new(cc)
           end
 
           @reporting_periods = []
@@ -212,7 +212,6 @@ module URBANopt
         def save(file_name = 'default_feature_report')
           # reassign the initialize local variable @file_name to the file name input.
           @file_name = file_name
-
           # save the feature reports csv and json data
           old_timeseries_path = nil
           if !@timeseries_csv.path.nil?
