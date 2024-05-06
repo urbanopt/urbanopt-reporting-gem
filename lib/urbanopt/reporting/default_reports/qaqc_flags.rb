@@ -16,9 +16,9 @@ module URBANopt
         ##
         # _Hash_ - Hash of flags raised by QAQC measure for this feature during this reporting period
         #
-        attr_accessor :eui_reasonableness,:end_use_by_category,:mechanical_system_part_load_efficiency,
-                      :simultaneous_heating_and_cooling , :internal_loads , :schedules, :envelope_r_value,
-                      :domestic_hot_water , :mechanical_system_efficiency , :supply_and_zone_air_temperature,
+        attr_accessor :eui_reasonableness, :end_use_by_category, :mechanical_system_part_load_efficiency,
+                      :simultaneous_heating_and_cooling, :internal_loads, :schedules, :envelope_r_value,
+                      :domestic_hot_water, :mechanical_system_efficiency, :supply_and_zone_air_temperature,
                       :total_qaqc_flags
 
         ##
@@ -46,13 +46,10 @@ module URBANopt
           @mechanical_system_efficiency = hash[:mechanical_system_efficiency]
           @total_qaqc_flags = hash[:total_qaqc_flags]
 
-
           # initialize class variables @@validator and @@schema
           @@validator ||= Validator.new
           @@schema ||= @@validator.schema
-
         end
-
 
         ##
         # Assigns default values if values do not exist.
@@ -72,9 +69,9 @@ module URBANopt
           hash[:mechanical_system_efficiency] = nil
           hash[:total_qaqc_flags] = nil
 
-
           return hash
         end
+
         ##
         # Convert to a Hash equivalent for JSON serialization
         ##
@@ -99,7 +96,6 @@ module URBANopt
           end
 
           return result
-
         end
 
         ##
@@ -126,7 +122,6 @@ module URBANopt
         # +other+ - _QAQC_ - An object of Program class.
         ##
         def add_qaqc_flags(other)
-
           @eui_reasonableness = add_values(@eui_reasonableness, other.eui_reasonableness)
           @end_use_by_category = add_values(@end_use_by_category, other.end_use_by_category)
           @mechanical_system_part_load_efficiency = add_values(@mechanical_system_part_load_efficiency, other.mechanical_system_part_load_efficiency)
@@ -138,9 +133,7 @@ module URBANopt
           @domestic_hot_water = add_values(@domestic_hot_water, other.domestic_hot_water)
           @mechanical_system_efficiency = add_values(@mechanical_system_efficiency, other.mechanical_system_efficiency)
           @total_qaqc_flags = add_values(@total_qaqc_flags, other.total_qaqc_flags)
-
         end
-
       end
     end
   end

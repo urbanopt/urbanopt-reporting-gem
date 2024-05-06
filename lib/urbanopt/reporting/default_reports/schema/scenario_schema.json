@@ -412,32 +412,73 @@
           "description": "File path of REopt assumptions file used to generate results, if known",
           "type": "string"
         },
-        "annual_renewable_electricity_pct": {
-          "description": "Percentage of annual renewable electricity generation",
+        "renewable_electricity_fraction": {
+          "description": "Fraction of annual renewable electricity generation",
           "type": "number"
         },
-        "lcc_us_dollars": {
-          "description": "Optimal lifecycle cost",
+        "lcc": {
+          "description": "Lifecycle costs for the complete distributed generation system",
+          "units": "dollars",
           "type": "number"
         },
-        "npv_us_dollars": {
-          "description": "Net present value of savings realized by the project",
+        "lcc_bau": {
+          "description": "Lifecycle cost in the business as usual scenario (i.e no new system)",
+          "units": "dollars",
           "type": "number"
         },
-        "year_one_energy_cost_us_dollars": {
-          "description": "Optimal year one utility energy cost",
+        "npv": {
+          "description": "Net present value of the complete distributed generation system",
+          "units": "dollars",
           "type": "number"
         },
-        "year_one_demand_cost_us_dollars": {
-          "description": "Optimal year one utility demand cost",
+        "lifecycle_demand_cost_after_tax": {
+          "description": "Total demand costs in US Dollars over the life of the system after tax",
+          "units": "dollars",
           "type": "number"
         },
-        "year_one_bill_us_dollars": {
-          "description": "Optimal year one utility bill",
+        "year_one_energy_cost_before_tax": {
+          "description": "Total amount paid for utility energy in US Dollars in the first year of operation",
+          "units": "dollars",
           "type": "number"
         },
-        "total_energy_cost_us_dollars": {
-          "description": "Total utility energy cost over the lifecycle, after-tax",
+        "year_one_energy_cost_before_tax_bau": {
+          "description": "Year one energy cost in the business as usual scenario (i.e no new system) before tax",
+          "units": "dollars",
+          "type": "number"
+        },
+        "year_one_demand_cost_before_tax": {
+          "description": "Total amount paid in utility demand charges in US Dollars in the first year of operation",
+          "units": "dollars",
+          "type": "number"
+        },
+        "year_one_demand_cost_before_tax_bau": {
+          "description": "Year one demand cost in the business as usual scenario (i.e no new system) before tax",
+          "units": "dollars",
+          "type": "number"
+        },
+        "year_one_bill_before_tax": {
+          "description": "Total amount paid to the utility in US Dollars in the first year of operation",
+          "units": "dollars",
+          "type": "number"
+        },
+        "year_one_bill_before_tax_bau": {
+          "description": "Year one bill in the business as usual scenario (i.e no new system) before tax",
+          "units": "dollars",
+          "type": "number"
+        },
+        "lifecycle_energy_cost_after_tax": {
+          "description": "Total energy costs in US Dollars over the life of the system after tax",
+          "units": "dollars",
+          "type": "number"
+        },
+        "lifecycle_demand_cost_after_tax_bau": {
+          "description": "Total demand costs in US Dollars over the life of the system in the business as usual scenario (i.e no new system) after tax",
+          "units": "dollars",
+          "type": "number"
+        },
+        "lifecycle_energy_cost_after_tax_bau": {
+          "description": "Total energy costs in US Dollars over the life of the system in the business as usual scenario (i.e no new system) after tax",
+          "units": "dollars",
           "type": "number"
         },
         "SolarPV": {
