@@ -128,7 +128,6 @@ RSpec.describe URBANopt::Reporting do
   end
 
   context 'with distributed generation' do
-
     it 'can add values in distributed generation' do
       expect(URBANopt::Reporting::DefaultReports::DistributedGeneration.add_values(1, 2)).to eq(3)
     end
@@ -138,18 +137,18 @@ RSpec.describe URBANopt::Reporting do
     end
 
     it 'can merge distributed generation systems together' do
-      existing_dgen = URBANopt::Reporting::DefaultReports::DistributedGeneration.new(annual_renewable_electricity_pct: 0, year_one_energy_cost_us_dollars: 100_000)
-      new_dgen = URBANopt::Reporting::DefaultReports::DistributedGeneration.new(annual_renewable_electricity_pct: 50, year_one_energy_cost_us_dollars: 50_000)
+      existing_dgen = URBANopt::Reporting::DefaultReports::DistributedGeneration.new(renewable_electricity_fraction: 0, year_one_energy_cost_us_dollars: 100_000)
+      new_dgen = URBANopt::Reporting::DefaultReports::DistributedGeneration.new(renewable_electricity_fraction: 50, year_one_energy_cost_us_dollars: 50_000)
 
       distributed_generation = URBANopt::Reporting::DefaultReports::DistributedGeneration.merge_distributed_generation(existing_dgen, new_dgen)
 
-      expect(distributed_generation.annual_renewable_electricity_pct).to eq(50)
+      expect(distributed_generation.renewable_electricity_fraction).to eq(50)
     end
   end
 
   it 'can add generator sizes' do
-    generator = URBANopt::Reporting::DefaultReports::Generator.new(size_kw:5)
-    new_generator = URBANopt::Reporting::DefaultReports::Generator.new(size_kw:8)
+    generator = URBANopt::Reporting::DefaultReports::Generator.new(size_kw: 5)
+    new_generator = URBANopt::Reporting::DefaultReports::Generator.new(size_kw: 8)
     total_generator = URBANopt::Reporting::DefaultReports::Generator.add_generator(generator, new_generator)
     expect(total_generator.size_kw).to eq(13)
   end
@@ -241,9 +240,8 @@ RSpec.describe URBANopt::Reporting do
   end
 
   it 'can report location results' do
-    location = URBANopt::Reporting::DefaultReports::Location.new({ latitude_deg: 13, longitude_deg: -61.24, })
+    location = URBANopt::Reporting::DefaultReports::Location.new({ latitude_deg: 13, longitude_deg: -61.24 })
     expect(location.latitude_deg).to eq 13
-    expect(location.longitude_deg).to eq -61.24
+    expect(location.longitude_deg).to eq(-61.24)
   end
-
 end
