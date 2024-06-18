@@ -931,14 +931,14 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     conv_kg_mt = 0.001 # kg to metric ton
     conv_kbtu_J = 1054852.32 # KBtu to J (1kBtu = 1054852.32 J)
 
-    ##### Emisison factors for natural gas, propane, and fuel oil based on EPA eGRID data and calculated using 20-year GWP horizon based on ASHRAE 189.1
-    ## natural gas :  277.358126 KG/MWH
-    ## propane : 323.896704 KG/MWH
-    ## Fuel oil : 294.962046 KG/MWH
-    nat_gas_val = 277.358126
-    lpg_val = 323.896704
-    fo1_val = 294.962046
-    fo2_val = 294.962046
+    ##### Emisison factors for natural gas, propane, and fuel oil based on https://portfoliomanager.energystar.gov/pdf/reference/Emissions.pdf
+    ## natural gas :  181.7 KG/MWH
+    ## propane : 219.2 KG/MWH
+    ## Fuel oil #1: 250.8 KG/MWH
+    nat_gas_val = 181.7
+    lpg_val = 219.2
+    fo1_val = 250.8
+    fo2_val = 253.2
 
     ##########################################################################################################################
     ######################################## Reporting TImeseries Results FOR CSV File #######################################
@@ -1184,14 +1184,13 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
         # conv_kg_mt = 0.001 # kg to metric ton
         # conv_kbtu_J = 1054852.32 # KBtu to J (1kBtu = 1054852.32 J)
 
-        # ##### Emisison factors for natural gas, propane, and fuel oil based on EPA eGRID data and calculated using 20-year GWP horizon based on ASHRAE 189.1
-        # ## natural gas :  277.358126 KG/MWH
-        # ## propane : 323.896704 KG/MWH
-        # ## Fuel oil : 294.962046 KG/MWH
-        # nat_gas_val = 277.358126
-        # lpg_val = 323.896704
-        # fo1_val = 294.962046
-        # fo2_val = 294.962046
+        # ##### Emisison factors for natural gas, propane, and fuel oil based on https://portfoliomanager.energystar.gov/pdf/reference/Emissions.pdf
+        # ## natural gas :  181.7 KG/MWH
+        # ## propane : 219.2 KG/MWH
+        # nat_gas_val = 181.7
+        # lpg_val = 219.2
+        # fo1_val = 250.8
+        # fo2_val = 253.2
 
         if timeseries_name == 'Natural_Gas_Emissions'
           newVals = Array.new(n, 0)
