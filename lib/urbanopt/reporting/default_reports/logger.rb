@@ -12,7 +12,7 @@ module URBANopt
 
       @@logger.level = Logger::WARN
       ##
-      # Definining class variable "@@logger" to log errors, info and warning messages.
+      # Defining class variable "@@logger" to log errors, info and warning messages.
       def self.logger
         @@logger
       end

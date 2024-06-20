@@ -719,7 +719,7 @@
           ]
         },
         "simultaneous_heating_and_cooling": {
-          "description": "Whether heating and cooling are occuring during the same hour when cooling load exists",
+          "description": "Whether heating and cooling are occurring during the same hour when cooling load exists",
           "type": [
             "integer",
             "null"
@@ -784,7 +784,7 @@
           "type": "string"
         },
         "name": {
-          "description": "name refers to the name of the feature (eg. Building 1, tranformer 5)",
+          "description": "name refers to the name of the feature (eg. Building 1, transformer 5)",
           "type": "string"
         },
         "directory_name": {
@@ -870,7 +870,7 @@
           "type": "string"
         },
         "multiplier": {
-          "description": "Multiplier used if this reporting period is representative of mulitple periods.  For example one week simulation that represents entire month.",
+          "description": "Multiplier used if this reporting period is representative of multiple periods.  For example one week simulation that represents entire month.",
           "type": "number",
           "default": 1
         },

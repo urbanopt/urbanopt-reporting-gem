@@ -11,13 +11,13 @@ module URBANopt
   module Reporting
     module DefaultReports
       ##
-      # Enduses class inlclude results for each fuel type.
+      # Enduses class include results for each fuel type.
       ##
       class EndUses
         attr_accessor :electricity_kwh, :natural_gas_kwh, :propane_kwh, :fuel_oil_kwh, :other_fuels_kwh, :district_cooling_kwh, :district_heating_kwh, :water_qbft # :nodoc:
 
         ##
-        # EndUses class intialize end_uses(fuel type) attributes: +:electricity_kwh+ , +:natural_gas_kwh+ , +:propane_kwh+ , +:fuel_oil_kwh+ , +:other_fuels_kwh+ ,
+        # EndUses class initialize end_uses(fuel type) attributes: +:electricity_kwh+ , +:natural_gas_kwh+ , +:propane_kwh+ , +:fuel_oil_kwh+ , +:other_fuels_kwh+ ,
         # +:district_cooling_kwh+ , +:district_heating_kwh+ , +:water_qbft+
         ##
         # [parameters:]

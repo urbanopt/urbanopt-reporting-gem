@@ -77,7 +77,7 @@ class ExportTimeSeriesLoadsCSV < OpenStudio::Measure::ReportingMeasure
     # use the built-in error checking
     return false unless runner.validateUserArguments(arguments(model), user_arguments)
 
-    # #Read in argumetns related to variables for output requests
+    # #Read in arguments related to variables for output requests
     hhw_loop_name = runner.getStringArgumentValue('hhw_loop_name', user_arguments)
     chw_loop_name = runner.getStringArgumentValue('chw_loop_name', user_arguments)
 

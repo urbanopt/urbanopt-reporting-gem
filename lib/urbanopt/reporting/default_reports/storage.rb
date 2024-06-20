@@ -28,7 +28,7 @@ module URBANopt
         ##
         # [parameters:]
         #
-        # * +hash+ - _Hash_ - A hash containting +:size_kw+ and +:size_kwh+ key/value pair which represents the power and storage capacity in kilowatts (kW) and kilowatt-hours respectively.
+        # * +hash+ - _Hash_ - A hash containing +:size_kw+ and +:size_kwh+ key/value pair which represents the power and storage capacity in kilowatts (kW) and kilowatt-hours respectively.
         #
         def initialize(hash = {})
           hash.delete_if { |k, v| v.nil? }

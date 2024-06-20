@@ -798,7 +798,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
       enduses.each do |eu|
         sql_r = sql_query(runner, sql_file, 'AnnualBuildingUtilityPerformanceSummary', "TableName='End Uses' AND RowName='#{eu}' AND ColumnName='#{ft}'")
 
-        # report each query in its corresponding feature report obeject
+        # report each query in its corresponding feature report object
         x = ft.tr(' ', '_').downcase
         if x.include? 'water'
           x_u = "#{x}_qbft"
@@ -1046,7 +1046,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     total_hours = 1 / timesteps_per_hour.to_f # make sure timesteps_per_hour is a float in the division
     # set power_conversion
     power_conversion = total_hours # we set the power conversio to total_hours since we want to convert lWh to kW
-    puts "Power Converion: to convert kWh to kW values will be divided by #{power_conversion}"
+    puts "Power Conversion: to convert kWh to kW values will be divided by #{power_conversion}"
 
     # number of values in each timeseries
     n = nil
@@ -1440,7 +1440,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     else
       raise 'ELECTRICITY and GAS results are not initiaized'
     end
-    # get formated datetimes
+    # get formatted datetimes
     timeseries_d.dateTimes.each do |datetime|
       datetimes << format_datetime(datetime.to_s)
     end

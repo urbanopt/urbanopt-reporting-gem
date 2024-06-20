@@ -23,7 +23,7 @@ module URBANopt
         ##
         # [parameters:]
         #
-        # * +hash+ - _Hash_ - A hash containting a +:size_kw+ key/value pair which represents the nameplate capacity in kilowatts (kW)
+        # * +hash+ - _Hash_ - A hash containing a +:size_kw+ key/value pair which represents the nameplate capacity in kilowatts (kW)
         #
         def initialize(hash = {})
           hash.delete_if { |k, v| v.nil? }

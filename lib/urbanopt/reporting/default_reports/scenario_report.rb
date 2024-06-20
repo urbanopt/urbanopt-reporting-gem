@@ -33,7 +33,7 @@ module URBANopt
                       :timeseries_csv, :location, :program, :construction_costs, :reporting_periods, :feature_reports, :distributed_generation,
                       :scenario_power_distribution, :scenario_power_distribution_cost, :qaqc_flags # :nodoc:
 
-        # ScenarioReport class intializes the scenario report attributes:
+        # ScenarioReport class initializes the scenario report attributes:
         # +:id+ , +:name+ , +:directory_name+, +:timesteps_per_hour+ , +:number_of_not_started_simulations+ ,
         # +:number_of_started_simulations+ , +:number_of_complete_simulations+ , +:number_of_failed_simulations+ ,
         # +:timeseries_csv+ , +:location+ , +:program+ , +:construction_costs+ , +:reporting_periods+ , +:feature_reports+,
@@ -74,7 +74,7 @@ module URBANopt
             @reporting_periods << ReportingPeriod.new(rp)
           end
 
-          # feature_report is intialized here to be used in the add_feature_report method
+          # feature_report is initialized here to be used in the add_feature_report method
           @feature_reports = []
           hash[:feature_reports].each do |fr|
             @feature_reports << FeatureReport.new(fr)
@@ -246,7 +246,7 @@ module URBANopt
         # - add the array of feature_reports
         # - scenario report location takes the location of the first feature in the list
         ##
-        # [parmeters:]
+        # [parameters:]
         # +feature_report+ - _FeatureReport_ - An object of FeatureReport class.
         ##
         def add_feature_report(feature_report)
