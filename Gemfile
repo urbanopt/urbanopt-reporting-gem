@@ -15,6 +15,8 @@ allow_local = ENV['FAVOR_LOCAL_GEMS']
 gem 'addressable', '2.8.1'
 # pin this dependency to avoid using racc dependency (which has native extensions)
 gem 'parser', '3.2.2.2'
+# pin this dependency because 2.9.2 breaks OS tests (openstudio:test_with_openstudio)
+gem 'regexp_parser', '2.9.0'
 
 # if allow_local && File.exist?('../openstudio-extension-gem')
 #   gem 'openstudio-extension', path: '../openstudio-extension-gem'
