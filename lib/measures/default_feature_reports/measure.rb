@@ -798,7 +798,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
       enduses.each do |eu|
         sql_r = sql_query(runner, sql_file, 'AnnualBuildingUtilityPerformanceSummary', "TableName='End Uses' AND RowName='#{eu}' AND ColumnName='#{ft}'")
 
-        # report each query in its corresponding feature report obeject
+        # report each query in its corresponding feature report object
         x = ft.tr(' ', '_').downcase
         if x.include? 'water'
           x_u = "#{x}_qbft"
@@ -931,14 +931,14 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     conv_kg_mt = 0.001 # kg to metric ton
     conv_kbtu_J = 1054852.32 # KBtu to J (1kBtu = 1054852.32 J)
 
-    ##### Emisison factors for natural gas, propane, and fuel oil based on EPA eGRID data and calculated using 20-year GWP horizon based on ASHRAE 189.1
-    ## natural gas :  277.358126 KG/MWH
-    ## propane : 323.896704 KG/MWH
-    ## Fuel oil : 294.962046 KG/MWH
-    nat_gas_val = 277.358126
-    lpg_val = 323.896704
-    fo1_val = 294.962046
-    fo2_val = 294.962046
+    ##### Emisison factors for natural gas, propane, and fuel oil based on https://portfoliomanager.energystar.gov/pdf/reference/Emissions.pdf
+    ## natural gas :  181.7 KG/MWH
+    ## propane : 219.2 KG/MWH
+    ## Fuel oil #1: 250.8 KG/MWH
+    nat_gas_val = 181.7
+    lpg_val = 219.2
+    fo1_val = 250.8
+    fo2_val = 253.2
 
     ##########################################################################################################################
     ######################################## Reporting TImeseries Results FOR CSV File #######################################
@@ -1046,7 +1046,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     total_hours = 1 / timesteps_per_hour.to_f # make sure timesteps_per_hour is a float in the division
     # set power_conversion
     power_conversion = total_hours # we set the power conversio to total_hours since we want to convert lWh to kW
-    puts "Power Converion: to convert kWh to kW values will be divided by #{power_conversion}"
+    puts "Power Conversion: to convert kWh to kW values will be divided by #{power_conversion}"
 
     # number of values in each timeseries
     n = nil
@@ -1184,14 +1184,13 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
         # conv_kg_mt = 0.001 # kg to metric ton
         # conv_kbtu_J = 1054852.32 # KBtu to J (1kBtu = 1054852.32 J)
 
-        # ##### Emisison factors for natural gas, propane, and fuel oil based on EPA eGRID data and calculated using 20-year GWP horizon based on ASHRAE 189.1
-        # ## natural gas :  277.358126 KG/MWH
-        # ## propane : 323.896704 KG/MWH
-        # ## Fuel oil : 294.962046 KG/MWH
-        # nat_gas_val = 277.358126
-        # lpg_val = 323.896704
-        # fo1_val = 294.962046
-        # fo2_val = 294.962046
+        # ##### Emisison factors for natural gas, propane, and fuel oil based on https://portfoliomanager.energystar.gov/pdf/reference/Emissions.pdf
+        # ## natural gas :  181.7 KG/MWH
+        # ## propane : 219.2 KG/MWH
+        # nat_gas_val = 181.7
+        # lpg_val = 219.2
+        # fo1_val = 250.8
+        # fo2_val = 253.2
 
         if timeseries_name == 'Natural_Gas_Emissions'
           newVals = Array.new(n, 0)
@@ -1441,7 +1440,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     else
       raise 'ELECTRICITY and GAS results are not initiaized'
     end
-    # get formated datetimes
+    # get formatted datetimes
     timeseries_d.dateTimes.each do |datetime|
       datetimes << format_datetime(datetime.to_s)
     end

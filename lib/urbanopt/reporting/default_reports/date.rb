@@ -17,7 +17,7 @@ module URBANopt
         attr_accessor :month, :day_of_month, :year #:nodoc:
 
         ##
-        # Date class intialize all date attributes:
+        # Date class initialize all date attributes:
         # +:month+ , +:day_of_month+ , +:year+
         ##
         # [parameters:]

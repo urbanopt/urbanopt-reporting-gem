@@ -1,7 +1,12 @@
 # URBANopt Reporting Gem
 
+## Version 0.10.1
+* Other Fuel emission factors update by @rawadelkontar in https://github.com/urbanopt/urbanopt-reporting-gem/pull/153
+
+
+**Full Changelog**: https://github.com/urbanopt/urbanopt-reporting-gem/compare/v0.10.0...v0.10.1
+
 ## Version 0.10.0
-## What's Changed
 * Additional reporting tests by @vtnate in https://github.com/urbanopt/urbanopt-reporting-gem/pull/147
 * Update formatting and version in export_modelica_loads by @nllong in https://github.com/urbanopt/urbanopt-reporting-gem/pull/149
 * Update feature reports for Reopt v3 by @vtnate in https://github.com/urbanopt/urbanopt-reporting-gem/pull/148

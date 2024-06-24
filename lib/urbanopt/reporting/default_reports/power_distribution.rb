@@ -12,7 +12,7 @@ module URBANopt
   module Reporting
     module DefaultReports
       ##
-      # power_distributio include eletrical power distribution systems information.
+      # power_distribution include eletrical power distribution systems information.
       ##
       class PowerDistribution
         attr_accessor :under_voltage_hours, :over_voltage_hours, :nominal_capacity,
@@ -89,7 +89,7 @@ module URBANopt
         end
 
         ##
-        # Merges muliple power distribution results together.
+        # Merges multiple power distribution results together.
         ##
         # +new_costs+ - _Array_ - An array of ConstructionCost objects.
         def merge_power_distribution

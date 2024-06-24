@@ -17,7 +17,7 @@ module URBANopt
         attr_accessor :category, :item_name, :unit_cost, :cost_units, :item_quantity, :total_cost # :nodoc:
 
         ##
-        # ConstructionCost class intialize all construction_cost attributes:
+        # ConstructionCost class initialize all construction_cost attributes:
         # +:category+ , +:item_name+ , +:unit_cost+ , +:cost_units+ , +:item_quantity+ , +:total_cost+
         ##
         # [parameters:]
@@ -108,7 +108,7 @@ module URBANopt
         end
 
         ##
-        # Merges muliple construction costs together.
+        # Merges multiple construction costs together.
         # - loops over the new_costs and find the index of the cost with identical +:item_name+.
         # - if +item_name+ is identical then modify the existing_cost array by summing the :total_cost and :item_quantity. Else add the new_cost to existing_costs array.
         ##

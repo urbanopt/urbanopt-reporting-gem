@@ -17,7 +17,7 @@ module URBANopt
                       :fans, :pumps, :heat_rejection, :humidification, :heat_recovery, :water_systems, :refrigeration, :generators # :nodoc:
 
         ##
-        # EndUse class intialize all enduse atributes: +:heating+ , +:cooling+ , +:interior_lighting+ ,
+        # EndUse class initialize all enduse attributes: +:heating+ , +:cooling+ , +:interior_lighting+ ,
         # +:exterior_lighting+ , +:interior_equipment+ , +:exterior_equipment+ ,
         # +:fans+ , +:pumps+ , +:heat_rejection+ , +:humidification+ , +:heat_recovery+ , +:water_systems+ , +:refrigeration+ , +:generators+
         ##

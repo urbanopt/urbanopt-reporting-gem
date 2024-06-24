@@ -14,7 +14,7 @@ module URBANopt
   module Reporting
     module DefaultReports
       ##
-      # TimeseriesCSV include timesries reults reported in a CSV file.
+      # TimeseriesCSV include timesries results reported in a CSV file.
       ##
       class TimeseriesCSV
         attr_accessor :path, :first_report_datetime, :column_names #:nodoc:
@@ -33,7 +33,7 @@ module URBANopt
           @path = hash[:path]
           @first_report_datetime = hash[:first_report_datetime]
 
-          # from scenario csv shema get required reults to be aggregated
+          # from scenario csv shema get required results to be aggregated
           @required_column_names = load_scenario_csv_schema_headers
 
           @column_names = hash[:column_names]
