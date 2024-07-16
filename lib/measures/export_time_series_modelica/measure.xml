@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>export_time_series_loads_csv</name>
   <uid>9fcf6116-c2eb-43d6-93f0-e1bdd822f768</uid>
-  <version_id>0b134568-d3a8-4ede-bf22-2010a173ea97</version_id>
-  <version_modified>2024-01-08T22:54:07Z</version_modified>
+  <version_id>8bd4bc8e-f597-47f9-82b9-044a06977bb1</version_id>
+  <version_modified>2024-07-16T17:52:07Z</version_modified>
   <xml_checksum>9BF1E6AC</xml_checksum>
   <class_name>ExportTimeSeriesLoadsCSV</class_name>
   <display_name>ExportTimeSeriesLoadsCSV</display_name>
@@ -111,7 +111,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>EC8615DF</checksum>
+      <checksum>EB4FBA91</checksum>
     </file>
     <file>
       <filename>os_lib_helper_methods.rb</filename>
