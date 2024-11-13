@@ -1,14 +1,12 @@
 name: Reporting-gem CI
 
 on:
-  # push:
+  push:
   workflow_dispatch:
   schedule:
     # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule
     # 5 am UTC (11pm MDT the day before) every weekday night in MDT
     - cron: '22 5 * * 2-6'
-  pull_request:
-    types: [review_requested]
 
 env:
   # This env var should enforce develop branch of all dependencies
@@ -31,6 +29,7 @@ jobs:
         run: |
           ruby --version
           bundle install
+          bundle update
       - name: List OpenStudio measures
         run: bundle exec rake openstudio:list_measures
       - name: Update OpenStudio measures
