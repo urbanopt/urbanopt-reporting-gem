@@ -542,7 +542,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     space_type_occupancy = {}
     spaces.each do |space|
       if space.spaceType.empty?
-        raise 'space.spaceType is empty. Make sure spaces have a space type'
+        raise "The #{space.name} spaceType is empty. Ensure all spaces have a space type"
       else
         building_type = space.spaceType.get.standardsBuildingType
       end
@@ -932,9 +932,11 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     conv_kbtu_J = 1054852.32 # KBtu to J (1kBtu = 1054852.32 J)
 
     ##### Emisison factors for natural gas, propane, and fuel oil based on https://portfoliomanager.energystar.gov/pdf/reference/Emissions.pdf
+    ## Emission factors are based on EPA eGRID data and calculated using a 100-year global warming potential (GWP) horizon based on ASHRAE 189.1
     ## natural gas :  181.7 KG/MWH
     ## propane : 219.2 KG/MWH
     ## Fuel oil #1: 250.8 KG/MWH
+    ## Fuel oil #2: 253.2 KG/MWH
     nat_gas_val = 181.7
     lpg_val = 219.2
     fo1_val = 250.8
