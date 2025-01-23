@@ -542,7 +542,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     space_type_occupancy = {}
     spaces.each do |space|
       if space.spaceType.empty?
-        raise 'space.spaceType is empty. Make sure spaces have a space type'
+        raise "The #{space.name} spaceType is empty. Ensure all spaces have a space type"
       else
         building_type = space.spaceType.get.standardsBuildingType
       end

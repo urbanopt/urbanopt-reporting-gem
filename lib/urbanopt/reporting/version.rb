@@ -5,6 +5,6 @@
 
 module URBANopt
   module Reporting
-    VERSION = '0.10.1'.freeze
+    VERSION = '1.0.0'.freeze
   end
 end
