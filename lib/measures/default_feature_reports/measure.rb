@@ -191,7 +191,9 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     # result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,Fans:Electricity,#{reporting_frequency};").get
     # result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,Pumps:Electricity,#{reporting_frequency};").get
     # result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,WaterSystems:Electricity,#{reporting_frequency};").get
-    # result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,Heating:NaturalGas,#{reporting_frequency};").get
+    result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,Heating:NaturalGas,#{reporting_frequency};").get
+    result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,Cooling:NaturalGas,#{reporting_frequency};").get
+    
     # result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,WaterSystems:NaturalGas,#{reporting_frequency};").get
     # result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,InteriorEquipment:NaturalGas,#{reporting_frequency};").get
     result << OpenStudio::IdfObject.load('Output:Variable,*,Heating Coil Heating Rate,hourly; !- HVAC Average [W];').get
@@ -965,6 +967,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
       'HeatRejection:Electricity',
       'HeatRejection:NaturalGas',
       'Heating:NaturalGas',
+      'Cooling:NaturalGas',
       'WaterSystems:NaturalGas',
       'InteriorEquipment:NaturalGas',
       'HeatRejection:Propane',
