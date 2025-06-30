@@ -775,16 +775,16 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
 
     # district_heating_steam
     district_heating_steam = sql_query(runner, sql_file, 'AnnualBuildingUtilityPerformanceSummary', "TableName='End Uses' AND RowName='Total End Uses' AND ColumnName='District Heating'")
-    feature_report.reporting_periods[0].district_heating_kwh = convert_units(district_heating_steam, 'GJ', 'kWh')
+    feature_report.reporting_periods[0].district_heating_steam_kwh = convert_units(district_heating_steam, 'GJ', 'kWh')
     if building.standardsBuildingType.is_initialized && ['Residential'].include?(building.standardsBuildingType.get)
-      feature_report.reporting_periods[0].district_heating_kwh = 0.0
+      feature_report.reporting_periods[0].district_heating_steam_kwh = 0.0
     end
 
     # district_heating_water
     district_heating_water = sql_query(runner, sql_file, 'AnnualBuildingUtilityPerformanceSummary', "TableName='End Uses' AND RowName='Total End Uses' AND ColumnName='District Heating'")
-    feature_report.reporting_periods[0].district_heating_kwh = convert_units(district_heating_water, 'GJ', 'kWh')
+    feature_report.reporting_periods[0].district_heating_water_kwh = convert_units(district_heating_water, 'GJ', 'kWh')
     if building.standardsBuildingType.is_initialized && ['Residential'].include?(building.standardsBuildingType.get)
-      feature_report.reporting_periods[0].district_heating_kwh = 0.0
+      feature_report.reporting_periods[0].district_heating_water_kwh = 0.0
     end    
 
     # water
