@@ -946,10 +946,14 @@
           "description": "Sum of all distric cooling end uses consumption (kWh)",
           "type": "number"
         },
-        "district_heating_kwh": {
-          "description": "Sum of all distric heating end uses consumption (kWh)",
+        "district_heating_steam_kwh": {
+          "description": "Sum of all distric heating steam end uses consumption (kWh)",
           "type": "number"
         },
+        "district_heating_water_kwh": {
+          "description": "Sum of all distric heating water end uses consumption (kWh)",
+          "type": "number"
+        },        
         "water_qbft": {
           "description": "Sum of all water end uses consumption (ft^3)",
           "type": "number"

@@ -22,7 +22,8 @@ The URBANopt <sup>&trade;</sup> Scenario Gem includes functionality for defining
 | ElectricityProduced:Facility             | kWh     |
 | Gas:Facility                             | kBtu    |
 | DistrictCooling:Facility                 | kWh     |
-| DistrictHeating:Facility                 | kWh     |
+| DistrictHeatingSteam:Facility            | kWh     |
+| DistrictHeatingWater:Facility            | kWh     |
 | District Cooling Chilled Water Rate      | GPM     |
 | District Cooling Mass Flow Rate          | kg/s    |
 | District Cooling Inlet Temperature       | &deg;C  |
