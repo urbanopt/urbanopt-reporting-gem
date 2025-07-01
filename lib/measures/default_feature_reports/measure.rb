@@ -811,7 +811,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
 
         # report each query in its corresponding feature report object
         x = ft.tr(' ', '_').downcase
-        if x.include? 'water'
+        if x.include? 'water' && x != 'district_heating_water'
           x_u = "#{x}_qbft"
         else
           x = x.gsub('_#2', '')
