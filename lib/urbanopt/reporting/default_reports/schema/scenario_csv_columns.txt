@@ -32,7 +32,8 @@ Heating:OtherFuels
 WaterSystems:OtherFuels
 InteriorEquipment:OtherFuels
 DistrictCooling:Facility
-DistrictHeating:Facility
+DistrictHeatingSteam:Facility
+DistrictHeatingWater:Facility
 District Cooling Chilled Water Rate
 District Cooling Mass Flow Rate
 District Cooling Inlet Temperature

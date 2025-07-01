@@ -14,7 +14,7 @@ module URBANopt
       # Enduses class include results for each fuel type.
       ##
       class EndUses
-        attr_accessor :electricity_kwh, :natural_gas_kwh, :propane_kwh, :fuel_oil_kwh, :other_fuels_kwh, :district_cooling_kwh, :district_heating_kwh, :water_qbft # :nodoc:
+        attr_accessor :electricity_kwh, :natural_gas_kwh, :propane_kwh, :fuel_oil_kwh, :other_fuels_kwh, :district_cooling_kwh, :district_heating_water_kwh, :district_heating_steam_kwh, :water_qbft # :nodoc:
 
         ##
         # EndUses class initialize end_uses(fuel type) attributes: +:electricity_kwh+ , +:natural_gas_kwh+ , +:propane_kwh+ , +:fuel_oil_kwh+ , +:other_fuels_kwh+ ,
@@ -33,7 +33,8 @@ module URBANopt
           @fuel_oil_kwh = EndUse.new(hash[:fuel_oil_kwh])
           @other_fuels_kwh = EndUse.new(hash[:other_fuels_kwh])
           @district_cooling_kwh = EndUse.new(hash[:district_cooling_kwh])
-          @district_heating_kwh = EndUse.new(hash[:district_heating_kwh])
+          @district_heating_water_kwh = EndUse.new(hash[:district_heating_water_kwh])
+          @district_heating_steam_kwh = EndUse.new(hash[:district_heating_steam_kwh])
           @water_qbft = EndUse.new(hash[:water_qbft])
 
           # initialize class variables @@validator and @@schema
@@ -74,9 +75,13 @@ module URBANopt
           district_cooling_kwh_hash.delete_if { |k, v| v.nil? }
           result[:district_cooling_kwh] = district_cooling_kwh_hash if @district_cooling_kwh
 
-          district_heating_kwh_hash = @district_heating_kwh.to_hash if @district_heating_kwh
-          district_heating_kwh_hash.delete_if { |k, v| v.nil? }
-          result[:district_heating_kwh] = district_heating_kwh_hash if @district_heating_kwh
+          district_heating_water_kwh_hash = @district_heating_water_kwh.to_hash if @district_heating_water_kwh
+          district_heating_water_kwh_hash.delete_if { |k, v| v.nil? }
+          result[:district_heating_water_kwh] = district_heating_water_kwh_hash if @district_heating_water_kwh
+          
+          district_heating_steam_kwh_hash = @district_heating_steam_kwh.to_hash if @district_heating_steam_kwh
+          district_heating_steam_kwh_hash.delete_if { |k, v| v.nil? }
+          result[:district_heating_steam_kwh] = district_heating_steam_kwh_hash if @district_heating_steam_kwh
 
           water_qbft_hash = @water_qbft.to_hash if @water_qbft
           water_qbft_hash.delete_if { |k, v| v.nil? }
@@ -101,7 +106,8 @@ module URBANopt
           hash[:fuel_oil_kwh] = EndUse.new.to_hash
           hash[:other_fuels_kwh] = EndUse.new.to_hash
           hash[:district_cooling_kwh] = EndUse.new.to_hash
-          hash[:district_heating_kwh] = EndUse.new.to_hash
+          hash[:district_heating_steam_kwh] = EndUse.new.to_hash
+          hash[:district_heating_water_kwh] = EndUse.new.to_hash
           hash[:water_qbft] = EndUse.new.to_hash
 
           return hash
@@ -121,7 +127,8 @@ module URBANopt
           @fuel_oil_kwh.merge_end_use!(new_end_uses.fuel_oil_kwh)
           @other_fuels_kwh.merge_end_use!(new_end_uses.other_fuels_kwh)
           @district_cooling_kwh.merge_end_use!(new_end_uses.district_cooling_kwh)
-          @district_heating_kwh.merge_end_use!(new_end_uses.district_heating_kwh)
+          @district_heating_water_kwh.merge_end_use!(new_end_uses.district_heating_water_kwh)
+          @district_heating_steam_kwh.merge_end_use!(new_end_uses.district_heating_steam_kwh)
           return self
         end
       end
