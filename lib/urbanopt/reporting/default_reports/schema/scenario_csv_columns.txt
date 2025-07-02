@@ -34,6 +34,7 @@ InteriorEquipment:OtherFuels
 DistrictCooling:Facility
 DistrictHeatingSteam:Facility
 DistrictHeatingWater:Facility
+Plant Supply Side Heating Demand Rate
 District Cooling Chilled Water Rate
 District Cooling Mass Flow Rate
 District Cooling Inlet Temperature
