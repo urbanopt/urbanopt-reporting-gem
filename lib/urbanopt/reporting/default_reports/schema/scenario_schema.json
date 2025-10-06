@@ -953,7 +953,7 @@
         "district_heating_water_kwh": {
           "description": "Sum of all distric heating water end uses consumption (kWh)",
           "type": "number"
-        },        
+        },
         "water_qbft": {
           "description": "Sum of all water end uses consumption (ft^3)",
           "type": "number"
@@ -1085,7 +1085,10 @@
         "district_cooling_kwh": {
           "$ref": "#/definitions/EndUse"
         },
-        "district_heating_kwh": {
+        "district_heating_water_kwh": {
+          "$ref": "#/definitions/EndUse"
+        },
+        "district_heating_steam_kwh": {
           "$ref": "#/definitions/EndUse"
         },
         "water_qbft": {
