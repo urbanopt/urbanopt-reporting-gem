@@ -80,7 +80,8 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
       'FuelOilNo2' => 'Fuel Oil #2',
       'Propane' => 'Propane',
       'DistrictCooling' => 'District Cooling',
-      'DistrictHeating' => 'District Heating',
+      'DistrictHeatingSteam' => 'District Heating Steam',
+      'DistrictHeatingWater' => 'District Heating Water',
       'Water' => 'Water'
     }
 
@@ -179,7 +180,8 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,ElectricityProduced:Facility,#{reporting_frequency};").get
     result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,NaturalGas:Facility,#{reporting_frequency};").get
     result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,DistrictCooling:Facility,#{reporting_frequency};").get
-    result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,DistrictHeating:Facility,#{reporting_frequency};").get
+    result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,DistrictHeatingSteam:Facility,#{reporting_frequency};").get
+    result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,DistrictHeatingWater:Facility,#{reporting_frequency};").get
     result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,Propane:Facility,#{reporting_frequency};").get
     result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,FuelOilNo2:Facility,#{reporting_frequency};").get
 
@@ -191,7 +193,9 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     # result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,Fans:Electricity,#{reporting_frequency};").get
     # result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,Pumps:Electricity,#{reporting_frequency};").get
     # result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,WaterSystems:Electricity,#{reporting_frequency};").get
-    # result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,Heating:NaturalGas,#{reporting_frequency};").get
+    result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,Heating:NaturalGas,#{reporting_frequency};").get
+    result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,Cooling:NaturalGas,#{reporting_frequency};").get
+    
     # result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,WaterSystems:NaturalGas,#{reporting_frequency};").get
     # result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,InteriorEquipment:NaturalGas,#{reporting_frequency};").get
     result << OpenStudio::IdfObject.load('Output:Variable,*,Heating Coil Heating Rate,hourly; !- HVAC Average [W];').get
@@ -769,12 +773,19 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
       feature_report.reporting_periods[0].district_cooling_kwh = 0.0
     end
 
-    # district_heating
-    district_heating = sql_query(runner, sql_file, 'AnnualBuildingUtilityPerformanceSummary', "TableName='End Uses' AND RowName='Total End Uses' AND ColumnName='District Heating'")
-    feature_report.reporting_periods[0].district_heating_kwh = convert_units(district_heating, 'GJ', 'kWh')
+    # district_heating_steam
+    district_heating_steam = sql_query(runner, sql_file, 'AnnualBuildingUtilityPerformanceSummary', "TableName='End Uses' AND RowName='Total End Uses' AND ColumnName='District Heating'")
+    feature_report.reporting_periods[0].district_heating_steam_kwh = convert_units(district_heating_steam, 'GJ', 'kWh')
     if building.standardsBuildingType.is_initialized && ['Residential'].include?(building.standardsBuildingType.get)
-      feature_report.reporting_periods[0].district_heating_kwh = 0.0
+      feature_report.reporting_periods[0].district_heating_steam_kwh = 0.0
     end
+
+    # district_heating_water
+    district_heating_water = sql_query(runner, sql_file, 'AnnualBuildingUtilityPerformanceSummary', "TableName='End Uses' AND RowName='Total End Uses' AND ColumnName='District Heating'")
+    feature_report.reporting_periods[0].district_heating_water_kwh = convert_units(district_heating_water, 'GJ', 'kWh')
+    if building.standardsBuildingType.is_initialized && ['Residential'].include?(building.standardsBuildingType.get)
+      feature_report.reporting_periods[0].district_heating_water_kwh = 0.0
+    end    
 
     # water
     water = sql_query(runner, sql_file, 'AnnualBuildingUtilityPerformanceSummary', "TableName='End Uses' AND RowName='Total End Uses' AND ColumnName='Water'")
@@ -800,7 +811,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
 
         # report each query in its corresponding feature report object
         x = ft.tr(' ', '_').downcase
-        if x.include? 'water'
+        if x.include?('water') && x != 'district_heating_water'
           x_u = "#{x}_qbft"
         else
           x = x.gsub('_#2', '')
@@ -965,6 +976,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
       'HeatRejection:Electricity',
       'HeatRejection:NaturalGas',
       'Heating:NaturalGas',
+      'Cooling:NaturalGas',
       'WaterSystems:NaturalGas',
       'InteriorEquipment:NaturalGas',
       'HeatRejection:Propane',
@@ -980,7 +992,8 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
       'WaterSystems:OtherFuels',
       'InteriorEquipment:OtherFuels',
       'DistrictCooling:Facility',
-      'DistrictHeating:Facility',
+      'DistrictHeatingSteam:Facility',
+      'DistrictHeatingWater:Facility',
       'District Cooling Chilled Water Rate',
       'District Cooling Mass Flow Rate',
       'District Cooling Inlet Temperature',
@@ -1135,7 +1148,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
         end
 
         # residential considerations
-        if building.standardsBuildingType.is_initialized && (['DistrictCooling:Facility', 'DistrictHeating:Facility'].include?(timeseries_name) && ['Residential'].include?(building.standardsBuildingType.get))
+        if building.standardsBuildingType.is_initialized && (['DistrictCooling:Facility', 'DistrictHeatingSteam:Facility', 'DistrictHeatingWater:Facility'].include?(timeseries_name) && ['Residential'].include?(building.standardsBuildingType.get))
           values[key_cnt] = Array.new(n, 0)
         end
 

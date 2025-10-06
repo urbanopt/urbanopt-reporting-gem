@@ -20,7 +20,7 @@ module URBANopt
       class ReportingPeriod
         attr_accessor :id, :name, :multiplier, :start_date, :end_date, :month, :day_of_month, :year, :total_site_energy_kwh, :total_source_energy_kwh, :site_EUI_kwh_per_m2, :site_EUI_kbtu_per_ft2, :source_EUI_kwh_per_m2, :source_EUI_kbtu_per_ft2,
                       :net_site_energy_kwh, :net_source_energy_kwh, :total_utility_cost_dollar, :net_utility_cost_dollar, :utility_costs_dollar, :electricity_kwh, :natural_gas_kwh, :propane_kwh, :fuel_oil_kwh, :other_fuels_kwh, :district_cooling_kwh,
-                      :district_heating_kwh, :water_qbft, :electricity_produced_kwh, :end_uses, :energy_production_kwh, :photovoltaic,
+                      :district_heating_water_kwh, :district_heating_steam_kwh, :water_qbft, :electricity_produced_kwh, :end_uses, :energy_production_kwh, :photovoltaic,
                       :fuel_type, :total_cost_dollar, :usage_cost_dollar, :demand_cost_dollar, :comfort_result, :time_setpoint_not_met_during_occupied_cooling,
                       :time_setpoint_not_met_during_occupied_heating, :time_setpoint_not_met_during_occupied_hours, :hours_out_of_comfort_bounds_PMV, :hours_out_of_comfort_bounds_PPD,
                       :emissions, :future_annual_electricity_emissions_mt, :future_hourly_electricity_emissions_mt, :historical_annual_electricity_emissions_mt, :historical_hourly_electricity_emissions_mt,
@@ -68,7 +68,8 @@ module URBANopt
           @fuel_oil_kwh = hash[:fuel_oil_kwh]
           @other_fuels_kwh = hash[:other_fuels_kwh]
           @district_cooling_kwh = hash[:district_cooling_kwh]
-          @district_heating_kwh = hash[:district_heating_kwh]
+          @district_heating_water_kwh = hash[:district_heating_water_kwh]
+          @district_heating_steam_kwh = hash[:district_heating_steam_kwh]
           @water_qbft = hash[:water_qbft]
           @electricity_produced_kwh = hash[:electricity_produced_kwh]
           @end_uses = EndUses.new(hash[:end_uses])
@@ -114,7 +115,8 @@ module URBANopt
           hash[:fuel_oil_kwh] = nil
           hash[:other_fuels_kwh] = nil
           hash[:district_cooling_kwh] = nil
-          hash[:district_heating_kwh] = nil
+          hash[:district_heating_water_kwh] = nil
+          hash[:district_heating_steam_kwh] = nil
 
           hash[:electricity_produced_kwh] = nil
           hash[:end_uses] = EndUses.new.to_hash
@@ -162,7 +164,8 @@ module URBANopt
           result[:fuel_oil_kwh] = @fuel_oil_kwh if @fuel_oil_kwh
           result[:other_fuels_kwh] = @other_fuels_kwh if @other_fuels_kwh
           result[:district_cooling_kwh] = @district_cooling_kwh if @district_cooling_kwh
-          result[:district_heating_kwh] = @district_heating_kwh if @district_heating_kwh
+          result[:district_heating_steam_kwh] = @district_heating_steam_kwh if @district_heating_steam_kwh
+          result[:district_heating_water_kwh] = @district_heating_water_kwh if @district_heating_water_kwh
           result[:water_qbft] = @water_qbft if @water_qbft
           result[:electricity_produced_kwh] = @electricity_produced_kwh if @electricity_produced_kwh
           result[:end_uses] = @end_uses.to_hash if @end_uses
@@ -236,7 +239,8 @@ module URBANopt
           existing_period.fuel_oil_kwh = add_values(existing_period.fuel_oil_kwh, new_period.fuel_oil_kwh)
           existing_period.other_fuels_kwh = add_values(existing_period.other_fuels_kwh, new_period.other_fuels_kwh)
           existing_period.district_cooling_kwh = add_values(existing_period.district_cooling_kwh, new_period.district_cooling_kwh)
-          existing_period.district_heating_kwh = add_values(existing_period.district_heating_kwh, new_period.district_heating_kwh)
+          existing_period.district_heating_steam_kwh = add_values(existing_period.district_heating_steam_kwh, new_period.district_heating_steam_kwh)
+          existing_period.district_heating_water_kwh = add_values(existing_period.district_heating_water_kwh, new_period.district_heating_water_kwh)
           existing_period.water_qbft = add_values(existing_period.water_qbft, new_period.water_qbft)
           existing_period.electricity_produced_kwh = add_values(existing_period.electricity_produced_kwh, new_period.electricity_produced_kwh)
 
