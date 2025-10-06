@@ -27,9 +27,10 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rspec', '~> 3.9'
-  spec.add_development_dependency 'rubocop', '1.50'
-  spec.add_development_dependency 'simplecov', '0.22.0'
-  spec.add_development_dependency 'simplecov-lcov', '0.8.0'
+  spec.add_development_dependency 'rubocop', '~> 1.50'
+  spec.add_development_dependency 'rubocop-performance', '~> 1.20'
+  spec.add_development_dependency 'simplecov', '~> 0.22.0'
+  spec.add_development_dependency 'simplecov-lcov', '~> 0.8.0'
 
   spec.add_runtime_dependency 'json_pure', '~> 2.7'
   spec.add_runtime_dependency 'json-schema', '~> 4.3.1'
