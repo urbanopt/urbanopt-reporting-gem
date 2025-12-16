@@ -1,5 +1,5 @@
 # *********************************************************************************
-# URBANopt (tm), Copyright (c) Alliance for Sustainable Energy, LLC.
+# URBANopt (tm), Copyright (c) Alliance for Energy Innovation, LLC.
 # See also https://github.com/urbanopt/urbanopt-reporting-gem/blob/develop/LICENSE.md
 # *********************************************************************************
 
@@ -81,6 +81,31 @@ module URBANopt
         # _Float_ -  Total lifetime energy costs in the business as usual scenario (i.e no new system) after tax, us dollars
         #
         attr_accessor :lifecycle_energy_cost_after_tax_bau
+
+        ##
+        # _Float_ -  Up-front capital costs for all technologies, in present value, excluding replacement costs and incentives.
+        #
+        attr_accessor :initial_capital_costs
+
+        ##
+        # _Float_ -  Up-front capital costs for all technologies, in present value, excluding replacement costs, including incentives.
+        #
+        attr_accessor :initial_capital_costs_after_incentives
+
+        ##
+        # _Float_ -  Net capital costs for all technologies, in present value, including replacement costs and incentives.
+        #
+        attr_accessor :lifecycle_capital_costs
+
+        ##
+        # _Float_ -  Component of lifecycle costs (LCC). This value is the present value of all fuel costs over the analysis period, after tax.
+        #
+        attr_accessor :lifecycle_fuel_costs_after_tax
+
+        ##
+        # _Float_ -  Component of lifecycle costs (LCC). This value is the present value of all electric utility charges, after tax.
+        #
+        attr_accessor :lifecycle_elecbill_after_tax
 
         ##
         # _Array_ - List of _SolarPV_ systems
@@ -171,7 +196,9 @@ module URBANopt
         #
         # * Technologies include +:solar_pv+, +:wind+, +:generator+, and +:storage+.
         # * Financial metrics include +:lcc+, +:npv+, +:year_one_energy_cost_before_tax+, +:year_one_demand_cost_before_tax+,
-        # +:year_one_bill_before_tax+, and +:lifecycle_energy_cost_after_tax+
+        # +:year_one_bill_before_tax+, +:lifecycle_energy_cost_after_tax+, +:initial_capital_costs+,
+        # +:initial_capital_costs_after_incentives+, +:lifecycle_capital_costs+,
+        # +:lifecycle_elecbill_after_tax+, and +:lifecycle_fuel_costs_after_tax+
         ##
         # [parameters:]
         #
@@ -194,6 +221,11 @@ module URBANopt
           @lifecycle_energy_cost_after_tax_bau = hash[:lifecycle_energy_cost_after_tax_bau]
           @lifecycle_demand_cost_after_tax = hash[:lifecycle_demand_cost_after_tax]
           @lifecycle_demand_cost_after_tax_bau = hash[:lifecycle_demand_cost_after_tax_bau]
+          @initial_capital_costs = hash[:initial_capital_costs]
+          @initial_capital_costs_after_incentives = hash[:initial_capital_costs_after_incentives]
+          @lifecycle_capital_costs = hash[:lifecycle_capital_costs]
+          @lifecycle_fuel_costs_after_tax = hash[:lifecycle_fuel_costs_after_tax]
+          @lifecycle_elecbill_after_tax = hash[:lifecycle_elecbill_after_tax]
 
           @resilience_hours_min = hash[:resilience_hours_min]
           @resilience_hours_max = hash[:resilience_hours_max]
@@ -362,6 +394,12 @@ module URBANopt
           result[:lifecycle_energy_cost_after_tax_bau] = @lifecycle_energy_cost_after_tax_bau if @lifecycle_energy_cost_after_tax_bau
           result[:lifecycle_demand_cost_after_tax_bau] = @lifecycle_demand_cost_after_tax_bau if @lifecycle_demand_cost_after_tax_bau
 
+          result[:initial_capital_costs] = @initial_capital_costs if @initial_capital_costs
+          result[:initial_capital_costs_after_incentives] = @initial_capital_costs_after_incentives if @initial_capital_costs_after_incentives
+          result[:lifecycle_capital_costs] = @lifecycle_capital_costs if @lifecycle_capital_costs
+          result[:lifecycle_fuel_costs_after_tax] = @lifecycle_fuel_costs_after_tax if @lifecycle_fuel_costs_after_tax
+          result[:lifecycle_elecbill_after_tax] = @lifecycle_elecbill_after_tax if @lifecycle_elecbill_after_tax
+
           result[:total_solar_pv_kw] = @total_solar_pv_kw if @total_solar_pv_kw
           result[:total_wind_kw] = @total_wind_kw if @total_wind_kw
           result[:total_generator_kw] = @total_generator_kw if @total_generator_kw
@@ -431,6 +469,12 @@ module URBANopt
           existing_dgen.year_one_bill_before_tax_bau = add_values(existing_dgen.year_one_bill_before_tax_bau, new_dgen.year_one_bill_before_tax_bau)
           existing_dgen.lifecycle_energy_cost_after_tax_bau = add_values(existing_dgen.lifecycle_energy_cost_after_tax_bau, new_dgen.lifecycle_energy_cost_after_tax_bau)
           existing_dgen.lifecycle_demand_cost_after_tax_bau = add_values(existing_dgen.lifecycle_demand_cost_after_tax_bau, new_dgen.lifecycle_demand_cost_after_tax_bau)
+
+          existing_dgen.initial_capital_costs = add_values(existing_dgen.initial_capital_costs, new_dgen.initial_capital_costs)
+          existing_dgen.initial_capital_costs_after_incentives = add_values(existing_dgen.initial_capital_costs_after_incentives, new_dgen.initial_capital_costs_after_incentives)
+          existing_dgen.lifecycle_capital_costs = add_values(existing_dgen.lifecycle_capital_costs, new_dgen.lifecycle_capital_costs)
+          existing_dgen.lifecycle_fuel_costs_after_tax = add_values(existing_dgen.lifecycle_fuel_costs_after_tax, new_dgen.lifecycle_fuel_costs_after_tax)
+          existing_dgen.lifecycle_elecbill_after_tax = add_values(existing_dgen.lifecycle_elecbill_after_tax, new_dgen.lifecycle_elecbill_after_tax)
 
           existing_dgen.resilience_hours_min = add_values(existing_dgen.resilience_hours_min, new_dgen.resilience_hours_min)
           existing_dgen.resilience_hours_max = add_values(existing_dgen.resilience_hours_max, new_dgen.resilience_hours_max)
