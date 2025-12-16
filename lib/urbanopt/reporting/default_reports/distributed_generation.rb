@@ -196,7 +196,9 @@ module URBANopt
         #
         # * Technologies include +:solar_pv+, +:wind+, +:generator+, and +:storage+.
         # * Financial metrics include +:lcc+, +:npv+, +:year_one_energy_cost_before_tax+, +:year_one_demand_cost_before_tax+,
-        # +:year_one_bill_before_tax+, and +:lifecycle_energy_cost_after_tax+
+        # +:year_one_bill_before_tax+, +:lifecycle_energy_cost_after_tax+, +:initial_capital_costs+,
+        # +:initial_capital_costs_after_incentives+, +:lifecycle_capital_costs+,
+        # +:lifecycle_elecbill_after_tax+, and +:lifecycle_fuel_costs_after_tax+
         ##
         # [parameters:]
         #
