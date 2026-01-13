@@ -199,7 +199,9 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     # result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,WaterSystems:NaturalGas,#{reporting_frequency};").get
     # result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,InteriorEquipment:NaturalGas,#{reporting_frequency};").get
     result << OpenStudio::IdfObject.load('Output:Variable,*,Heating Coil Heating Rate,hourly; !- HVAC Average [W];').get
+	result << OpenStudio::IdfObject.load('Output:Variable,*,Cooling Coil Total Cooling Rate,hourly; !- HVAC Average [W];').get
     result << OpenStudio::IdfObject.load('Output:Variable,*,Plant Supply Side Heating Demand Rate,hourly; !- HVAC Average [W];').get
+	#result << OpenStudio::IdfObject.load('Output:Variable,*,Plant Supply Side Heating Demand Rate,hourly; !- HVAC Average [W];').get
     # result << OpenStudio::IdfObject.load("Output:Variable,*,Exterior Equipment:Electric Vehicles,#{reporting_frequency};").get
 
     ## add environmental factor outputs
