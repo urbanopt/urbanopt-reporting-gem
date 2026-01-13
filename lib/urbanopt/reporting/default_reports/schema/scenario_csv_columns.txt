@@ -35,6 +35,8 @@ DistrictCooling:Facility
 DistrictHeatingSteam:Facility
 DistrictHeatingWater:Facility
 Plant Supply Side Heating Demand Rate
+Heating Coil Heating Rate
+Cooling Coil Total Cooling Rate
 District Cooling Chilled Water Rate
 District Cooling Mass Flow Rate
 District Cooling Inlet Temperature
