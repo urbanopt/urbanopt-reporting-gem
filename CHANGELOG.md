@@ -1,5 +1,9 @@
 # URBANopt Reporting Gem
 
+## Version 1.1.0
+
+* Upgrade to OpenStudio 3.10
+
 ## Version 1.0.0
 
 * Upgrade to OpenStudio 3.9 and Ruby 3.2.2 by @vtnate in https://github.com/urbanopt/urbanopt-reporting-gem/pull/155
