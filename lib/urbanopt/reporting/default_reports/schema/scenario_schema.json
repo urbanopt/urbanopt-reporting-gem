@@ -481,6 +481,31 @@
           "units": "dollars",
           "type": "number"
         },
+        "initial_capital_costs": {
+          "description": "Up-front capital costs for all technologies, in present value, excluding replacement costs and incentives.",
+          "units": "dollars",
+          "type": "number"
+        },
+        "initial_capital_costs_after_incentives": {
+          "description": "Up-front capital costs for all technologies, in present value, excluding replacement costs, including incentives.",
+          "units": "dollars",
+          "type": "number"
+        },
+        "lifecycle_capital_costs": {
+          "description": "Net capital costs for all technologies, in present value, including replacement costs and incentives.",
+          "units": "dollars",
+          "type": "number"
+        },
+        "lifecycle_fuel_costs_after_tax": {
+          "description": "Component of lifecycle costs (LCC). This value is the present value of all fuel costs over the analysis period, after tax.",
+          "units": "dollars",
+          "type": "number"
+        },
+        "lifecycle_elecbill_after_tax": {
+          "description": "Component of lifecycle costs (LCC). This value is the present value of all electric utility charges, after tax.",
+          "units": "dollars",
+          "type": "number"
+        },
         "SolarPV": {
           "$ref": "#/definitions/SolarPV"
         },

@@ -1,5 +1,5 @@
 # *********************************************************************************
-# URBANopt (tm), Copyright (c) Alliance for Sustainable Energy, LLC.
+# URBANopt (tm), Copyright (c) Alliance for Energy Innovation, LLC.
 # See also https://github.com/urbanopt/urbanopt-reporting-gem/blob/develop/LICENSE.md
 # *********************************************************************************
 
@@ -186,21 +186,26 @@ module URBANopt
             path = @path
           end
 
-          File.open(path, 'w') do |f|
-            f.puts @column_names.join(',')
-            n = @data[@column_names[0]].size - 1
-
-            (0..n).each do |i|
-              line = []
-              @column_names.each do |column_name|
-                line << @data[column_name][i]
+          # what if data is nil? warn user and don't attempt to write to file or it errors out
+          if @data.nil?
+            @@logger.warn('No data to save to TimeseriesCSV to write to file during feature report update.')
+            puts
+          else
+            File.open(path, 'w') do |f|
+              f.puts @column_names.join(',')
+              n = @data[@column_names[0]].size - 1
+              (0..n).each do |i|
+                line = []
+                @column_names.each do |column_name|
+                  line << @data[column_name][i]
+                end
+                f.puts line.join(',')
               end
-              f.puts line.join(',')
-            end
-            begin
-              f.fsync
-            rescue StandardError
-              f.flush
+              begin
+                f.fsync
+              rescue StandardError
+                f.flush
+              end
             end
           end
         end
