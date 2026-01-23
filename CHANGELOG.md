@@ -3,9 +3,7 @@
 ## Version 1.2.0
 
 * Update copyrights, handle change from github.com/NREL to github.com/NatLabRockies
-* Update OpenStudio Extension Gem version
 * Add lifecycle cost fields to scenario report for REopt cost analysis
-* 
 
 ## Version 1.1.0
 
