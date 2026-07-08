@@ -1,5 +1,9 @@
 # URBANopt Reporting Gem
 
+## Version 1.3.0
+
+* Updated dependencies for OpenStudio 3.11
+
 ## Version 1.2.0
 
 * Update copyrights, handle change from github.com/NREL to github.com/NatLabRockies

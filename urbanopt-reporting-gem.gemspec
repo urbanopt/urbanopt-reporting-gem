@@ -5,8 +5,8 @@ require 'urbanopt/reporting/version'
 Gem::Specification.new do |spec|
   spec.name          = 'urbanopt-reporting'
   spec.version       = URBANopt::Reporting::VERSION
-  spec.authors       = ['Rawad El Kontar', 'Dan Macumber']
-  spec.email         = ['rawad.elkontar@nrel.gov']
+  spec.authors       = ['Rawad El Kontar', 'Katherine Fleming', 'Dan Macumber']
+  spec.email         = ['rawad.elkontar@nlr.gov', 'katherine.fleming@nlr.gov']
 
   spec.summary       = 'Library to report URBANopt results'
   spec.description   = 'Library include scenario default reporting measure and scenario defaults reports schema and classes'
@@ -34,5 +34,5 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'json_pure', '~> 2.7'
   spec.add_runtime_dependency 'json-schema', '~> 4.3.1'
-  spec.add_dependency 'openstudio-extension', '~> 0.9.4'
+  spec.add_dependency 'openstudio-extension', '~> 0.9.7'
 end
