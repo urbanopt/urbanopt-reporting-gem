@@ -1,12 +1,12 @@
 name: Reporting-gem CI
 
 on:
+  pull_request:
   push:
-  workflow_dispatch:
-  schedule:
-    # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule
-    # 5 am UTC (11pm MDT the day before) every weekday night in MDT
-    - cron: '22 5 * * 2-6'
+    branches:
+      - "develop"
+    tags:
+      - '*'
 
 env:
   # This env var should enforce develop branch of all dependencies
@@ -14,6 +14,7 @@ env:
   GEM_DEVELOPER_KEY: ${{ secrets.GEM_DEVELOPER_KEY }}
   # Enforce language so openstudio doesn't get confused
   LANG: "C.UTF-8"
+  LC_ALL: C.UTF-8
 
 jobs:
   weeknight-tests:
@@ -29,13 +30,8 @@ jobs:
         run: |
           ruby --version
           bundle install
-          bundle update
       - name: List OpenStudio measures
         run: bundle exec rake openstudio:list_measures
-      - name: Update OpenStudio measures
-        run: |
-          bundle install
-          bundle exec rake openstudio:update_measures
       - name: Test OpenStudio measures
         run: bundle exec rake openstudio:test_with_openstudio
       - name: Run Rspec
