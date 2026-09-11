@@ -200,7 +200,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     # result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,InteriorEquipment:NaturalGas,#{reporting_frequency};").get
     result << OpenStudio::IdfObject.load('Output:Variable,*,Heating Coil Heating Rate,hourly; !- HVAC Average [W];').get
 	result << OpenStudio::IdfObject.load('Output:Variable,*,Cooling Coil Total Cooling Rate,hourly; !- HVAC Average [W];').get
-    result << OpenStudio::IdfObject.load('Output:Variable,*,Plant Supply Side Heating Demand Rate,hourly; !- HVAC Average [W];').get
+	result << OpenStudio::IdfObject.load('Output:Variable,*,Plant Supply Side Heating Demand Rate,hourly; !- HVAC Average [W];').get
 	#result << OpenStudio::IdfObject.load('Output:Variable,*,Plant Supply Side Heating Demand Rate,hourly; !- HVAC Average [W];').get
     # result << OpenStudio::IdfObject.load("Output:Variable,*,Exterior Equipment:Electric Vehicles,#{reporting_frequency};").get
 
@@ -217,7 +217,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
                        'District Cooling Inlet Temperature', 'District Cooling Outlet Temperature',
                        'District Heating Hot Water Rate', 'District Heating Mass Flow Rate',
                        'District Heating Inlet Temperature', 'District Heating Outlet Temperature', 'Cooling Coil Total Cooling Rate',
-                       'Heating Coil Heating Rate', 'Plant Supply Side Heating Demand Rate', 'ExteriorEquipment:Electricity']
+                       'Heating Coil Heating Rate', 'Plant Supply Side Heating Demand Rate', 'ExteriorEquipment:Electricity', 'Plant Supply Side Heating Demand Rate']
 
     tes_timeseries_data = ['Ice Thermal Storage End Fraction', 'Cooling coil Ice Thermal Storage End Fraction']
 
@@ -1008,6 +1008,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
       'District Heating Outlet Temperature',
       'Cooling Coil Total Cooling Rate',
       'Heating Coil Heating Rate',
+	  'Plant Supply Side Heating Demand Rate', 
       'Future_Annual_Electricity_Emissions',
       'Future_Hourly_Electricity_Emissions',
       'Historical_Annual_Electricity_Emissions',
