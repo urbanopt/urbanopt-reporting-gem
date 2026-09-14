@@ -1,5 +1,18 @@
 # URBANopt Reporting Gem
 
+## Version 1.3.0
+
+* Updated dependencies for OpenStudio 3.11
+
+## Version 1.2.0
+
+* Update copyrights, handle change from github.com/NREL to github.com/NatLabRockies
+* Add lifecycle cost fields to scenario report for REopt cost analysis
+
+## Version 1.1.0
+
+* Upgrade to OpenStudio 3.10
+
 ## Version 1.0.0
 
 * Upgrade to OpenStudio 3.9 and Ruby 3.2.2 by @vtnate in https://github.com/urbanopt/urbanopt-reporting-gem/pull/155

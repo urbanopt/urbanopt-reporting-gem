@@ -5,8 +5,8 @@ require 'urbanopt/reporting/version'
 Gem::Specification.new do |spec|
   spec.name          = 'urbanopt-reporting'
   spec.version       = URBANopt::Reporting::VERSION
-  spec.authors       = ['Rawad El Kontar', 'Dan Macumber']
-  spec.email         = ['rawad.elkontar@nrel.gov']
+  spec.authors       = ['Rawad El Kontar', 'Katherine Fleming', 'Dan Macumber']
+  spec.email         = ['rawad.elkontar@nlr.gov', 'katherine.fleming@nlr.gov']
 
   spec.summary       = 'Library to report URBANopt results'
   spec.description   = 'Library include scenario default reporting measure and scenario defaults reports schema and classes'
@@ -25,12 +25,14 @@ Gem::Specification.new do |spec|
   # It would be nice to be able to use newer patches of Ruby 3.2, which would require os-extension to relax its dependency on bundler.
   spec.required_ruby_version = '3.2.2'
 
-  spec.add_development_dependency 'rspec', '~> 3.13'
-  spec.add_development_dependency 'simplecov', '0.22.0'
-  spec.add_development_dependency 'simplecov-lcov', '0.8.0'
-  spec.add_development_dependency 'rubocop', '1.50.0'
+  spec.add_development_dependency 'rake', '~> 13.0'
+  spec.add_development_dependency 'rspec', '~> 3.9'
+  spec.add_development_dependency 'rubocop', '~> 1.50'
+  spec.add_development_dependency 'rubocop-performance', '~> 1.20'
+  spec.add_development_dependency 'simplecov', '~> 0.22.0'
+  spec.add_development_dependency 'simplecov-lcov', '~> 0.8.0'
 
   spec.add_runtime_dependency 'json_pure', '~> 2.7'
   spec.add_runtime_dependency 'json-schema', '~> 4.3.1'
-  spec.add_dependency 'openstudio-extension', '~> 0.8.3'
+  spec.add_dependency 'openstudio-extension', '~> 0.9.7'
 end
